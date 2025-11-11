@@ -1,0 +1,5 @@
+.team_list_image { width: 100px; height: 100px; text-align: center; display: inline-block; object-fit: contain; } 
+:host /deep/ .delete-input .mat-form-field-appearance-outline .mat-form-field-infix { padding:3px 0px;}
+.delete-input .text-danger.text-left.small { position: absolute; bottom: 2px; }
+a.workflow_id { color:#337ab7; font-size: 14px; text-decoration: underline; } 
+.mat-button.send_btn { background-color:#29b6d8; color:#fff; }

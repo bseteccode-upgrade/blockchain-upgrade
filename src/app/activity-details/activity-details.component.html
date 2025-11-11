@@ -1,0 +1,252 @@
+  <div class="badge-detail-separate">
+    <div class="product-detail-list">
+      <div class="col-md-12 col-dm-12">
+        <div class="product-title">
+          <h3>{{actDetail.title}}</h3>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-sm-12"
+        *ngIf="actDetail.certData.issuer_eth_address && actDetail.certData.issuer_eth_address !== 'None' && actDetail.certData.show_transaction">
+        <div class="product_field">
+          <h4>{{'transaction_id' | translate}}:</h4>
+          <p>{{actDetail.certData.issuer_eth_address || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.evidence && actDetail.certData.evidence !== 'None' && actDetail.certData.show_transaction">
+        <div class="product_field">
+          <h4>{{'evidence' | translate}}:</h4>
+          <a href="{{actDetail.certData.evidence}}" target="_blank"> {{'view_evidence' | translate}} </a>
+        </div>
+      </div>
+
+      <div *ngIf="actDetail.certData.datetimeplace == 1 || actDetail.certData.datetimeplace == 4" class="col-md-6 col-sm-12">
+        <div class="product_field">
+          <h4>{{'created_on' | translate}}:</h4>
+          <p>{{actDetail.certData.globaldatetime}}</p>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="actDetail.certData.product_array.length > 0">
+        <div class="col-md-12 col-sm-12">
+          <div class="product_details_title">
+            <h4>{{'product_information' | translate}}</h4>
+          </div>
+
+          <div class="col-md-12 col-sm-12" *ngFor="let productdata of actDetail.certData.product_array">
+            <div class="product_details">
+              <ul class="product_list">
+                <li>
+                  <img [src]="productdata.image != '' ? productdata.image: 'assets/images/university-image.png'">
+                </li>
+                <li>
+                  <p>{{productdata.title}}</p>
+                  <p [innerHtml]="convertStyle(productdata.description)"></p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-sm-12 content_center"
+        *ngIf="actDetail.certData.step_content && actDetail.certData.step_content != '' &&  actDetail.certData.step_content != 'None'">
+        <h3>{{'description' | translate}}</h3>
+        <p [innerHtml]="actDetail.certData.step_content"></p>
+      </div>
+
+      <div class="col-md-12 col-sm-12">
+        <div class="product-title">
+          <h3>{{'activity' | translate}}</h3>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.in_batch_id && actDetail.certData.in_batch_id != 'None' && actDetail.certData.show_inoutbatch">
+        <div class="product_field">
+          <h4>{{'batchid' | translate}}:</h4>
+          <p>{{actDetail.certData.in_batch_id || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12" *ngIf="actDetail.certData.show_inoutbatch">
+        <div class="product_field">
+          <h4>{{'subproductbatch' | translate}}:</h4>
+          <p>{{actDetail.certData.out_batch_id || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <ng-container *ngFor="let displaycontent of actDetail.certData.field_set">
+        <div class="col-md-6 col-sm-12" *ngIf="displaycontent.in_box">
+          <div class="product_field">
+            <h4><b>{{displaycontent.label}}</b>:</h4>
+            <p
+              *ngIf="displaycontent.type !== 'document' && displaycontent.type !== 'date' && displaycontent.type !== 'timestamp'">
+              {{displaycontent.value || '&nbsp;'}}</p>
+
+            <p *ngIf="displaycontent.type === 'date'">
+              <span *ngIf="displaycontent.dateformat == 1;else dmyy">{{displaycontent.value | date:'MM/dd/yyyy'}}</span>
+              <ng-template #dmyy>
+                <span>{{displaycontent.value | date:'dd/MM/yyyy'}}</span>
+              </ng-template>
+            </p>
+            <p *ngIf="displaycontent.type === 'timestamp'">
+              <span
+                *ngIf="displaycontent.dateformat == 1;else dmyytime">{{displaycontent.value != '' ? convertDateToStringMM(displaycontent.value) : ''}}</span>
+              <ng-template #dmyytime>
+                <span>{{displaycontent.value != '' ? convertDateToString(displaycontent.value) : ''}}</span>
+              </ng-template>
+            </p>
+            <p *ngIf="displaycontent.type === 'document'"><a
+                *ngIf="displaycontent.value && displaycontent.value != null && displaycontent.value !== ''"
+                target="_blank" href="{{displaycontent.value}}">{{'click' | translate}}</a></p>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('country_certified') && actDetail.certData.country_certified && actDetail.certData.country_certified != 'None'">
+        <div class="product_field">
+          <h4>{{'certified_country' | translate}}:</h4>
+          <p>{{actDetail.certData.country_certified || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('certifier_name') && actDetail.certData.certifier_name && actDetail.certData.certifier_name != 'None'">
+        <div class="product_field">
+          <h4>{{'certifier_name' | translate}}:</h4>
+          <p>{{actDetail.certData.certifier_name || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('certifier_designation') && actDetail.certData.certifier_designation && actDetail.certData.certifier_designation != 'None'">
+        <div class="product_field">
+          <h4>{{'certifier_designation' | translate}}:</h4>
+          <p>{{actDetail.certData.certifier_designation || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('certificate_number') && actDetail.certData.certificate_number && actDetail.certData.certificate_number != 'None'">
+        <div class="product_field">
+          <h4>{{'certificate_number' | translate}}:</h4>
+          <p>{{actDetail.certData.certificate_number || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('date_issued') && actDetail.certData.date_issued && actDetail.certData.date_issued != 'None'">
+        <div class="product_field">
+          <h4>{{'certified_date' | translate}}:</h4>
+          <p>{{actDetail.certData.date_issued || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('manufacture_date') && actDetail.certData.manufacture_date && actDetail.certData.manufacture_date != 'None'">
+        <div class="product_field">
+          <h4>{{'manufacture_date' | translate}}:</h4>
+          <p>{{actDetail.certData.manufacture_date || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div
+        *ngIf="actDetail.certData.activity_field_set.includes('expire_date') && actDetail.certData.expire_date && actDetail.certData.expire_date !== 'None'"
+        class="col-md-6 col-sm-12">
+        <div class="product_field">
+          <h4>{{'expiry_date' | translate}}:</h4>
+          <p>{{actDetail.certData.expire_date || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('transport') && actDetail.certData.transport && actDetail.certData.transport != 'None'">
+        <div class="product_field">
+          <h4>{{'transport' | translate}}:</h4>
+          <p>{{actDetail.certData.transport || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('shipping') && actDetail.certData.shipping && actDetail.certData.shipping != 'None'">
+        <div class="product_field">
+          <h4>{{'shipping' | translate}}:</h4>
+          <p>{{actDetail.certData.shipping || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('category') && actDetail.certData.category && actDetail.certData.category != 'None'">
+        <div class="product_field">
+          <h4>{{'category' | translate}}:</h4>
+          <p>{{actDetail.certData.category || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('weight') && actDetail.certData.weight && actDetail.certData.weight != 'None'">
+        <div class="product_field">
+          <h4>{{'weight' | translate}}:</h4>
+          <p>{{actDetail.certData.weight || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('grade') && actDetail.certData.grade && actDetail.certData.grade != 'None'">
+        <div class="product_field">
+          <h4>{{'grade' | translate}}:</h4>
+          <p>{{actDetail.certData.grade || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('packing_type') && actDetail.certData.packing_type && actDetail.certData.packing_type != 'None'">
+        <div class="product_field">
+          <h4>{{'packing_type' | translate}}:</h4>
+          <p>{{actDetail.certData.packing_type || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('shell_life') && actDetail.certData.shell_life && actDetail.certData.shell_life != 'None'">
+        <div class="product_field">
+          <h4>{{'minimum_shell_life' | translate}}:</h4>
+          <p>{{actDetail.certData.shell_life || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('storage_condition') && actDetail.certData.storage_condition && actDetail.certData.storage_condition != 'None'">
+        <div class="product_field">
+          <h4>{{'storage_condition' | translate}}:</h4>
+          <p>{{actDetail.certData.storage_condition || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="actDetail.certData.activity_field_set.includes('processing_plant') && actDetail.certData.processing_plant && actDetail.certData.processing_plant != 'None'">
+        <div class="product_field">
+          <h4>{{'processing_plant' | translate}}:</h4>
+          <p>{{actDetail.certData.processing_plant || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div
+        *ngIf="actDetail.certData.activity_field_set.includes('description') && actDetail.certData.description && actDetail.certData.description !== 'None'"
+        class="col-md-12 col-sm-12">
+        <div class="product_field">
+          <!-- <h4>{{'description' | translate}}:</h4> -->
+          <p [innerHtml]="convertStyle(actDetail.certData.description) || 'None'"></p>
+        </div>
+      </div>
+    </div>
+
+
+
+  <button class="close-btn" [mat-dialog-close]="false">
+      <i class="material-icons">close</i></button>
+  </div>

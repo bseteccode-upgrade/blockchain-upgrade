@@ -1,0 +1,2 @@
+.feedback_btn{position:fixed;z-index:999;top:215px;left:0;transform: rotate(-90deg);-webkit-transform: rotate(-90deg);-moz-transform: rotate(-90deg);-ms-transform: rotate(-90deg);-o-transform: rotate(-90deg);transform-origin: left top 0;}
+.feedback_btn button{box-shadow:none;border:none;max-width: 120px;display: inline-block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;vertical-align: middle;padding: 10px 20px;text-transform: capitalize;background-color: #777777;color: #FFFFFF;font-size:16px;}

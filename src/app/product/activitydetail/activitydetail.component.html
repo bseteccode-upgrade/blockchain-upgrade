@@ -1,0 +1,421 @@
+<mat-dialog-content>
+  <div class="badge-detail-separate">
+
+    <div class="product-detail-list">
+      <div>
+        <div class="col-md-12 col-dm-12">
+          <div class="product-title">
+            <h3>{{activityDetails?.title}}</h3>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12"
+          *ngIf="activityDetails?.issuer_eth_address && activityDetails?.issuer_eth_address !== 'None' && activityDetails?.show_transaction">
+          <div class="product_field">
+            <h4>{{'transaction_id' | translate}}:</h4>
+            <p>{{activityDetails?.issuer_eth_address || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="activityDetails?.evidence && activityDetails?.evidence !== 'None' && activityDetails?.show_transaction">
+          <div class="product_field">
+            <h4>{{'evidence' | translate}}:</h4>
+            <a href="{{activityDetails?.evidence}}" target="_blank"> {{'view_evidence' | translate}} </a>
+          </div>
+        </div>
+
+        <div *ngIf="activityDetails?.datetimeplace == 1 || activityDetails?.datetimeplace == 4"
+          class="col-md-6 col-sm-12">
+          <div class="product_field">
+            <h4>{{'created_on' | translate}}:</h4>
+            <p>{{activityDetails?.date_issued}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 row" *ngIf="activityDetails?.product_array.length > 0">
+          <div class="col-md-12 col-sm-12">
+            <div class="product_details_title">
+              <h4>{{'product_information' | translate}}</h4>
+            </div>
+
+            <div class="col-md-12 col-sm-12" *ngFor="let productdata of activityDetails?.product_array">
+              <div class="product_details">
+                <ul class="product_list">
+                  <li>
+                    <img [src]="productdata.image != '' ? productdata.image: 'assets/images/university-image.png'">
+                  </li>
+                  <li>
+                    <p>{{productdata.title}}</p>
+                    <p [innerHtml]="productdata.description"></p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12">
+          <div
+            class="{{activityDetails?.final_qr || activityDetails?.fixed_qr_code_url ? 'col-md-6' : 'col-md-12' }} col-sm-12 qr-container"
+            *ngIf="activityDetails?.qr_files.length > 0 && activityDetails?.show_transaction">
+            <label>{{'activity_qr_code' | translate}}</label>
+            <div>
+              <ul class="qr-code-list">
+                <li *ngFor="let qrdata of activityDetails?.qr_files">
+                  <img src="{{qrdata}}" class="bar-img">
+
+                  <div class="qr-user-delete">
+                    <a target="_blank" href="{{qrdata}}"><i class="material-icons">
+                        cloud_download
+                      </i></a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-12 qr-container"
+            *ngIf="(activityDetails?.final_qr || activityDetails?.fixed_qr_code_url) && activityDetails?.show_transaction">
+            <label>{{'end_user_qr_code' | translate}}</label>
+            <div class="end-user-qr">
+              <ul class="qr-code-list" *ngIf="activityDetails?.qr_type == 2">
+                <li class="end_user_main">
+                  <div class="end_user">
+                  <img src="{{activityDetails?.fixed_qr_code_url}}" class="bar-img">                  
+                  <div class="qr-user-delete">
+                    <a target="_blank" href="{{activityDetails?.fixed_qr_code_url}}"><i class="material-icons">
+                        cloud_download
+                      </i></a>
+                  </div>
+                </div>
+                <a target="_blank" href="{{activityDetails.final_qr_code_url_value}}" class="click_here">{{'click_here' | translate }}</a>
+                </li>
+                <li *ngIf="activityDetails?.eps_qr_files">
+                  <img src="assets/images/eps.png" style="width:100px">
+
+                  <div class="qr-user-delete">
+                    <a target="_blank" href="{{activityDetails.eps_qr_files}}"><i class="material-icons">
+                        cloud_download
+                      </i></a>
+                  </div>
+                </li>
+                <li *ngIf="activityDetails?.svg_qr_files">
+                  <img src="assets/images/svg.png" style="width:100px">
+
+                  <div class="qr-user-delete">
+                    <a target="_blank" href="{{activityDetails.svg_qr_files}}"><i class="material-icons">
+                        cloud_download
+                      </i></a>
+                  </div>
+                </li>
+              </ul>
+              <ul class="qr-code-list" *ngIf="activityDetails?.qr_type == 1">
+                <li class="end_user_main">
+                  <div class="end_user">
+                  <img src="{{activityDetails?.final_qr}}" class="bar-img">                  
+                  <div class="qr-user-delete">
+                    <a target="_blank" href="{{activityDetails?.final_qr}}"><i class="material-icons">
+                        cloud_download
+                      </i></a>
+                  </div>
+                </div>
+                <a target="_blank" href="{{activityDetails.final_qr_code_url_value}}" class="click_here">{{'click_here' | translate }}</a>
+                </li>
+                <li *ngIf="activityDetails?.eps_qr_files">
+                  <img src="assets/images/eps.png" style="width:100px">
+
+                  <div class="qr-user-delete">
+                    <a target="_blank" href="{{activityDetails.eps_qr_files}}"><i class="material-icons">
+                        cloud_download
+                      </i></a>
+                  </div>
+                </li>
+                <li *ngIf="activityDetails?.svg_qr_files">
+                  <img src="assets/images/svg.png" style="width:100px">
+
+                  <div class="qr-user-delete">
+                    <a target="_blank" href="{{activityDetails.svg_qr_files}}"><i class="material-icons">
+                        cloud_download
+                      </i></a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-sm-12 content_center"
+        *ngIf="activityDetails?.step_content && activityDetails?.step_content != '' &&  activityDetails?.step_content != 'None'">
+        <h3>{{'description' | translate}}</h3>
+        <p [innerHtml]="activityDetails?.step_content"></p>
+      </div>
+
+      <div class="col-md-12 col-sm-12">
+        <div class="product-title">
+          <h3>{{'activity' | translate}}</h3>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.in_batch_id && activityDetails?.in_batch_id != 'None' && activityDetails?.show_inoutbatch">
+        <div class="product_field">
+          <h4>{{'batchid' | translate}}:</h4>
+          <p>{{activityDetails?.in_batch_id || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12" *ngIf="activityDetails?.show_inoutbatch">
+        <div class="product_field">
+          <h4>{{'subproductbatch' | translate}}:</h4>
+          <p>{{activityDetails?.out_batch_id || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <ng-container *ngFor="let displaycontent of activityDetails?.field_set">
+        <div class="col-md-6 col-sm-12" *ngIf="displaycontent.in_box">
+          <div class="product_field">
+            <h4><b>{{displaycontent.label}}</b>:</h4>
+            <p
+              *ngIf="displaycontent.type !== 'document' && displaycontent.type !== 'productimage' && displaycontent.type !== 'date' && displaycontent.type !== 'timestamp'">
+              {{displaycontent.value || '&nbsp;'}}</p>
+
+            <p *ngIf="displaycontent.type === 'date'">
+              <span *ngIf="displaycontent.dateformat == 1;else dmyy">{{displaycontent.value | date:'MM/dd/yyyy'}}</span>
+              <ng-template #dmyy>
+                <span>{{displaycontent.value | date:'dd/MM/yyyy'}}</span>
+              </ng-template>
+            </p>
+            <p *ngIf="displaycontent.type === 'timestamp'">
+              <span
+                *ngIf="displaycontent.dateformat == 1;else dmyytime">{{displaycontent.value != '' ? convertDateToStringMM(displaycontent.value) : ''}}</span>
+              <ng-template #dmyytime>
+                <span>{{displaycontent.value != '' ? convertDateToString(displaycontent.value) : ''}}</span>
+              </ng-template>
+            </p>
+            <p class="document-pro"
+              *ngIf="displaycontent.type === 'document' || displaycontent.type === 'productimage'"><a
+                *ngIf="displaycontent.value && displaycontent.value != null && displaycontent.value !== ''"
+                target="_blank" href="{{displaycontent.value}}">{{'click' | translate}}</a></p>
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('country_certified') && activityDetails?.country_certified && activityDetails?.country_certified != 'None'">
+        <div class="product_field">
+          <h4>{{'certified_country' | translate}}:</h4>
+          <p>{{activityDetails?.country_certified || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('certifier_name') && activityDetails?.certifier_name && activityDetails?.certifier_name != 'None'">
+        <div class="product_field">
+          <h4>{{'certifier_name' | translate}}:</h4>
+          <p>{{activityDetails?.certifier_name || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('certifier_designation') && activityDetails?.certifier_designation && activityDetails?.certifier_designation != 'None'">
+        <div class="product_field">
+          <h4>{{'certifier_designation' | translate}}:</h4>
+          <p>{{activityDetails?.certifier_designation || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('certificate_number') && activityDetails?.certificate_number && activityDetails?.certificate_number != 'None'">
+        <div class="product_field">
+          <h4>{{'certificate_number' | translate}}:</h4>
+          <p>{{activityDetails?.certificate_number || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('date_issued') && activityDetails?.date_issued && activityDetails?.date_issued != 'None'">
+        <div class="product_field">
+          <h4>{{'certified_date' | translate}}:</h4>
+          <p>{{activityDetails?.date_issued || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('manufacture_date') && activityDetails?.manufacture_date && activityDetails?.manufacture_date != 'None'">
+        <div class="product_field">
+          <h4>{{'manufacture_date' | translate}}:</h4>
+          <p>{{actDetail.manufacture_date || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div
+        *ngIf="activityDetails?.activity_field_set.includes('expire_date') && activityDetails.expire_date && activityDetails.expire_date !== 'None'"
+        class="col-md-6 col-sm-12">
+        <div class="product_field">
+          <h4>{{'expiry_date' | translate}}:</h4>
+          <p>{{actDetail.expire_date || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('transport') && activityDetails?.transport && activityDetails?.transport != 'None'">
+        <div class="product_field">
+          <h4>{{'transport' | translate}}:</h4>
+          <p>{{activityDetails?.transport || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('shipping') && activityDetails?.shipping && activityDetails?.shipping != 'None'">
+        <div class="product_field">
+          <h4>{{'shipping' | translate}}:</h4>
+          <p>{{activityDetails?.shipping || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('category') && activityDetails?.category && activityDetails?.category != 'None'">
+        <div class="product_field">
+          <h4>{{'category' | translate}}:</h4>
+          <p>{{activityDetails?.category || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('weight') && activityDetails?.weight && activityDetails?.weight != 'None'">
+        <div class="product_field">
+          <h4>{{'weight' | translate}}:</h4>
+          <p>{{activityDetails?.weight || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('grade') && activityDetails?.grade && activityDetails?.grade != 'None'">
+        <div class="product_field">
+          <h4>{{'grade' | translate}}:</h4>
+          <p>{{activityDetails?.grade || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('packing_type') && activityDetails?.packing_type && activityDetails?.packing_type != 'None'">
+        <div class="product_field">
+          <h4>{{'packing_type' | translate}}:</h4>
+          <p>{{activityDetails?.packing_type || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('shell_life') && activityDetails?.shell_life && activityDetails?.shell_life != 'None'">
+        <div class="product_field">
+          <h4>{{'minimum_shell_life' | translate}}:</h4>
+          <p>{{activityDetails?.shell_life || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('storage_condition') && activityDetails?.storage_condition && activityDetails?.storage_condition != 'None'">
+        <div class="product_field">
+          <h4>{{'storage_condition' | translate}}:</h4>
+          <p>{{activityDetails?.storage_condition || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12"
+        *ngIf="activityDetails?.activity_field_set.includes('processing_plant') && activityDetails?.processing_plant && activityDetails?.processing_plant != 'None'">
+        <div class="product_field">
+          <h4>{{'processing_plant' | translate}}:</h4>
+          <p>{{activityDetails?.processing_plant || '&nbsp;'}}</p>
+        </div>
+      </div>
+
+      <div
+        *ngIf="activityDetails?.activity_field_set.includes('description') && activityDetails?.description && activityDetails?.description !== 'None'"
+        class="col-md-12 col-sm-12">
+        <div class="product_field">
+          <h4>{{'description' | translate}}:</h4>
+          <p [innerHtml]="activityDetails?.description || 'None'"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-12">
+    <div class="product-title">
+      <h3 *ngIf="data.historyCertData.length > 0">{{'history_of_activity_data' | translate}}</h3>
+    </div>
+
+    <div *ngFor="let certData of data.historyCertData">
+      <h4 class="time-details">{{certData.created}}</h4>
+      <div *ngIf="certData.show_transaction" class="col-md-12 col-sm-12 dynamic-details-sub-new">
+        <ul class="col-md-12 col-sm-12">
+          <li>{{'transaction_id' | translate}}: <span>{{certData.transaction_address}} </span> </li>
+          <li *ngIf="certData.evidence && certData.evidence != 'None'">{{'evidence' | translate}}:
+            <span><a target="_blank" href="{{certData.evidence}}">{{'click_here' | translate}}</a></span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-12 col-sm-12 no-padding">
+        <div class="table-responsive popup-table">
+
+          <table *ngIf="certData.show_inoutbatch" class="table">
+            <tr class="col-md-6 col-sm-12 col-xs-12" *ngIf="certData.in_batch_id && certData.in_batch_id != 'None'">
+              <td>
+                <h2>{{'batchid' | translate}}:</h2>
+              </td>
+              <td>
+                <h2>{{certData.in_batch_id || '&nbsp;'}}</h2>
+              </td>
+            </tr>
+            <tr class="col-md-6 col-sm-12 col-xs-12">
+              <td>
+                <h2>{{'subproductbatch' | translate}}:</h2>
+              </td>
+              <td>
+                <h2>{{certData.out_batch_id || '&nbsp;'}}</h2>
+              </td>
+            </tr>
+          </table>
+
+          <table class="table">
+            <tr class="col-md-6 col-sm-12 col-xs-12" *ngFor="let details of certData.field_set">
+              <td>
+                <h2>{{details.label}}:</h2>
+              </td>
+              <td *ngIf="details.type !== 'document' && details.type !== 'productimage'">
+                <h2>{{details.value}}</h2>
+              </td>
+              <td *ngIf="details.type === 'document' || details.type === 'productimage'">
+                <a *ngIf="details.value && details.value != null && details.value !== ''" target="_blank"
+                  href="{{details.value}}">{{'click_here' | translate}}</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12" *ngIf="certData.company_admin_product.length > 0">
+        <div class="product_details_title">
+          <h4>{{'product_information' | translate}}</h4>
+        </div>
+        <div class="col-md-6 col-sm-6" *ngFor="let productdata of certData.company_admin_product">
+          <div class="product_details">
+            <ul class="product_list">
+              <li>
+                <img [src]="productdata.image != '' ? productdata.image: 'assets/images/university-image.png'">
+              </li>
+              <li>
+                <p>{{productdata.title}}</p>
+                <p [innerHtml]="productdata.description"></p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button mat-mini-fab class="close-btn" [mat-dialog-close]="false"><i class="material-icons">close</i></button>
+
+</mat-dialog-content>

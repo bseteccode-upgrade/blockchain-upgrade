@@ -1,0 +1,9 @@
+.feedback_container{max-width:650px;padding:0 20px;position:relative;}
+.feedback_container .form-horizontal .form-group{margin-left:0;margin-right:0}
+.feedback_title{color:#222;font-size:20px;font-weight:bold;margin-bottom:25px;}
+.form-control{border:1px solid #d3dbe8 !important}
+.submit-btn.mat-button{background:#29b6d8;background-color:#29b6d8;color:#ffffff}
+label{font-size:20px;cursor:pointer;padding:10px}
+.close_btn{position:absolute;right:20px;font-size:24px;top:-3px;cursor:pointer;}
+.close_btn i{color:#697177;}
+.close_btn:hover i{color:#222222;}

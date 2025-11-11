@@ -1,0 +1,412 @@
+<section class="start_wrapper certificate-list badge-add-form">
+  <form [formGroup]="addCertificateForm">
+    <div class="user-certificate">
+      <div class="hpanel">
+        <div class="header-top">
+          <div class="col-lg-3 col-md-12">
+            <div class="header-title">
+              <h3><img src="assets/images/badges/badge-form.png"> {{'add_edit_course' | translate}} <span
+                  matTooltip="{{'phi_add_edit_course' | translate}}" class="headTooltip"><i class="material-icons">
+                    help_outline</i></span></h3>
+            </div>
+          </div>
+
+          <div class="col-lg-9 col-md-12">
+            <div class="header-btns">
+              <ul class="badge-btn-list">
+                <li [ngClass]="{ hidden : certificateModel.is_designed }">
+                  <div class="onload-message">
+                    <h4>{{'courseform_info_designer' | translate}}
+                    </h4>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="designer-toggle">
+                    <mat-slide-toggle (change)="onDesignerChecked($event.checked)" formControlName="is_designed"
+                      [(ngModel)]="certificateModel.is_designed">{{'designer' | translate}}</mat-slide-toggle>
+                  </div>
+                </li>
+
+                <li [ngClass]="{ hidden : !certificateID }">
+                  <div class="active-toggle">
+                    <mat-slide-toggle formControlName="is_active" [(ngModel)]="certificateModel.is_active">{{'active' |
+                  translate}}</mat-slide-toggle>
+                  </div>
+                </li>
+
+                <!-- <li>
+                  <div class="active-toggle" (click)="ngxSmartModalService.getModal('zohoPopup').open()">
+                    <a>{{'req_custom_design' | translate}}</a>
+                  </div>
+                </li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="col-lg-5 col-md-12">
+            <div class="course-left">
+              <div class="course-left-sub">
+                <div class="form-group cutom-fields" [ngClass]="{ hidden : !certificateModel.is_designed }">
+                  <input type="text" class="form-control" (keyup)="onDisplayCompName($event.target.value, compDedegree)"
+                    formControlName="company_name" [(ngModel)]="certificateModel.company_name"
+                    placeholder="{{'company_name' | translate}}">
+                  <span matTooltip="{{'info_companyname_field' | translate}}"><i class="material-icons"> help_outline
+                    </i></span>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('company_name') ||
+                    errorMsgArr['company_name'] | translate}}</div>
+                </div>
+
+                <div class="form-group cutom-fields">
+                  <input type="text" class="form-control"
+                    (keyup)="onDisplaybadgeTitle($event.target.value, badgeDedegree)" formControlName="title"
+                    [(ngModel)]="certificateModel.title" placeholder="{{'title' | translate}}">
+                  <span matTooltip="{{'info_companytitle_field' | translate}}"><i class="material-icons"> help_outline
+                    </i></span>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('title') ||
+                    errorMsgArr['title'] | translate}}</div>
+                </div>
+
+                <div class="form-group cutom-fields">
+                  <input type="text" class="form-control" formControlName="identifier"
+                    [(ngModel)]="certificateModel.identifier" placeholder="{{'identifier' | translate}}">
+                  <span matTooltip="{{'info_badge_identifier_field' | translate}}"><i class="material-icons">
+                      help_outline
+                    </i></span>
+                </div>
+
+                <div class="form-group cutom-fields" [ngClass]="{ hidden : !certificateID }">
+                  <input type="text" class="form-control" formControlName="code" [(ngModel)]="certificateModel.code"
+                    placeholder="{{'code' | translate}}" readonly>
+                  <span matTooltip="{{'info_coursecode_field' | translate}}"><i class="material-icons"> help_outline
+                    </i></span>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('code') ||
+                    errorMsgArr['code'] | translate}}</div>
+                </div>
+
+                <div class="certificate-color-picker">
+                  <div [ngClass]="{ hidden : !certificateModel.is_designed }">
+                    <div class="upload-badgeLogo">
+                      <h3>{{'upload_badge_logo' | translate}} <span
+                          matTooltip="{{'info_upload_badge_field' | translate}}" class="upload_badge"><i
+                            class="material-icons"> help_outline
+                          </i></span></h3>
+                      <div class="badgeLogo">
+                        <img
+                          src="{{certificateModel.company_logo ? certificateModel.company_logo : 'assets/images/badges/html/logo.png'}}"
+                          class="">
+                      </div>
+                      <div class="select-file">
+                        <label class="btn btn-primary">{{'select_file' | translate}}
+                          <input type="file" name="file" accept=".jpg, .jpeg, .png" style="display: none"
+                            (change)="onUploadBadgeLogo($event)">
+                        </label>
+                      </div>
+                      <div class="text-danger text-left small" *ngIf="errorMsgArr['company_logo']">{{errorMsgArr['company_logo']
+                        | translate}}</div>
+                    </div>
+
+                    <h3>{{'badge_color_picker' | translate}} <span
+                        matTooltip="{{'info_badge_color_picker' | translate}}" class="upload_badge"><i
+                          class="material-icons"> help_outline
+                        </i></span></h3>
+
+                    <ul class="color-themes">
+                      <li><a (click)="openColorPicker()"><img src="assets/images/colorpicker.gif"></a></li>
+                      <li *ngFor="let colorBadge of schemaOfBadges"><a
+                          (click)="onSelectedBadgeColor(colorBadge.name, 'default')"><img width="80px" height="75px"
+                            src="{{colorBadge.image_path}}"></a></li>
+                    </ul>
+                  </div>
+
+                  <div class="upload-container" [ngClass]="{ hidden : certificateModel.is_designed }">
+                    <div class="btn-container" (click)="uploadImageTrigger()">
+                      <a class="upload-btn" matTooltip="{{'support_only' | translate}} jpeg, jpg, & png">
+                        <span><i class="fa fa-upload" aria-hidden="true"></i></span>
+                        {{'upload' | translate}}
+                        <i class="material-icons"> help_outline </i>
+                      </a>
+                    </div>
+
+                    <div class="center">
+                      <file-drop (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+                        (onFileLeave)="fileLeave($event)">
+                        <div class="upload-content">
+                          <img src="assets/images/upload.png">
+                          <p>{{'drop_file' | translate}}
+                            <span>
+                              <label class="browselink">{{'browse' | translate}}
+                                <input type="file" style="display: none" name="logo" accept=".jpg, .jpeg, .png"
+                                  (change)="changeBadge($event)" id="uploadlogo">
+                              </label>
+                            </span>
+                          </p>
+                        </div>
+                      </file-drop>
+                    </div>
+                    <div class="text-danger text-left small" *ngIf="errorMsg && certificateModel.logo == ''">{{'upload_image'
+                      | translate}}.</div>
+                    <div class="text-danger text-left small" *ngIf="errorMsgArr['logo']">{{errorMsgArr['logo']
+                      | translate}}</div>
+                  </div>
+
+                  <div class="form-group select_dropdown">
+                    <!-- <ng-select formControlName="skills" [(ngModel)]="certificateModel.skills" (input)="searchSkill($event.target.value)" (keypress)="onAvoidComma($event)" placeholder="{{'select' | translate}}
+                {{'skills' | translate}}" [selectOnTab]='true' [items]="skillsData"
+                      [multiple]="true" bindLabel="item" bindValue="item" [addTag]="true">
+                      <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                        {{item.item ? item.item : item}}
+                        <span class="ng-value-icon right" (click)="clear(item); $event.stopPropagation()"
+                          aria-hidden="true">×</span>
+                      </ng-template>
+                      <ng-template ng-option-tmp let-item="item">
+                        {{item.item ? item.item : item}}
+                      </ng-template>
+                    </ng-select> -->
+                    <ng-select formControlName="skills" [(ngModel)]="certificateModel.skills"
+                      (input)="searchSkill($event.target.value)" [selectOnTab]='true' (keypress)="onAvoidComma($event)"
+                      placeholder="{{'select' | translate}}
+                    {{'skills' | translate}}" bindLabel="item" bindValue="item.item ? item.item : item"
+                      [multiple]="true" bindLabel="item" bindValue="item" [addTag]="addNewSkill">
+                      <ng-option *ngFor="let item of skillsData" [value]="item.item ? item.item : item">
+                        {{item.item ? item.item : item}}
+                      </ng-option>
+                    </ng-select>
+                    <span class="icons" matTooltip="{{'info_skills_field' | translate}}"><i class="material-icons">
+                        help_outline
+                      </i></span>
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('skills') ||
+                      errorMsgArr['skills'] | translate}}</div>
+                  </div>
+
+                  <div class="form-group cutom-fields">
+                    <a (click)="ngxSmartModalService.getModal('DescriptionPopup').open()"><input type="text"
+                        class="form-control" placeholder="{{'description' | translate}}"
+                        value="{{removeHtml(certificateModel.description)}}" readonly></a>
+                    <span matTooltip="{{'info_badge_description' | translate}}"><i class="material-icons">
+                        help_outline</i></span>
+                  </div>
+
+                  <div class="form-group cutom-fields">
+                    <a (click)="ngxSmartModalService.getModal('CriteriaPopup').open()"><input type="text"
+                        class="form-control" placeholder="{{'criteria' | translate}}"
+                        value="{{removeHtml(certificateModel.criteria)}}" readonly></a>
+                    <span matTooltip="{{'info_badge_criteria' | translate}}"><i class="material-icons">
+                        help_outline</i></span>
+                  </div>
+
+
+                  <div class="form-group cutom-fields">
+                    <input type="text" class="form-control" [(ngModel)]="certificateModel.collaborate" formControlName="collaborate"
+                      placeholder="{{'collaborate' | translate}}" value="">
+                    <span matTooltip="{{'info_badge_collaborate' | translate}}"><i class="material-icons">
+                        help_outline</i></span>
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('collaborate') ||
+                          errorMsgArr['collaborate'] | translate}}</div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <ul class="uploadImageList">
+                      <li>
+                        <h3>{{'logo_one' | translate}}</h3>
+                      </li>
+                      <li>
+                        <label for="uploadOne" class="uploadImage">
+                          {{'uploadImages' | translate}}
+                          <input type="file" name="logo1" (change)="changeLogo($event, 'collaborate_img_1')" id="uploadOne">
+                        </label>
+                        <span (click)="refreshLogo('collaborate_img_1')" class="sign_clear"><i class="material-icons"> replay</i></span>
+                      </li>
+                      <li>
+                        <span class="upload_badge" matTooltip="{{'upload_image_message' | translate}}"
+                        ><i
+                            class="material-icons"> help_outline</i></span>
+                      </li>
+                    </ul>
+
+                    <div class="uploadImageView">                      
+                      <img
+              src="{{certificateModel.collaborate_img_1 ? certificateModel.collaborate_img_1 : 'assets/images/default-badge.png'}}"
+              class="img-responsive">
+              <div class="text-danger text-left small" *ngIf="errorMsgArr['collaborate_img_1']">{{errorMsgArr['collaborate_img_1']
+                | translate}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <ul class="uploadImageList">
+                      <li>
+                        <h3>{{'logo_two' | translate}}</h3>
+                      </li>
+                      <li>
+                        <label for="uploadTwo" class="uploadImage">
+                          {{'uploadImages' | translate}}
+                          <input type="file" name="logo2" (change)="changeLogo($event, 'collaborate_img_2')" id="uploadTwo" >
+                        </label>
+                        <span class="sign_clear" (click)="refreshLogo('collaborate_img_2')"><i class="material-icons"> replay</i></span>                       
+                      </li>
+                      <li>
+                        <span class="upload_badge" matTooltip="{{'upload_image_message' | translate}}"><i
+                            class="material-icons"> help_outline</i></span>
+                      </li>
+                    </ul>
+
+                    <div class="uploadImageView">
+                      <img
+              src="{{certificateModel.collaborate_img_2 ? certificateModel.collaborate_img_2 : 'assets/images/default-badge.png'}}"
+              class="img-responsive">
+              <div class="text-danger text-left small" *ngIf="errorMsgArr['collaborate_img_2']">{{errorMsgArr['collaborate_img_2']
+                | translate}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group cutom-fields">
+                    <input type="text" class="form-control" [(ngModel)]="certificateModel.others_collaborate" formControlName="others_collaborate"
+                      placeholder="{{'others_collaborators' | translate}}" value="">
+                    <span matTooltip="{{'info_badge_others_collaborators' | translate}}"><i class="material-icons">
+                        help_outline</i></span>
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('others_collaborate') ||
+                          errorMsgArr['others_collaborate'] | translate}}</div>
+                  </div>
+
+                  <div class="form-group cutom-fields">
+                    <input type="text" [(ngModel)]="certificateModel.cert_type" formControlName="cert_type" class="form-control"
+                      placeholder="{{'tipo' | translate}}" value="">
+                    <span matTooltip="{{'info_badge_tipo' | translate}}"><i class="material-icons">
+                        help_outline</i></span>
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('cert_type') ||
+                          errorMsgArr['cert_type'] | translate}}</div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-7 col-md-12">
+            <div class="course-right">
+              <div class="badge-list-container" [ngClass]="{ hidden : !certificateModel.is_designed }">
+                <ul id="badgeListLayout" class="badge-list">
+                  <li *ngFor="let badgeThumb of resBadgeImages;let i = index">
+                    <a class="findFirstBadge" id="{{badgeThumb.template_number}}"
+                      (click)="onSelectedBadge(badgeThumb.template_number)"><img width="80px" height="75px"
+                        src="{{badgeThumb.thumb_image}}"></a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="course-image-block">
+                <div id="dynBadgeTemplate" class="badge-templates">
+                </div>
+                <img *ngIf="badgeTemplate === ''"
+                  src="{{certificateModel.logo ? certificateModel.logo : 'assets/images/default-badge.png'}}"
+                  class="img-responsive">
+              </div>
+
+              <mat-spinner *ngIf="process"></mat-spinner>
+              <div *ngIf="!process" class="bottom-btnContainer">
+                <ul class="bottom-btn-list">
+                  <li>
+                    <div class="btn-container savebtnContainer">
+                      <a (click)="submitForm(certificateModel, false)"
+                        class="save-btn">{{'save_button' | translate}}</a>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div class="btn-container cancelbtnContainer">
+                      <a id="back_to_courses" routerLink="/usercourse"
+                        class="cancel-btn">{{'color_pic_cancel' | translate}}</a>
+                    </div>
+                  </li>
+
+                  <li
+                    *ngIf="( testMode && certificateModel.is_active && apiService.pages.issue_certificate ) || ( apiService.matrixData.remaining_wallet >= 1 && certificateModel.is_active && apiService.pages.issue_certificate ) ">
+                    <div class="btn-container publishbtnContainer">
+                      <a (click)="submitForm(certificateModel, true)" class="publish-btn">{{'publish' | translate}}</a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <ngx-smart-modal #DescriptionPopup identifier="DescriptionPopup" class="DescriptionPopup" [closable]='false'
+      [escapable]='false' [dismissable]='false'>
+      <h4>{{'description' | translate}} </h4>
+      <div class="angular-editor">
+        <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" [style]="{height: '100px'}"
+          [formControl]="addCertificateForm.controls['description']" [(ngModel)]="certificateModel.description">
+        </angular-editor>
+      </div>
+
+      <div class="col-sm-12">
+        <button type="button" (click)="ngxSmartModalService.getModal('DescriptionPopup').close()" mat-button
+          class="btn btn-form-save">{{'ok'
+          | translate}}</button>
+      </div>
+    </ngx-smart-modal>
+
+    <ngx-smart-modal #CriteriaPopup identifier="CriteriaPopup" class="CriteriaPopup" [closable]='false'
+      [escapable]='false' [dismissable]='false'>
+      <h4>{{'criteria' | translate}} </h4>
+      <div class="angular-editor">
+        <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" [style]="{height: '100px'}"
+          [formControl]="addCertificateForm.controls['criteria']" [(ngModel)]="certificateModel.criteria">
+        </angular-editor>
+      </div>
+
+      <div class="col-sm-12">
+        <button type="button" (click)="ngxSmartModalService.getModal('CriteriaPopup').close()" mat-button
+          class="btn btn-form-save">{{'ok'
+          | translate}}</button>
+      </div>
+    </ngx-smart-modal>
+
+    <ngx-smart-modal #zohoPopup identifier="zohoPopup" class="zohoPopup">
+      <app-zohopopupembaed></app-zohopopupembaed>
+    </ngx-smart-modal>
+
+    <ngx-smart-modal #colorPickPopup identifier="colorPickPopup" [closable]='false' [escapable]='false'
+      [dismissable]='false'>
+      <div>
+        <div class="row" style="height: 320px">
+          <div class="col-md-12">
+            <span [style.background]="arrayColors[selectedColor]" [cpToggle]="true" [cpDialogDisplay]="'inline'"
+              (colorPickerChange)="onChangeColor($event)" [cpOutputFormat]="'rgba'" [cpAlphaChannel]="'disabled'"
+              [cpCancelButtonClass]="'btn btn-primary btn-xs'" [cpDisableInput]="true"
+              [(colorPicker)]="arrayColors[selectedColor]"></span>
+          </div>
+
+          <div class="col-md-12 multi-color">
+            <div *ngIf="arrayColors['clr1']" class="color-box" (colorPickerChange)="onChangeColor($event)"
+              [style.background]="arrayColors['clr1']" (click)="selectedColor='clr1'"></div>
+            <div *ngIf="arrayColors['clr2']" class="color-box" (colorPickerChange)="onChangeColor($event)"
+              [style.background]="arrayColors['clr2']" (click)="selectedColor='clr2'"></div>
+            <div *ngIf="arrayColors['clr3']" class="color-box" (colorPickerChange)="onChangeColor($event)"
+              [style.background]="arrayColors['clr3']" (click)="selectedColor='clr3'"></div>
+            <div *ngIf="arrayColors['clr4']" class="color-box" (colorPickerChange)="onChangeColor($event)"
+              [style.background]="arrayColors['clr4']" (click)="selectedColor='clr4'"></div>
+          </div>
+        </div>
+        <div class="form-group color-picker-btn">
+          <button *ngIf="imageCreateProcess" class="btn btn-primary">{{'processing' | translate}}...</button>
+          <button *ngIf="!imageCreateProcess" type="button" mat-button class="password-submit" style="margin-right:10px"
+            (click)="onColorPickImgCreate()">{{'submit' | translate}}</button>
+          <button *ngIf="!imageCreateProcess" mat-button class="password-submit" (click)="colorPickPopup.close()">{{'color_pic_cancel'
+            | translate}}</button>
+        </div>
+      </div>
+    </ngx-smart-modal>
+  </form>
+  <app-commonplanalert></app-commonplanalert>
+</section>

@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>{{'post_confirmation' | translate}}</h1>
+<mat-dialog-content>
+  <div>
+      <h4>{{ totalAmount }} {{'info_about_post_confirmation' | translate}}</h4>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button class="post_btn" [mat-dialog-close]="1">yes</button>
+    <button mat-button class="post_btn" [mat-dialog-close]="2">no</button>
+</mat-dialog-actions>

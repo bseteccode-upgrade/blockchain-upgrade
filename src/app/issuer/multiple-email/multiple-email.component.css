@@ -1,0 +1,14 @@
+.multiple-emails { position: relative; width:100%; }
+.multiple-emails h3 { font-size: 16px; border-bottom: 1px solid #e3e3e3; padding-bottom: 10px; }
+.multiple-email-header { position: relative; width:100%;  display: inline-block; }
+ul.email-list { width:1000px; overflow: auto; position: relative; }
+ul.email-list li { display: inline-block; }
+:host /deep/ .mat-form-field-appearance-outline .mat-form-field-infix { padding: 0em 0 0em 0; border-top:0.2em solid transparent; }
+:host /deep/ .start_wrapper .table > tbody > tr > td {text-align: left; border-bottom: 1px solid #e3e3e3; }
+:host /deep/ .start_wrapper .table > tbody > tr > td:first-child { min-width:400px;}
+:host /deep/ .start_wrapper .table > tbody > tr > td p.primary { font-weight: bold; color:rgb(45, 46, 46); text-transform: capitalize; }
+:host /deep/ .start_wrapper .table > tbody > tr > td a.make-primary { color:rgb(4, 75, 167); text-transform: capitalize; }
+:host /deep/ .start_wrapper .table > tbody > tr > td a.remove { color:#f20; text-transform: capitalize; }
+:host /deep/ .text-danger.text-left.small { bottom:0px; }
+.material-icons.green {color: #21d652;}
+.material-icons.red {color: #ff5d44;}

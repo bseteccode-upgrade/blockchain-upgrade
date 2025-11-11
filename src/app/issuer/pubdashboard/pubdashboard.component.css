@@ -1,0 +1,20 @@
+section.start_wrapper.change-pwd{width:100%;display:inline-block}
+:host{display: block;}
+/* .total-left{width:100%;text-align:center} */
+.no_record { width:100%;display: inline-block; text-align:center;}
+.no_record h2 { font-size:16px; color:#1e232b;margin: 20px 0; }
+:host /deep/ .start_wrapper .panel-heading .pull-right button { background-color: transparent; padding:0 0;box-shadow:none;}
+:host /deep/ .start_wrapper .panel-heading .pull-right button span { color:#1e232b;}
+.total-count-block h4{font-size:15px}
+.total-count-block h3{font-size:48px}
+.total-student{background-color:#d79800;padding:15px 15px 0 15px}
+.total-addnew{background-color:#7c17fa;padding:15px 15px 0 15px}
+.total-certificate{background-color:#e20404;padding:15px 15px 0 15px}
+.total-achievement{background-color:#1792fa;padding:15px 15px 0 15px}
+
+
+.total-student.share{background-color:#ff6384}
+.total-addnew.download{background-color:#36a2eb}
+.total-certificate.login{background-color:#ffce56}
+.total-achievement.review{background-color:#c1c1c1}
+.total-right i{font-size:48px;color:#ffffff}

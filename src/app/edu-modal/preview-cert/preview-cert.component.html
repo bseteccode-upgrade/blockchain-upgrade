@@ -1,0 +1,238 @@
+<div>
+  <div class="detailedBlock">
+    
+    <a class="arrowClose" (click)="onCancel()"><span class="material-icons">
+      close
+    </span></a>
+    
+    <ul class="detailedList">
+      <li>
+        <div class="detailed-center">
+          <div class="detailedBox">
+            <div class="detailedHead">
+              <div class="pull-left">
+                <h3><img src="assets/images/verified.png" />{{'certificate' | translate}}</h3>
+              </div>
+
+              <div class="pull-right">
+
+              </div>
+            </div>
+            <div class="detailedCertificate">
+              <img src="{{badgeDetail.logo}}" />
+            </div>
+          </div>
+
+          <div class="detailedBox" *ngIf="badgeDetail.skills && badgeDetail.skills.length != 0">
+            <div class="detailedHead">
+              <div class="pull-left">
+                <h3>{{'skills' | translate}}</h3>
+              </div>
+
+              <div class="pull-right">
+              </div>
+            </div>
+
+
+            <div class="content-block">
+              <span *ngFor="let skill of badgeDetail.skills">{{skill | translate}}</span>
+            </div>
+          </div>
+
+          <div class="detailedBox" *ngIf="badgeDetail.description">
+            <div class="detailedHead">
+              <div class="pull-left">
+                <h3>{{'description' | translate}}</h3>
+              </div>
+
+              <div class="pull-right">
+              </div>
+            </div>
+
+
+            <div class="">
+              <p [innerHtml]="convertStyle(badgeDetail.description)"></p>
+            </div>
+          </div>
+
+
+
+          <div class="detailedBox" *ngIf="badgeDetail.criteria">
+            <div class="detailedHead">
+              <div class="pull-left">
+                <h3>{{'criteria' | translate}}</h3>
+              </div>
+
+              <div class="pull-right">
+              </div>
+            </div>
+
+
+            <div class="">
+              <p [innerHtml]="convertStyle(badgeDetail.criteria)"></p>
+            </div>
+          </div>
+
+          <div class="detailedBox" *ngIf="badgeDetail.testimonial">
+            <div class="detailedHead">
+              <div class="pull-left">
+                <h3>{{'testimonial' | translate}}</h3>
+              </div>
+
+              <div class="pull-right">
+              </div>
+            </div>
+
+
+            <div class="">
+              <p [innerHtml]="convertStyle(badgeDetail.testimonial)"></p>
+            </div>
+          </div>
+
+
+        </div>
+      </li>
+      <li>
+        <div class="detailed-right">
+          <div class="pull-right">
+            <!-- <button mat-button class="exitBtn"><img src="assets/images/exit.png"/> Exit</button> -->
+          </div>
+
+
+          <div class="detailedInfo">
+            <div class="detailedProfile">
+              <img [src]="(badgeDetail.student_image)? badgeDetail.student_image : 'assets/images/avatar.jpeg'">
+              <img src="assets/images/verified.png" class="verified">
+              <a href="javascript:;" class="emailMessage"><img src="assets/images/black-mail.png"></a>
+            </div>
+            <div class="detailedProfileDetails">
+              <h4 class="uppercase">{{'first_name' | translate}}</h4>
+              <p class="uppercase">{{'last_name' | translate}}</p>
+            </div>
+
+            <div class="detailedLabel">
+              <ul class="firstLabel">
+                <li>
+                  <img
+                    [src]="(badgeDetail.university_logo)? badgeDetail.university_logo : 'assets/images/Univer-logo.png'">
+                </li>
+                <li>
+                  <p class="uppercase"><label>{{'organization' | translate}}</label> <a href="javascript:;"><img
+                        src="assets/images/black-mail.png"></a>
+                    <span><img src="assets/images/verified.png"></span></p>
+                </li>
+              </ul>
+            </div>
+
+            <div class="detailedLabel">
+              <ul>
+                <li>
+                  <img src="assets/images/hyperledger.png">
+                </li>
+                <li>
+                  <p class="uppercase">blockchain</p>
+                </li>
+              </ul>
+            </div>
+
+            <div class="detailedLabelEvidence">
+              <a>{{'view_evidence' | translate}}</a>
+            </div>
+
+
+            <div class="detailedDates">
+              <h4 class="uppercase">{{'issue_date' | translate}}</h4>
+              <p>xxxx/xx/xx</p>
+            </div>
+
+            <div class="detailedDates">
+              <h4 class="uppercase">{{'expire_date' | translate}}</h4>
+              <p>xxxx/xx/xx</p>
+            </div>
+
+            <div class="detailedDates">
+              <h4 class="uppercase">{{'start_date' | translate}}</h4>
+              <p>xxxx/xx/xx</p>
+            </div>
+
+            <div class="detailedDates">
+              <h4 class="uppercase">{{'end_date' | translate}}</h4>
+              <p>xxxx/xx/xx</p>
+            </div>
+
+
+            <div>
+              <div class="detailedSharing">
+                <div class="pull-left">
+                  <p>{{'sharing' | translate}}</p>
+                </div>
+              </div>
+
+              <ul class="detailedSharingList">
+                <li>
+                  <img src="assets/images/facebook.png">
+                </li>
+                <li>
+                  <img src="assets/images/twitter.png">
+                </li>
+                <li>
+                  <img src="assets/images/linkedin.png">
+                </li>
+                <li>
+                  <img src="assets/images/whatsapp.png">
+                </li>
+              </ul>
+
+
+
+              <div class="detailedDoc">
+                <ul>
+                  <li><img src="assets/images/mail.png"></li>
+                  <li>
+                    <h5>{{'email_credential' | translate}}</h5>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detailedDoc">
+                <ul>
+                  <li><img src="assets/images/pdf-red.png"></li>
+                  <li>
+                    <h5>{{'download_pdf' | translate}}</h5>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detailedDoc">
+                <ul>
+                  <li><img src="assets/images/green-image.png"> </li>
+                  <li>
+                    <a>
+                      <h5>{{'download_badge' | translate}}</h5>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detailedDoc">
+                <ul>
+                  <li><img src="assets/images/code-file.png"></li>
+                  <li>
+                    <h5>{{'embed_credential' | translate}}</h5>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+
+            <div class="blockchainedCerttun">
+              <a>{{'blockchained_by' | translate}} {{appName}}</a>
+            </div>
+
+          </div>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</div>

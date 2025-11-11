@@ -1,0 +1,125 @@
+<section class="start_wrapper download-data">
+  <div class="hpanel">
+
+
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'download_activities' | translate}}</h3>
+      </div>
+      <div class="pull-right">
+      </div>
+    </div>
+
+    <div class="panel-heading clearfix filter-search-box">
+      <fieldset class="scheduler-border">
+        <form [formGroup]="searchForm" (ngSubmit)="submitSearchForm(searchForm.value)">
+
+          <ul class="filter">
+            <li>
+              <div class="form-group">
+                <mat-form-field class="angular-datepicker field-datepicker">
+                  <input matInput placeholder="{{'start_date' | translate}}" [readonly]="true"
+                    (dateChange)="changeDateEvent($event, 'start_date')" [matDatepicker]="fromdate"
+                    formControlName="start_date" id="start_date" (click)="fromdate.open()">
+                  <mat-datepicker-toggle matSuffix [for]="fromdate"></mat-datepicker-toggle>
+                  <mat-datepicker #fromdate></mat-datepicker>
+                </mat-form-field>
+                <div class="refresh-icon" (click)="refreshFromDate()">
+                  <mat-icon>refresh</mat-icon>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <div class="form-group">
+                <mat-form-field class="angular-datepicker field-datepicker">
+                  <input matInput placeholder="{{'to_date' | translate}}" [matDatepicker]="todate" [readonly]="true"
+                    (dateChange)="changeDateEvent($event, 'end_date')" formControlName="end_date" id="end_date"
+                    min={{minendDate}} (click)="todate.open()">
+                  <mat-datepicker-toggle matSuffix [for]="todate"></mat-datepicker-toggle>
+                  <mat-datepicker #todate></mat-datepicker>
+                </mat-form-field>
+                <div class="refresh-icon" (click)="refreshToDate()">
+                  <mat-icon>refresh</mat-icon>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="form-group">
+                <div class="activity">
+                  <ul class="button-list">
+                    <li><button type="submit" class="filter-btn search" mat-button>{{'search' | translate}}</button>
+                    </li>
+
+                    <li><button type="reset" [disabled]="process" class="filter-btn reset" mat-button
+                        (click)="searchForm.reset();resetForm()">{{'reset' | translate}}</button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </form>
+      </fieldset>
+    </div>
+
+    <div class="panel-body standter">
+      <div *ngIf="process" class="progress_animation">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="!process && downloadDataList.length === 0">
+        <div class="alert alert-info no-records">
+          {{'no_records_found' | translate}}
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="downloadDataList.length !== 0">
+
+        <div class="search-results-stud scroll-window" slimScroll (scrollChanged)="scrollChanged($event)"
+          [options]="options" infiniteScroll [infiniteScrollDistance]="scrollDistance"
+          [infiniteScrollThrottle]="throttle" [scrollWindow]="false" (scrolled)="onScrollDown(searchForm.value)">
+
+
+          <div class="col-md-6 col-sm-6 col-xs-12" *ngFor="let downloadData of downloadDataList">
+            <div class="download-block">
+              <ul class="download-sub">
+                <li>
+                  <img src="assets/images/hyperledger.png" class="img-responsive">
+                  <h5>HyperLedger</h5>
+                  <img src="assets/images/blockchain/blkimg_{{downloadData.blockchain_type}}.png" class="img-responsive">
+                  <h5>{{blockchainName(downloadData.blockchain_type)}}</h5>
+                </li>
+                <li>
+                  <p *ngIf="apiService.userType !== '9'"><span>Name:</span> {{downloadData.user_name}}</p>
+                  <p><span>Daily transactions made in:</span> Hyperledger</p>
+                  <p><span>Double registery made in:</span> {{blockchainName(downloadData.blockchain_type)}}</p>
+                  <p><span>{{'date' | translate}}:</span> {{downloadData.export_date}}</p>
+                  <p *ngIf="downloadData.transaction"><span>{{'transaction_id' | translate}} ({{blockchainName(downloadData.blockchain_type)}}):</span><br>{{downloadData.transaction}}</p>
+
+                  <p>
+                    <a *ngIf="downloadData.evidence" href="{{downloadData.evidence}}" target="_blank">{{'transaction_link' | translate}} <i
+                        class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    <a *ngIf="apiService.userType !== '3' && apiService.userType !== '0' && apiService.pages.download"
+                      mat-button class="download-link" href="{{downloadData.ipfs_url && downloadData.ipfs_url != '' ? downloadData.ipfs_url : downloadData.pdfurl}}"
+                      target="_blank">{{'download_pdf' | translate}}</a>
+                    <a *ngIf="apiService.userType === '3' || apiService.userType === '0'" mat-button
+                      class="download-link" href="{{downloadData.ipfs_url && downloadData.ipfs_url != '' ? downloadData.ipfs_url : downloadData.pdfurl}}"
+                      target="_blank">{{'download_pdf' | translate}}</a>
+                  </p>
+
+                </li>
+              </ul>
+            </div>
+          </div>
+
+
+
+
+        </div>
+
+      </div>
+    </div>
+
+
+
+  </div>
+</section>

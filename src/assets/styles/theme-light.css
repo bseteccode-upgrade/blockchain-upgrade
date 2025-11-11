@@ -1,0 +1,43 @@
+/* $nav-background-color:#fff;
+$nav-border-color:#373d47;
+$nav-text-color:#262d37;
+$nav-hover-color:#1e232b; */
+
+/* $header-background-color:#fff;
+$header-border-color:#262d37;
+$header-text-color:#262d37; */
+
+ /* Header Start */
+#header.main_header_substream { background-color:#f3f4f5; border-bottom: 1px solid #e0e0e0; }
+.theme-palette .material-icons { color:#262d37; }
+
+.logodash h1 a span.vottun-image { background-image: url('../images/logo-blue.png');background-size: 100% 100%; background-repeat: no-repeat;}
+ /* Header End */
+
+
+ /* Side Navigation Start */
+.menuslides #side-menu {background:#f3f4f5;}
+.sidebar-scroll #menu.menuslides { background-color:#f3f4f5; }
+.menuslides #side-menu li a { color: #262d37; }
+.main_header_substream #logo.light-version span { color: #262d37;}
+.main_header_substream #logo.light-version {width:237px; background-color:#f3f4f5; border-bottom:1px solid #e0e0e0; height: 82px; padding: 23px 10px 23px 41px; text-align: center;}
+.menuslides #side-menu.nav > li > a:hover, .menuslides #side-menu.nav > li > a:focus {background-color:#d2d4d8; color:#1e232b;}
+.menu-active { background-color:#d2d4d8; color:#1e232b;}
+.menuslides #side-menu li:first-child {border-top: 1px solid #e0e0e0;}
+.menuslides #side-menu li {border-bottom: 1px solid #e0e0e0;}
+.main_header_substream .header-link {height:82px;background: #f3f4f5; border-left: 0px solid #e0e0e0; border-right: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; color: #262d37; cursor: pointer; float: left; font-size: 17px; margin-right: 15px; padding:28px 17px 28px 16px;}
+.menuslides p { color: #1e232b; }
+ul.wallet-list li { color: #1e232b; }
+.scroll-window { border-right:1px solid #e0e0e0; }
+ /* Side Navigation End */
+
+ .dash-header { background-color:#f3f4f5; }
+
+ .dash-header .mat-select-trigger{ background-color: #e3e3e3;}
+ .total-section{background-color:#e3e3e3; border-top:5px solid #262d37;}
+ ul.total-count li h3 {color:#262d37; }
+ .total-count .fa { color:#262d37; font-size:40px;}
+ .dash-header .mat-select-value { color:#262d37;}
+ .dash-header .mat-select-arrow { color:#262d37;}
+
+ .year_block span.mat-select-placeholder { color:#262d37; }

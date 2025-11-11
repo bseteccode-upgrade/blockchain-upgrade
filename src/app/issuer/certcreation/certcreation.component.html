@@ -1,0 +1,523 @@
+<ngx-smart-modal #zohoPopup identifier="zohoPopup" class="zohoPopup">
+  <app-zohopopupembaed></app-zohopopupembaed>
+</ngx-smart-modal>
+
+<section class="start_wrapper certificate-add-form">
+  <div class="user-certificate hpanel">
+    <div class="panel-body">
+      <div class="">
+        <div class="add-student-form">
+          <mat-horizontal-stepper class="form-horizontal" linear #stepper>
+            <mat-step [stepControl]="firstFormGroup">
+              <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>
+                  <span class="arrow">
+                    <i class="fa fa-check"></i>
+                  </span>
+                  <span class="not-arrow"></span>
+                  <p>{{'step' | translate}} 1</p>
+                </ng-template>
+
+                <ngx-smart-modal #DescriptionPopup identifier="DescriptionPopup"
+                  class="DescriptionPopup certificate-popup" [closable]='false' [escapable]='false'
+                  [dismissable]='false'>
+                  <h4>{{'description' | translate}} </h4>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <quill-editor [style]="{height: '100px'}" [formControl]="firstFormGroup.controls['description']"
+                        [(ngModel)]="certificateModel.description"></quill-editor>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <button type="button" (click)="ngxSmartModalService.getModal('DescriptionPopup').close()" mat-button
+                      class="btn btn-form-save">{{'ok' | translate}}</button>
+                  </div>
+                </ngx-smart-modal>
+
+                <ngx-smart-modal #CriteriaPopup identifier="CriteriaPopup" class="CriteriaPopup certificate-popup"
+                  [closable]='false' [escapable]='false' [dismissable]='false'>
+                  <h4>{{'criteria' | translate}} </h4>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <quill-editor [style]="{height: '100px'}" [formControl]="firstFormGroup.controls['criteria']"
+                        [(ngModel)]="certificateModel.criteria"></quill-editor>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <button type="button" (click)="ngxSmartModalService.getModal('CriteriaPopup').close()" mat-button
+                      class="btn btn-form-save">{{'ok' | translate}}</button>
+                  </div>
+                </ngx-smart-modal>
+
+                <div class="hpanel">
+                  <div class="header-top">
+                    <div class="pull-left">
+                      <div class="header-title">
+                        <h3><img src="assets/images/certificates/certificate-image.png" style="width:50px;"> {{'add_edit_certificate' |
+                          translate}} <span matTooltip="{{'phi_add_cert' |
+                          translate}}" class="headTooltip"><i class="material-icons">
+                              help_outline</i></span></h3>
+                      </div>
+                    </div>
+                    <div class="pull-right">
+                      <div class="header-btns">
+                        <div class="designer-toggle" [ngClass]="{ hidden : certificateID }">
+                          <mat-slide-toggle id="editIsActive" formControlName="selectImageOption"
+                            (change)="onTemplateChange($event)" [(ngModel)]="certificateModel.selectImageOption">
+                            {{'templates' | translate}}</mat-slide-toggle>
+                        </div>
+
+                        <div [ngClass]="{ hidden : !certificateID }" class="active-toggle">
+                          <mat-slide-toggle id="editIsActive" formControlName="is_active"
+                            [(ngModel)]="certificateModel.is_active">{{'active'
+                              | translate}}</mat-slide-toggle>
+                        </div>
+
+                        <!-- <div class="active-toggle" (click)="ngxSmartModalService.getModal('zohoPopup').open()">
+                          <a>{{'req_custom_design' | translate}}</a>
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel-body">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-12 cert-col">
+                      <div class="course-left">
+                        <div class="course-left-sub">
+
+
+                          <div class="certificate-add">
+                            <h3>{{'draw_cert' | translate}}</h3>
+                            <button mat-button (click)="addSingleRow()"
+                              class="add-custom">{{'add_single_row' | translate}}</button>
+                            <button mat-button (click)="addColumnRow()"
+                              class="add-custom">{{'add_two_column' | translate}} </button>
+                          </div>
+                          <div class="form-group custom-fields">
+                            <input type="text" class="form-control" (keyup)="onDisplayCompTitle($event.target.value)"
+                              formControlName="title" [(ngModel)]="certificateModel.title"
+                              placeholder="{{'certificate_name' | translate}}">
+                            <span matTooltip="{{'info_cert_title' | translate}}"><i class="material-icons">
+                                help_outline </i></span>
+                            <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('title') ||
+                              errorMsgArr['title'] | translate}}</div>
+                          </div>
+
+                          <div class="form-group custom-fields">
+                            <input type="text" class="form-control"
+                              formControlName="identifier" [(ngModel)]="certificateModel.identifier"
+                              placeholder="{{'identifier' | translate}}">
+                            <span matTooltip="{{'info_about_identifier_field' | translate}}"><i class="material-icons">
+                                help_outline </i></span>
+                          </div>
+
+                          <div class="form-group custom-fields" [ngClass]="{ hidden : !certificateID }">
+                            <input type="text" class="form-control" id="code" formControlName="code"
+                              [(ngModel)]="certificateModel.code" placeholder="{{'code' | translate}}" readonly>
+                            <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('code') ||
+                              errorMsgArr['code'] | translate}}</div>
+                          </div>
+
+                          <div class="certificate-add">
+                            <h3>{{'color_picker' | translate}} <span
+                                matTooltip="{{'info_badge_color_picker' | translate}}" class="upload_badge"><i
+                                  class="material-icons"> help_outline
+                                </i></span></h3>
+
+                            <ul class="color-themes">
+                              <li><a (click)="openColorPicker()"><img src="assets/images/colorpicker.gif"></a></li>
+                            </ul>
+                          </div>
+
+
+                          <div class="certificate-color-picker">
+                            <div class="btn-container" [ngClass]="{ hidden : !optionLogodisplay }">
+                              <div class="upload-badgeLogo">
+
+                                <div class="uploadTitle">
+                                  <div class="pull-left">
+                                    <h3>{{'upload_optional_logo' | translate}} <span
+                                        matTooltip="{{'info_cert_upload_optional' | translate}}" class="upload_badge"><i
+                                          class="material-icons"> help_outline
+                                        </i></span></h3>
+                                  </div>
+
+                                  <div class="pull-right">
+                                    <div class="toggle-container">
+                                      <mat-slide-toggle id="toggleUploadOptImage"
+                                        matTooltip="{{secondaryStatus ? 'disable' : 'enable' | translate}}"
+                                        [checked]="secondaryStatus" (change)="toggleUploadImage($event.checked)">
+                                      </mat-slide-toggle>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div [ngClass]="{ hidden : !secondaryStatus }">
+                                  <div class="upload_logo">
+                                    <ul class="badgelogoList">
+                                      <li>
+                                        <div class="badgeLogo">
+                                          <img
+                                            src="{{secondaryStatus === false ? 'assets/images/badges/html/noimage.png' : certificateModel.company_logo && certificateModel.company_logo !== 'badge_logo.png'  ? certificateModel.company_logo : 'assets/images/badges/html/logo.png'}}">
+                                        </div>
+                                      </li>
+                                    </ul>
+
+
+                                    <div class="btn-select">
+                                      <div class="select-file">
+                                        <label class="btn btn-primary">{{'select_file' | translate}}
+                                          <input type="file" name="file" accept=".jpg, .jpeg, .png"
+                                            style="display: none" (change)="onUploadCompLogo($event)">
+                                        </label>
+                                      </div>
+
+                                      <div class="text-danger text-left small" *ngIf="errorMsgArr['company_logo']">{{errorMsgArr['company_logo']
+                                      | translate}}</div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+
+                            <div class="form-group custom-fields">
+                              <a (click)="ngxSmartModalService.getModal('DescriptionPopup').open()"><input type="text"
+                                  class="form-control" placeholder="{{'description' | translate}}"
+                                  value="{{removeHtml(certificateModel.description)}}" readonly></a>
+                              <span matTooltip="{{'info_cert_desp' | translate}}"><i class="material-icons">
+                                  help_outline</i></span>
+                            </div>
+
+                            <div class="form-group custom-fields">
+                              <a (click)="ngxSmartModalService.getModal('CriteriaPopup').open()"><input type="text"
+                                  class="form-control" placeholder="{{'criteria' | translate}}"
+                                  value="{{removeHtml(certificateModel.criteria)}}" readonly></a>
+                              <span matTooltip="{{'info_cert_critria' | translate}}"><i class="material-icons">
+                                  help_outline</i></span>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-8 col-md-12 cert-col">
+                      <div class="course-right">
+                        <div class="custom-container">
+                          <div class="course-image-block">
+                            <div class="certificate-block">
+                              <div class="certificate-sub-block">
+                                <div class="container-dragdrop" dragula="dragContainerCertCus" #dynamiccontent
+                                  id="dynamiccontent" style="margin-bottom:25px">
+                                </div>
+                                <div class="placeholderAddContent">
+                                  <i class="material-icons"> queue </i>
+                                  <h3>{{'add_content_here' | translate}}</h3>
+                                </div>
+
+                                <footer
+                                  style="width: 100%;right:15px;text-align:right;display: inline-block;padding:10px;">
+                                  <a [href]="siteName" target="_blank">{{'blockchained_by' | translate}} {{appName}}</a>
+                                </footer>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="alert alert-danger" *ngIf="errorMsg"> {{'valid_inputs' | translate}} </div>
+                        <div class="bottom-btnContainer">
+                          <div class="btn-container publishbtnContainer">
+                            <button *ngIf="process" class="btn btn-primary">{{'processing' |
+                                    translate}}...</button>
+
+                            <button *ngIf="!process" mat-button id="back_to_courses" routerLink="/usercertificate"
+                              class="green cancel-btn">{{'color_pic_cancel'
+                                  | translate}}</button>
+
+                            <button *ngIf="!process" type="submit" mat-button class="btn btn-form-save"
+                              (click)="submitted = firstFormGroup.invalid; submitForm(certificateModel, false)">{{'save_button'
+                              | translate}}</button>
+
+                            <button
+                              *ngIf="!process && apiService.matrixData.remaining_wallet >= 10 && certificateModel.is_active && apiService.pages.issue_certificate"
+                              type="submit" mat-button class="btn publish blue mat-button"
+                              (click)="submitted = firstFormGroup.invalid; submitForm(certificateModel, true)">{{'publish'
+                                | translate}}</button>
+
+                            <button *ngIf="!emptyCourse && !process" type="submit" class="publish-btn" mat-button
+                              matStepperNext class="step-next" (click)="submitted = firstFormGroup.invalid">
+                              <span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span> {{'next' |
+                                translate}}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+
+            <mat-step [stepControl]="secondFormGroup">
+              <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>
+                  <span class="arrow">
+                    <i class="fa fa-check"></i>
+                  </span>
+                  <span class="not-arrow"></span>
+                  <p>{{'step' | translate}} 2</p>
+                </ng-template>
+                <div class="hpanel">
+                  <div class="header-top">
+                    <div class="pull-left">
+                      <div class="header-title">
+                        <h3><img src="assets/images/certificates/certificate-image.png" style="width:50px;"> {{'add_edit_certificate' |
+                          translate}}</h3>
+                      </div>
+                    </div>
+                    <div class="pull-right">
+                      <div class="header-btns-info">
+                        <div class="onload-message">
+                          <h4>{{'info_about_badge_select' | translate}}</h4>
+                        </div>
+                        <span><i class="material-icons">help_outline </i></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-12" *ngIf="certificateModel.is_certificate">
+                  <div class="form-group">
+                    <label class="control-label" for="status">
+                      <h4>{{'courses' | translate}}</h4>
+                    </label>
+                    <div *ngIf="!emptyCourse;else norecord">
+                      <div *ngFor="let course of courseslists">
+                        <div *ngIf="selectedCourseArr?.indexOf(course.id) !== -1;else unchecked">
+                          <div class="col-md-3 col-sm-12">
+                            <div class="eng_group">
+                              <div class="blockchain-main">
+                                <mat-checkbox [ngModel]="true" formControlName="courses"
+                                  (change)="onChangeCourse(course.id, $event.checked)">
+                                  <div class="badge-certificate-section">
+                                    <div class="blockchain-details">
+                                      <img src="{{course.logo}}" class="img-responsive">
+                                      <div class="block-left">
+                                        <h4>{{course.title}}</h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <ng-template #unchecked>
+                          <div class="col-md-3 col-sm-12">
+                            <div class="eng_group">
+                              <div class="blockchain-main">
+                                <mat-checkbox (change)="onChangeCourse(course.id, $event.checked)">
+                                  <div class="badge-certificate-section">
+                                    <div class="blockchain-details">
+                                      <img src="{{course.logo}}" class="img-responsive">
+                                      <div class="block-left">
+                                        <h4>{{course.title}}</h4>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </mat-checkbox>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </div>
+                    </div>
+                    <ng-template #norecord>
+                      <div class="col-sm-12">
+                        <div class="alert alert-info">
+                          {{'no_records_found' | translate}}
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+                <div class="col-sm-12" *ngIf="viewAutomatic">
+                  <div class="form-group">
+                    <label class="control-label" for="status">{{'related_certificate_issue' | translate}}</label>
+                    <div class="">
+                      <mat-radio-group formControlName="automatic" [(ngModel)]="certificateModel.automatic">
+                        <mat-radio-button class="example-radio-button"
+                          *ngFor="let relatedstatuslist of relatedstatuslists" [value]="relatedstatuslist.value">
+                          {{relatedstatuslist.text | translate}}
+                        </mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-12">
+                  <div class="alert alert-danger" *ngIf="errorMsg">
+                    {{errorMsg | translate}}
+                  </div>
+                  <br>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <button *ngIf="process" class="btn btn-primary">{{'processing' | translate}}...</button>
+                    <button *ngIf="!process" mat-button matStepperPrevious class="step-back"
+                      (click)="submitted = firstFormGroup.invalid">{{'back'
+                      | translate}}</button>
+                    <button
+                      *ngIf="!process && apiService.matrixData.remaining_wallet >= 10 && certificateModel.is_active && apiService.pages.issue_certificate"
+                      type="submit" mat-button class="btn publish green mat-button"
+                      (click)="submitted = firstFormGroup.invalid; submitForm(certificateModel, true)">{{'publish'
+                      | translate}}</button>
+                    <button *ngIf="!process" type="submit" mat-button class="btn btn-form-save"
+                      (click)="submitted = firstFormGroup.invalid; submitForm(certificateModel, false)">{{'save_button'
+                        | translate}}</button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+          </mat-horizontal-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-smart-modal #colorPickPopup identifier="colorPickPopup" [closable]='false' [escapable]='false'
+    [dismissable]='false'>
+    <div>
+      <div class="row" style="height: 320px">
+        <div class="col-md-12">
+          <span [style.background]="arrayColors[selectedColor]" [cpToggle]="true" [cpDialogDisplay]="'inline'"
+            (colorPickerChange)="onChangeColor($event)" [cpOutputFormat]="'rgba'" [cpAlphaChannel]="'disabled'"
+            [cpCancelButtonClass]="'btn btn-primary btn-xs'" [cpDisableInput]="true"
+            [(colorPicker)]="arrayColors[selectedColor]"></span>
+        </div>
+
+        <div class="col-md-12 multi-color">
+          <div *ngIf="arrayColors['clr1']" class="color-box" (colorPickerChange)="onChangeColor($event)"
+            [style.background]="arrayColors['clr1']" (click)="selectedColor='clr1'"></div>
+          <div *ngIf="arrayColors['clr2']" class="color-box" (colorPickerChange)="onChangeColor($event)"
+            [style.background]="arrayColors['clr2']" (click)="selectedColor='clr2'"></div>
+          <div *ngIf="arrayColors['clr3']" class="color-box" (colorPickerChange)="onChangeColor($event)"
+            [style.background]="arrayColors['clr3']" (click)="selectedColor='clr3'"></div>
+          <div *ngIf="arrayColors['clr4']" class="color-box" (colorPickerChange)="onChangeColor($event)"
+            [style.background]="arrayColors['clr4']" (click)="selectedColor='clr4'"></div>
+        </div>
+      </div>
+      <div class="form-group color-picker-btn">
+        <button *ngIf="imageCreateProcess" class="btn btn-primary">{{'processing' | translate}}...</button>
+        <button *ngIf="!imageCreateProcess" type="button" mat-button class="password-submit" style="margin-right:10px"
+          (click)="onColorPickImgCreate()">{{'submit' | translate}}</button>
+        <button *ngIf="!imageCreateProcess" mat-button class="password-submit" (click)="colorPickPopup.close()">{{'color_pic_cancel'
+          | translate}}</button>
+      </div>
+    </div>
+  </ngx-smart-modal>
+  <ngx-smart-modal #myModal identifier="myModal" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+    <div>
+      <form [formGroup]="reasonForm" (ngSubmit)="reasonFormSubmit(reasonForm.value)">
+        <fieldset>
+          <legend>{{'confirm_delete' | translate}}</legend>
+          <div class="password-enter delete-container">
+            <h5>{{'are_you_sure' | translate}}?</h5>
+            <br>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-select formControlName="reason_type" placeholder="{{'pls_select_reason_type' | translate}}">
+                    <mat-option (click)="getReasonType(1)" value='1'>{{'misspelling' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(2)" value='2'>{{'issued_by_mistake' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(3)" value='3'>{{'sanction' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(4)" value='4'>{{'test' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(5)" value='5'>{{'other' | translate}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="text-danger text-left small" *ngIf="reasonErrorMsg">{{getreasonErrorMsg('reason_type') ||
+                  errorMsgArr['reason_type'] | translate}}</div>
+              </div>
+
+              <div *ngIf="hideOtherField" class="col-sm-6 delete-input">
+                <mat-form-field appearance="outline">
+                  <input #otherTxt formControlName="reason" matInput class="form-control">
+                </mat-form-field>
+                <div class="text-danger text-left small" *ngIf="reasonErrorMsg">{{getreasonErrorMsg('reason') ||
+                  errorMsgArr['reason'] | translate}}</div>
+              </div>
+            </div>
+
+          </div>
+        </fieldset>
+        <div class="form-group" style="float: right">
+          <button type="submit" mat-button class="password-submit"
+            style="margin-right:10px">{{'yes' | translate}}</button>
+          <button mat-button class="password-submit" (click)="myModal.close()">{{'no' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </ngx-smart-modal>
+  <ngx-smart-modal #contentPopup identifier="contentPopup"
+    class="DescriptionPopup certificate-popup certificate-editor">
+    <h4>{{'change_content' | translate}} </h4>
+    <div class="col-sm-12">
+      <div class="form-group">
+        <quill-editor [modules]="modules" [(ngModel)]="initialContentVal" [style]="{height: '100px'}"
+          (onEditorCreated)="getEditorInstance($event)" (onContentChanged)="onContentChanged($event)">
+        </quill-editor>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <button type="button" (click)="submitContent()" mat-button class="btn btn-form-save">{{'ok' | translate}}</button>
+    </div>
+  </ngx-smart-modal>
+
+  <div class="acheivement-popup certificate-view-model">
+    <ngx-smart-modal #samplevideo identifier="samplevideo">
+      <div class="col-sm-12">
+        <div class="video-container">
+          <video #videoPlayer (click)="toggleVideo()" width="400" controls>
+            <source src="{{samplevideo.getData()}}" type="video/mp4">
+            <source src="{{samplevideo.getData()}}" type="video/ogg">
+          </video>
+        </div>
+      </div>
+    </ngx-smart-modal>
+  </div>
+
+  <ngx-smart-modal #colorPickPopup identifier="colorPickPopup" [closable]='false' [escapable]='false'
+    [dismissable]='false'>
+    <div>
+      <div class="row" style="height: 320px">
+        <div class="col-md-12">
+          <span [style.background]="arrayColors[selectedColor]" [cpToggle]="true" [cpDialogDisplay]="'inline'"
+            (colorPickerChange)="onChangeColor($event)" [cpOutputFormat]="'rgba'" [cpAlphaChannel]="'disabled'"
+            [cpCancelButtonClass]="'btn btn-primary btn-xs'" [cpDisableInput]="true"
+            [(colorPicker)]="arrayColors[selectedColor]"></span>
+        </div>
+
+        <div class="col-md-12 multi-color">
+          <div *ngIf="arrayColors['clr1']" class="color-box" (colorPickerChange)="onChangeColor($event)"
+            [style.background]="arrayColors['clr1']" (click)="selectedColor='clr1'"></div>
+        </div>
+      </div>
+      <div class="form-group color-picker-btn">
+        <button *ngIf="imageCreateProcess" class="btn btn-primary">{{'processing' | translate}}...</button>
+        <button *ngIf="!imageCreateProcess" type="button" mat-button class="password-submit" style="margin-right:10px"
+          (click)="onColorPickImgCreate()">{{'submit' | translate}}</button>
+        <button *ngIf="!imageCreateProcess" mat-button class="password-submit" (click)="colorPickPopup.close()">{{'color_pic_cancel'
+          | translate}}</button>
+      </div>
+    </div>
+  </ngx-smart-modal>
+
+  <app-commonplanalert></app-commonplanalert>
+</section>

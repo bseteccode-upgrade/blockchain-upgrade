@@ -1,0 +1,3 @@
+:host /deep/ .mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex { height:44px; }
+:host /deep/ .mat-select-trigger { top:5px; }
+mat-table.table.table-striped.table-bordered.table-hover.mat-table { min-width:1050px;}

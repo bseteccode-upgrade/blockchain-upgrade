@@ -1,0 +1,386 @@
+<!-- <div class="total-count-block">
+  <div class="col-md-3 col-sm-12">
+    <div class="total-student">
+      <div class="total-left">
+        <h4>{{'total_students' | translate}}</h4>
+        <h3>{{apiService.matrixData.student_count}}</h3>
+      </div>
+      <div class="total-right">
+        <span class="side-icon icon-student"></span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-3 col-sm-12">
+    <div class="total-addnew">
+      <div class="total-left">
+        <h4>{{'total_courses' | translate}}</h4>
+        <h3>{{apiService.matrixData.course_count}}</h3>
+      </div>
+      <div class="total-right">
+        <span class="side-icon icon-course"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-12">
+    <div class="total-certificate">
+      <div class="total-left">
+        <h4>{{'total_certificates' | translate}}</h4>
+        <h3>{{apiService.matrixData.certificate_count}}</h3>
+      </div>
+      <div class="total-right">
+        <span class="side-icon icon-certificate"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-12">
+    <div class="total-achievement">
+      <div class="total-left">
+        <h4>{{'total_achievements' | translate}}</h4>
+        <h3>{{ apiService.matrixData.total_achievements }}</h3>
+      </div>
+      <div class="total-right">
+        <span class="side-icon icon-issue-certificate"></span>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<section class="start_wrapper issue-certificate-list">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'students' | translate}}
+          <span class="stu-count">( {{'total_students' | translate}} - {{studentList.count}} )</span>
+          <span matTooltip="{{'phi_stud_list' | translate}}" class="headTooltip"><i class="material-icons">
+              help_outline</i></span>
+        </h3>
+      </div>
+
+      <div class="pull-right">
+        <button style="margin: 5px" mat-button routerLink="/bulkupload">
+          <i class="material-icons">cloud_upload</i> {{'upload' | translate}} </button>
+        <button id="add_student" mat-button routerLink="/addstudent">{{'add_student' | translate}}
+          <i class="fa fa-plus-circle"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel-heading clearfix filter-search-box">
+
+      <fieldset class="scheduler-border" *ngIf="!advanceSearch">
+        <form [formGroup]="searchForm" (ngSubmit)="submitSearchForm(searchForm.value)">
+          <div class="col-lg-5 col-md-12 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'search' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="search" [(ngModel)]="searchFieldVal" name="search">
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-7 col-md-12 col-sm-12">
+            <div class="user-btn-block">
+              <ul class="button-list">
+                <li><button type="submit" class="filter-btn search" mat-button
+                    [disabled]="process">{{'search' | translate}}</button></li>
+                <li><button type="reset" class="filter-btn reset" mat-button
+                    (click)="advanceSearch = true; getStudentList({},true);searchForm.reset();resetForm()">{{'advanced_search' | translate}}</button>
+                </li>
+                <li><button type="reset" class="filter-btn reset" mat-button [disabled]="process"
+                    (click)="getStudentList({},true);searchForm.reset();resetForm()">{{'reset' | translate}}</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </fieldset>
+
+
+      <fieldset class="scheduler-border" *ngIf="advanceSearch">
+        <form [formGroup]="searchForm" (ngSubmit)="submitSearchForm(searchForm.value)">
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'student_id' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="student_id">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <input formControlName="student_id" [formControl]="filterStudentIdOptions" (input)="getinputStudentId($event.target.value)"
+                placeholder="{{'student_id' | translate}}" autocomplete="off" matInput [matAutocomplete]="auto_student_id">
+              <mat-autocomplete #auto_student_id="matAutocomplete" (optionSelected)="studentIdInput = $event.option.value">
+                <mat-option *ngFor="let option of filterStudentIdOptions | async" [value]="option.student_id">
+                  {{option.student_id}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'first_name' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="first_name">
+            </mat-form-field> -->
+
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <input formControlName="first_name" [formControl]="firstNameControl" (input)="getinputfirstname($event.target.value)"
+                placeholder="{{'first_name' | translate}}" autocomplete="off" matInput [matAutocomplete]="auto_first_name">
+              <mat-autocomplete #auto_first_name="matAutocomplete" (optionSelected)="firstNameInput = $event.option.value">
+                <mat-option *ngFor="let option of filterFirstName | async" [value]="option.first_name">
+                  {{option.first_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'last_name' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="last_name">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <input formControlName="last_name" [formControl]="lastNameControl" (input)="getinputlastname($event.target.value)"
+                placeholder="{{'last_name' | translate}}" autocomplete="off" matInput [matAutocomplete]="auto_last_name">
+              <mat-autocomplete #auto_last_name="matAutocomplete" (optionSelected)="lastNameInput = $event.option.value">
+                <mat-option *ngFor="let option of filterLastName | async" [value]="option.last_name">
+                  {{option.last_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'email' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="email">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <input formControlName="email" [formControl]="emailControl" autocomplete="off" (input)="getinputemail($event.target.value)" placeholder="{{'email' | translate}}" matInput
+                [matAutocomplete]="auto_email">
+              <mat-autocomplete #auto_email="matAutocomplete" (optionSelected)="emailInput = $event.option.value">
+                <mat-option *ngFor="let option of filterEmail | async" [value]="option.email">
+                  {{option.email}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'phone' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="phone">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <input formControlName="phone" [formControl]="phoneControl" autocomplete="off" (input)="getinputphone($event.target.value)" placeholder="{{'phone' | translate}}" matInput
+                [matAutocomplete]="auto_phone">
+              <mat-autocomplete #auto_phone="matAutocomplete" (optionSelected)="phoneInput = $event.option.value">
+                <mat-option *ngFor="let option of filterPhone | async" [value]="option.phone">
+                  {{option.phone}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'group' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="group_name">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <input formControlName="group_name" [formControl]="groupNameControl" autocomplete="off" (input)="getinputgroup($event.target.value)" placeholder="{{'group' | translate}}"
+                matInput [matAutocomplete]="auto_group_name">
+              <mat-autocomplete #auto_group_name="matAutocomplete" (optionSelected)="groupNameInput = $event.option.value">
+                <mat-option *ngFor="let option of filterGroupName| async" [value]="option.group_name">
+                  {{option.group_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="form-group">
+              <div class="activity">
+                <ul class="button-list">
+                  <li><button type="submit" class="filter-btn search" mat-button
+                      [disabled]="process">{{'search' | translate}}</button></li>
+
+                  <li><button type="reset" class="filter-btn reset" mat-button
+                      (click)="getStudentList({},true);searchForm.reset();resetForm()"
+                      [disabled]="process">{{'reset' | translate}}</button>
+                  </li>
+
+                  <li><button type="reset" class="filter-btn reset" mat-button
+                      (click)="advanceSearch = false;getStudentList({},true); searchForm.reset()">{{'close' | translate}}</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </form>
+      </fieldset>
+    </div>
+
+
+    <div class="panel-body standter">
+
+      <div class="table-responsive">
+        <div class="example-container mat-elevation-z8">
+
+          <div *ngIf="process" class="progress_animation">
+            <mat-spinner></mat-spinner>
+          </div>
+
+          <table mat-table [dataSource]="dataSource" class="table table-striped table-bordered table-hover"
+            *ngIf="!process">
+
+            <ng-container matColumnDef="profile">
+              <th mat-header-cell *matHeaderCellDef>{{'profile' | translate}}</th>
+              <td mat-cell *matCellDef="let element" style="width:10%;">
+                <div class="student-profile">
+                  <img style="max-width:100px;height:100px;"
+                    [src]="(element.avatar)? element.avatar : 'assets/images/avatar.jpeg'">
+
+                  <div class="view-achieve" *ngIf="element.student_id">
+                    <a [routerLink]="['/issuecertificate', element.email, element.first_name, element.last_name]">
+                      <p>{{'view' | translate}} {{'achievements' | translate}}</p>
+                    </a>
+                  </div>
+                </div>
+
+              </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="firstname">
+              <th mat-header-cell *matHeaderCellDef>{{'first_name' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
+            </ng-container>
+
+            <!-- Certificate Image Column -->
+            <ng-container matColumnDef="lastname">
+              <th mat-header-cell *matHeaderCellDef> {{'last_name' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
+            </ng-container>
+
+            <!-- Certificate Number Column -->
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef> {{'email_address' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+            </ng-container>
+
+            <!-- Issue Date Column -->
+            <ng-container matColumnDef="phone">
+              <th mat-header-cell *matHeaderCellDef> {{'phone' | translate}}</th>
+              <td mat-cell *matCellDef="let element"> {{element.phone || '-'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="studentId">
+              <th mat-header-cell *matHeaderCellDef> {{'student_id' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.student_id || '-'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="achievement">
+              <th mat-header-cell *matHeaderCellDef
+                [style.display]="apiService.pages.issue_certificate ? 'display' : 'none'">
+                {{'achievement' | translate}}</th>
+              <td mat-cell *matCellDef="let element"
+                [style.display]="apiService.pages.issue_certificate ? 'display' : 'none'">
+                <button class="btn btn-primary"
+                  [routerLink]="['/issuecertificate', element.email, element.first_name, element.last_name]">{{'view'
+                  | translate}}
+                  <i class="fa fa-eye" style="font-size:18px;"></i>
+                </button>
+              </td>
+            </ng-container>
+            <!-- Evidence Number Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> {{'actions' | translate}} </th>
+              <td mat-cell *matCellDef="let element" class="edt_delt">
+                <button mat-button class="green" routerLink="/addstudent/{{element.profile_id}}">{{'edit' | translate}}
+                  <i class="fa fa-pencil-square-o" style="font-size:18px;"></i>
+                </button>
+                <button *ngIf="element.can_delete" mat-button class="red"
+                  (click)="setCertId(element.id);ngxSmartModalService.getModal('myModal').open();">{{'delete'
+                  | translate}}
+                  <i class="fa fa-trash-o" style="font-size:18px;"></i>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <div class="col-sm-12" *ngIf="!process">
+            <div class="alert alert-info no-records" *ngIf="studentList.count === 0">
+              {{'no_records_found' | translate}}.
+            </div>
+          </div>
+          <mat-paginator (page)="onPageChange(searchForm.value,$event)" [hidePageSize]="true" [pageSize]="5"
+            [length]="studentList.count"></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <ngx-smart-modal #myModal identifier="myModal" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+    <div>
+      <form [formGroup]="reasonForm" #resetFormID="ngForm" (ngSubmit)="reasonFormSubmit(reasonForm.value)">
+        <fieldset>
+          <legend>{{'confirm_delete' | translate}}</legend>
+          <div class="password-enter delete-container">
+            <h5>{{'are_you_sure' | translate}}?</h5>
+            <br>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-select formControlName="reason_type" placeholder="{{'pls_select_reason_type' | translate}}">
+                    <mat-option (click)="getReasonType(1)" value='1'>{{'misspelling' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(2)" value='2'>{{'issued_by_mistake' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(3)" value='3'>{{'sanction' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(4)" value='4'>{{'test' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(5)" value='5'>{{'other' | translate}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="text-danger text-left small" *ngIf="reasonErrorMsg">{{getreasonErrorMsg('reason_type') |
+                  translate}}</div>
+              </div>
+
+              <div *ngIf="hideOtherField" class="col-sm-6 delete-input">
+                <mat-form-field appearance="outline">
+                  <input #otherTxt formControlName="reason" matInput class="form-control">
+                </mat-form-field>
+                <div class="text-danger text-left small" *ngIf="reasonErrorMsg">{{getreasonErrorMsg('reason') |
+                  translate}}</div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="form-group" style="float: right">
+          <button type="submit" [disabled]="checkSubmit" mat-button class="password-submit" style="margin-right:10px">{{'yes'
+            | translate}}</button>
+          <button type="button" mat-button class="password-submit"
+            (click)="myModal.close()">{{'no' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </ngx-smart-modal>
+  <ngx-smart-modal #initialTourPopup identifier="initialTourPopup" [closable]='false' [escapable]='false'
+    [dismissable]='false'>
+    <fieldset>
+      <legend>{{'initial_page_info' | translate}} </legend>
+      <div class="student_notify">
+        <p>{{'stud_notify_info' | translate}}</p>
+        <button type="button" mat-button class="password-submit"
+          (click)="onDoneInitialTour()">{{'ok' | translate}}</button>
+      </div>
+    </fieldset>
+  </ngx-smart-modal>
+</section>

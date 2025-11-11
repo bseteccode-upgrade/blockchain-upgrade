@@ -1,0 +1,52 @@
+<section class="start_wrapper issue-certificate-list">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'marketing_tools' | translate}} <span matTooltip="{{'phi_marketing_tools' | translate}}"
+            class="headTooltip"><i class="material-icons"> help_outline</i></span></h3>
+      </div>
+    </div>
+
+    <div *ngIf="process" class="col-sm-12 spinner_center">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div *ngIf="!process" class="list_contain">
+      <div *ngFor="let data of marketShareDatas">
+        <ul class="canned_list" *ngIf="data.title != 'email_share'">
+          <li class="{{data.title}}">
+            <h4>{{data.title | translate}}</h4>
+          </li>
+          <li>
+            <p>{{marketShareContent[data.title + '_content']}}</p>
+          </li>
+          <li>
+            <button mat-mini-fab class="certificate-btn"
+              routerLink="/marketingtool-addedit/{{data.title}}/{{marketShareContent.id}}">
+              <i class="material-icons">mode_edit</i>
+            </button>
+          </li>
+        </ul>
+        <ul class="canned_list" *ngIf="data.title == 'email_share'">
+          <li>
+            <h4>{{data.title | translate}}</h4>
+          </li>
+          <li>
+            <p>{{marketShareContent[data.title + '_mail_subject']}}</p>
+          </li>
+          <li>
+            <button mat-mini-fab class="certificate-btn"
+              routerLink="/marketingtool-addedit/{{data.title}}/{{marketShareContent.id}}">
+              <i class="material-icons">mode_edit</i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="alert alert-info" *ngIf="!process && marketShareDatas.length == 0">
+        {{ 'no_records_found' | translate }}
+      </div>
+    </div>
+  </div>
+</section>

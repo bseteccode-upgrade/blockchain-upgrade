@@ -1,0 +1,189 @@
+<section class="start_wrapper certificate-list separate_pages">
+  <div class="user-certificate">
+    <div class="hpanel">
+      <div class="panel-heading clearfix">
+          <div class="header-block">
+              <div class="container">
+                <div class="col-md-12 col-sm-12">
+                  <div class="col-md-4 col-sm-12">
+                    <div class="header-logo">
+                      <img *ngIf="pui != ''" src="assets/images/logo-blue.png" class="img-responsive">
+                    </div>
+                  </div>
+        
+                  <div class="col-md-3 col-sm-12">
+                  </div>
+        
+                  <div class="col-md-5 col-sm-12">
+                    <div class="back_btn">        
+                      <div class="lang_main">
+                        <button mat-button [matMenuTriggerFor]="menulang" class="dropdown_select">
+                          {{selectedLang}}
+                          <span class="caret"></span>
+                        </button>
+                        <div class="theme-palette">
+                          <div class="lang">
+                            <mat-menu #menulang="matMenu">
+                              <button mat-menu-item class="lang_submenu" *ngFor="let lang of languages"
+                                (click)="selectLang(lang)">
+                                {{lang.language_code}}</button>
+                            </mat-menu>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+
+      <div class="panel-heading clearfix filter-search-box">
+        <div class="container">
+          <!-- <fieldset class="scheduler-border">
+            <form [formGroup]="searchForm" (ngSubmit)="searchFormSubmit(searchForm.value)">
+              <div class="col-md-8 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{'search' | translate}}</mat-label>
+                  <input #searchVal formControlName="search" matInput class="form-control">
+                  <div class="text-danger text-left small" *ngIf="errorMsg">{{getErrorMessage('search') | translate}}
+                  </div>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4 col-sm-12">
+                <div class="user-btn-block">
+                  <button type="submit" class="filter-btn search"
+                    mat-button>{{'search' | translate}}</button>
+                  <button type="reset" class="filter-btn search" 
+                  mat-button (click)="advanceSearch = true; advancedSearchFun()">{{'advanced_search'
+                | translate}}</button>
+                </div>
+              </div>
+
+              <div class="col-lg-12  col-md-12 col-sm-12" *ngIf="norecordFound === true">
+                <div class="alert alert-info no-records">
+                  {{'no_records_found' | translate}}
+                </div>
+              </div>
+            </form>
+          </fieldset> -->
+
+
+
+          <fieldset class="scheduler-border">
+            <form [formGroup]="searchForm" (ngSubmit)="searchFormSubmit(searchForm.value)">
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{'first_name' | translate}}</mat-label>
+                  <input matInput class="form-control" formControlName="first_name">
+                </mat-form-field>
+              </div>
+    
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{'last_name' | translate}}</mat-label>
+                  <input matInput class="form-control" formControlName="last_name">
+                </mat-form-field>
+              </div>
+
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{'student_id' | translate}}</mat-label>
+                  <input matInput class="form-control" formControlName="student_id">
+                </mat-form-field>
+              </div>  
+
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{'email' | translate}}</mat-label>
+                  <input matInput class="form-control" formControlName="email">
+                </mat-form-field>
+              </div>
+
+
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{'phone' | translate}}</mat-label>
+                  <input matInput class="form-control" formControlName="phone">
+                </mat-form-field>
+              </div>
+    
+    
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{'group' | translate}}</mat-label>
+                  <input matInput class="form-control" formControlName="group">
+                </mat-form-field>
+              </div>
+
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{'certificate_name' | translate}}</mat-label>
+                  <input matInput class="form-control" formControlName="certificate_name">
+                </mat-form-field>
+              </div>
+
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <!-- <mat-form-field appearance="outline">
+                  <mat-label>{{'from_date' | translate}}</mat-label>
+                  <input matInput class="form-control" formControlName="from_date">
+                </mat-form-field> -->
+                <mat-form-field class="angular-datepicker field-datepicker">
+                  <input matInput placeholder="{{'from_date' | translate}}" [readonly]="true"
+                    (dateChange)="changeDateEvent($event, 'from_date')" [matDatepicker]="fromdate"
+                    formControlName="from_date" id="from_date" (click)="fromdate.open()">
+                  <mat-datepicker-toggle matSuffix [for]="fromdate"></mat-datepicker-toggle>
+                  <mat-datepicker #fromdate></mat-datepicker>
+                </mat-form-field>
+                <div class="refresh-icon" (click)="refreshFromDate()">
+                  <mat-icon>refresh</mat-icon>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <!-- <mat-form-field appearance="outline">
+                  <mat-label>{{'to_date' | translate}}</mat-label>
+                  <input matInput class="form-control" formControlName="to_date">
+                </mat-form-field> -->
+                <mat-form-field class="angular-datepicker field-datepicker">
+                  <input matInput placeholder="{{'to_date' | translate}}" [matDatepicker]="todate" [readonly]="true"
+                    (dateChange)="changeDateEvent($event, 'to_date')" formControlName="to_date" id="to_date"
+                    (click)="todate.open()">
+                  <mat-datepicker-toggle matSuffix [for]="todate"></mat-datepicker-toggle>
+                  <mat-datepicker #todate></mat-datepicker>
+                </mat-form-field>
+                <div class="refresh-icon" (click)="refreshToDate()">
+                  <mat-icon>refresh</mat-icon>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-4 col-sm-12" *ngIf="!pui">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{'training_center' | translate}}</mat-label>
+                  <input matInput class="form-control" formControlName="training_center">
+                </mat-form-field>
+              </div>
+    
+              <div class="col-lg-3 col-md-4 col-sm-12">
+                <div class="achievement-btn achievements-group">
+                  <button type="submit" class="filter-btn" mat-button [disabled]="loading">{{ loading ? 'loading' : 'search' | translate}}</button>
+                  <!-- <button type="reset" [disabled]="process" class="filter-btn" mat-button
+                      (click)="refreshDataAchievement([])">{{'reset' | translate}}</button>
+                  <button type="reset" class="filter-btn" mat-button (click)="advanceSearch = false; searchForm.reset()">{{'close' |
+                      translate}}</button> -->
+                </div>
+              </div>   
+              
+              <div class="col-lg-12  col-md-12 col-sm-12" *ngIf="norecordFound === true">
+                <div class="alert alert-info no-records">
+                  {{'no_records_found' | translate}}
+                </div>
+              </div>
+            </form>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,277 @@
+<section class="start_wrapper issue-certificate-list">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'activities' | translate}} <span matTooltip="{{'phi_activity' | translate}}" class="headTooltip"><i
+              class="material-icons"> help_outline</i></span></h3>
+      </div>
+      <div class="pull-right">
+        <button mat-button class="activity_btn" routerLink="/activity"
+          *ngIf="apiService.userType !== '3' && apiService.userType !== '9' && apiService.pages.issue_certificate">{{'add_activities' | translate}}
+          <i class="fa fa-plus-circle"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel-heading clearfix filter-search-box">
+
+      <fieldset class="scheduler-border" *ngIf="!advanceSearch">
+        <form [formGroup]="searchForm" (ngSubmit)="submitSearchForm(searchForm.value)">
+          <div class="col-lg-5 col-md-12 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'search' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="search" [(ngModel)]="searchOutbatchId"
+                name="search">
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-7 col-md-12 col-sm-12">
+            <div class="user-btn-block">
+              <ul class="button-list">
+                <li><button type="submit" class="filter-btn search" mat-button
+                    [disabled]="process">{{'search' | translate}}</button></li>
+                <li><button type="reset" class="filter-btn reset" mat-button
+                    (click)="advanceSearch = true; getProductList({},true);searchForm.reset();resetForm()">{{'advanced_search' | translate}}</button>
+                </li>
+                <li><button type="reset" class="filter-btn reset" mat-button [disabled]="process"
+                    (click)="getProductList({},true);searchForm.reset();resetForm()">{{'reset' | translate}}</button>
+                </li>
+                <li>
+                  <button [disabled]="exportLoading"
+                    *ngIf="productList.count !== 0 && apiService.userType === '9' && apiService.pages.download"
+                    type="button" class="filter-btn reset" mat-button
+                    (click)="downloadProductList(searchForm.value)">{{exportLoading ? 'csv prepare' : 'export' | translate}}</button>
+                  <button [disabled]="exportLoading" *ngIf="productList.count !== 0 && apiService.userType !== '9'"
+                    type="button" class="filter-btn reset" mat-button
+                    (click)="downloadProductList(searchForm.value)">{{exportLoading ? 'csv prepare' : 'export' | translate}}</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </fieldset>
+
+
+      <fieldset class="scheduler-border" *ngIf="advanceSearch">
+        <form [formGroup]="searchForm" (ngSubmit)="submitSearchForm(searchForm.value)">
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="form-group">
+              <mat-form-field class="angular-datepicker field-datepicker">
+                <input matInput placeholder="{{'start_date' | translate}}" [readonly]="true"
+                  (dateChange)="changeDateEvent($event, 'start_date')" [matDatepicker]="fromdate"
+                  formControlName="start_date" id="start_date" (click)="fromdate.open()">
+                <mat-datepicker-toggle matSuffix [for]="fromdate"></mat-datepicker-toggle>
+                <mat-datepicker #fromdate></mat-datepicker>
+              </mat-form-field>
+              <div class="refresh-icon" (click)="refreshFromDate()">
+                <mat-icon>refresh</mat-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="form-group">
+              <mat-form-field class="angular-datepicker field-datepicker">
+                <input matInput placeholder="{{'to_date' | translate}}" [matDatepicker]="todate" [readonly]="true"
+                  (dateChange)="changeDateEvent($event, 'end_date')" formControlName="end_date" id="end_date"
+                  min={{minendDate}} (click)="todate.open()">
+                <mat-datepicker-toggle matSuffix [for]="todate"></mat-datepicker-toggle>
+                <mat-datepicker #todate></mat-datepicker>
+              </mat-form-field>
+              <div class="refresh-icon" (click)="refreshToDate()">
+                <mat-icon>refresh</mat-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>{{'batchid' | translate}}</mat-label>
+                <input matInput class="form-control" formControlName="batch_id">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>{{'product' | translate}}</mat-label>
+                <input matInput class="form-control" formControlName="title">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'workflow_id' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="workflow_id">
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'step' | translate}}</mat-label>
+              <input matInput class="form-control" (keydown)="onlyNumber($event)" formControlName="step">
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'role' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="role">
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'company_name' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="organization">
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="form-group">
+              <div class="activity">
+                <ul class="button-list">
+                  <li><button type="submit" class="filter-btn search" mat-button
+                      [disabled]="process">{{'search' | translate}}</button></li>
+
+                  <li><button type="reset" class="filter-btn reset" mat-button
+                      (click)="getProductList({},true);searchForm.reset();resetForm()"
+                      [disabled]="process">{{'reset' | translate}}</button>
+                  </li>
+
+                  <li><button type="reset" class="filter-btn reset" mat-button
+                      (click)="advanceSearch = false;getProductList({},true); searchForm.reset()">{{'close' | translate}}</button>
+                  </li>
+
+                  <li>
+                    <button
+                      *ngIf="productList.count !== 0 && apiService.userType === '9' && apiService.user.pages.download"
+                      type="button" class="filter-btn reset" mat-button
+                      (click)="downloadProductList()">{{'export' | translate}}</button>
+                    <button *ngIf="productList.count !== 0 && apiService.userType !== '9'" type="button"
+                      class="filter-btn reset" mat-button
+                      (click)="downloadProductList()">{{'export' | translate}}</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </form>
+      </fieldset>
+    </div>
+
+
+    <div class="panel-body standter">
+
+      <div class="table-responsive">
+        <div class="example-container mat-elevation-z8">
+
+          <div *ngIf="process" class="progress_animation">
+            <mat-spinner></mat-spinner>
+          </div>
+
+          <table mat-table [dataSource]="dataSource" class="table table-striped table-bordered table-hover"
+            *ngIf="!process">
+
+            <ng-container matColumnDef="created_date">
+              <th mat-header-cell *matHeaderCellDef> {{'date_label' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.created_date}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="workflow">
+              <th mat-header-cell *matHeaderCellDef> {{'workflow_id' | translate}} </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.workflow_id && element.workflow_id !== 'None' ? element.workflow_id : '-'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="step">
+              <th mat-header-cell *matHeaderCellDef> {{'step' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.step && element.step !== 'None' ? element.step : '-'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="role">
+              <th mat-header-cell *matHeaderCellDef> {{'role' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.role && element.role !== 'None' ? element.role : '-'}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="company">
+              <th mat-header-cell *matHeaderCellDef> {{'company_name' | translate}} </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.organization && element.organization !== 'None' ? element.organization : '-'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="product">
+              <th mat-header-cell *matHeaderCellDef> {{'product' | translate}} </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.product && element.product !== 'None' ? element.product : '-'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="barcode">
+              <th mat-header-cell *matHeaderCellDef> {{'batchid' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.batch_id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="out_batch_id">
+              <th mat-header-cell *matHeaderCellDef> {{'subproductbatch' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.out_batch_id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> {{'actions' | translate}} </th>
+              <td mat-cell *matCellDef="let element" class="edt_delt">
+                <button *ngIf="!element.is_qc && element.allow_add && element.issue_certificate" mat-mini-fab
+                  class="blue"
+                  (click)="redirectToActivityPage(element.workflow_db_id, element.unique_key, element.step)"
+                  matTooltip="{{'info_add_actvity' | translate}}">
+                  <i class="fa fa-plus-circle"></i>
+                </button>
+
+                <button mat-mini-fab class="blue" routerLink="/productcertificateassign/{{element.id}}"
+                  matTooltip="{{'info_view_data' | translate}}">
+                  <i class="fa fa-eye"></i>
+                </button>
+
+                <button mat-mini-fab class="blue" *ngIf="element.allow_correction"
+                  (click)="redirectToAddActivity(element.workflow_db_id, element.out_batch_id, element.unique_key, element.step, element.id)"
+                  matTooltip="{{'info_edit_correction' | translate}}">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+                <button mat-mini-fab class="blue" *ngIf="element.is_mistake" (click)="redirectWithPopup(element.id)"
+                  matTooltip="{{'info_corrected_history' | translate}}">
+                  <i class="fa fa-check" aria-hidden="true"></i>
+                </button>
+
+                <!-- <div > -->                  
+                  <button mat-mini-fab class="blue deactivate" (click)="onActiveAction(element.activity_status, element.id)" matTooltip="{{element.activity_status ? 'Deactivate' : 'Activate' | translate}}" *ngIf="element.product && element.product !== 'None'">
+                    <i class="material-icons">{{element.activity_status ? 'unpublished' : 'check_circle' | translate}}</i>
+                      <!-- {{element.activity_status ? 'deactive' : 'active' | translate}} -->
+                  </button>
+                  <!-- <mat-slide-toggle (change)="onActiveAction($event.checked, element.id)" [checked]="element.activity_status"></mat-slide-toggle> -->
+
+                <!-- <div > -->
+                  <button mat-mini-fab class="blue deactivate" (click)="onClearCache(element)" matTooltip="{{'clear_cache' | translate}}" *ngIf="element.product && element.product !== 'None' && apiService?.user?.cache">
+                    <i class="material-icons">brush</i>
+                  </button>
+
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <div class="col-sm-12" *ngIf="!process">
+            <div class="alert alert-info no-records" *ngIf="productList.count === 0">
+              {{'no_records_found' | translate}}.
+            </div>
+          </div>
+          <mat-paginator (page)="onPageChange(searchForm.value,$event)" [pageSize]="page_size" [pageSizeOptions]="[5, 10, 50, 100, 200, 300, 400, 500]"
+            [length]="productList.count"></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

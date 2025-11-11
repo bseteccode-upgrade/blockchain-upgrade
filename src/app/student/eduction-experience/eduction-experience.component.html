@@ -1,0 +1,180 @@
+<h1 *ngIf="data.action_type == 'add'" mat-dialog-title>
+  {{ 'add_education_experience' | translate}}</h1>
+<h1 mat-dialog-title *ngIf="data.action_type != 'add'">
+  {{ 'edit_education_experience' | translate}}</h1>
+<mat-dialog-content>
+  <div>
+    <div class="table-responsive protest">
+      <div class="col-md-12 col-sm-12 no-padding">
+        <form [formGroup]="expForm" (ngSubmit)="formSubmit(expForm.value)">
+
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="form-group checkbox">
+              <mat-checkbox formControlName="external_certificate" (change)='selectExternal($event.checked)'>
+                <span> {{'external_certificate' | translate}} </span>
+              </mat-checkbox>
+            </div>
+          </div>
+
+          <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="!expForm.controls['external_certificate'].value">
+            <div class="text-danger text-left small" *ngIf="errorMsg">
+              {{getErrorMessage('certificate') || errorMsgArr['certificate'] | translate}}</div>
+            <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="process">
+              <mat-spinner></mat-spinner>
+            </div>
+            <mat-radio-group formControlName="certificate">
+              <div *ngIf="certificates && certificates.length > 0" class="search-results-course">
+                <div class="col-md-3 col-sm-12" *ngFor="let course of certificates">
+                  <div class="eng_group">
+                    <div class="blockchain-main">
+                      <mat-radio-button [value]="course.id" (click)='getcertificateId(course.id)' required>
+                        <div class="badge-certificate-section">
+                          <div class="blockchain-details">
+                            <img src="{{course.uploads}}" class="img-responsive">
+                          </div>
+                          <div class="block-left">
+                            <h4>{{course.title}}</h4>
+                          </div>
+                          <div class="identifier_name"
+                            *ngIf="course.identifier && course.identifier != null && course.identifier != '' && course.identifier != 'None'">
+                            <p>{{course.identifier}}</p>
+                          </div>
+                        </div>
+                      </mat-radio-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="certificates && certificates.length == 0" class="no-records">
+                {{ 'no_records_found' | translate }}
+              </div>
+            </mat-radio-group>
+          </div>
+
+
+          <div class="col-md-12 col-sm-12" *ngIf="expForm.controls['external_certificate'].value">
+            <div class="col-md-4 col-sm-12">
+              <div class="avatar-image avatar-image-new">
+                <img style="height: 100%;"
+                  [src]="(externalImage) ? externalImage : 'assets/images/university-logo.png'">
+                <span (click)="deleteImage()" class="delete_icons"><i class="fa fa-refresh"
+                    style="font-size:18px;"></i></span>
+              </div>
+            </div>
+
+            <div class="col-md-8 col-sm-12">
+              <div class="select-file">
+                <div class="control-label" for="organization">{{'certificate_image' | translate}} {{'logo' |
+                    translate}} <span class="mandatory">*</span></div>
+                <label class="btn btn-primary">{{'select_file' | translate}}
+                  <input type="file" name="file" accept=".jpg, .jpeg, .png" style="display: none"
+                    (change)="uploadImage($event)">
+                </label>
+
+                <div class="text-info text-left"> {{'image_quality_size' | translate}}: (200x200) <br>
+                  ({{'support_only' | translate}} jpeg, jpg, & png) </div>
+                <div class="text-danger text-left small" style="position: relative;"
+                  *ngIf="errorMsg || errorMsgArr['badge_image']">
+                  {{errorMsgArr['badge_image'] || getErrorMessage('badge_image') | translate}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>{{'title' | translate}}</mat-label>
+                <input matInput formControlName="experience_title"
+                  [readonly]="!expForm.controls['external_certificate'].value">
+              </mat-form-field>
+              <div class="text-danger text-left small" *ngIf="errorMsg">
+                {{getErrorMessage('experience_title') || errorMsgArr['experience_title'] | translate}}</div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>{{'organization' | translate}}</mat-label>
+                <input matInput formControlName="organization"
+                  [readonly]="!expForm.controls['external_certificate'].value">
+              </mat-form-field>
+              <div class="text-danger text-left small" *ngIf="errorMsg">
+                {{getErrorMessage('organization') || errorMsgArr['organization'] | translate}}</div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-4 col-sm-12">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>{{'from' | translate}}</mat-label>
+                <input matInput placeholder="year" (keydown)="onlyNumber($event)" formControlName="from_year"
+                  [readonly]="!expForm.controls['external_certificate'].value">
+              </mat-form-field>
+              <div class="text-danger text-left small" *ngIf="errorMsg">
+                {{getErrorMessage('from_year') || errorMsgArr['from_year'] | translate}}</div>
+            </div>
+
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-select [disabled]="!expForm.controls['external_certificate'].value" formControlName="from_month"
+                  placeholder="{{'select' | translate}} {{'from_month' | translate}}">
+                  <mat-option *ngFor="let data of monthArr" [value]='data.index'>
+                    {{data.month}}</mat-option>
+                </mat-select>
+                <!-- <input matInput placeholder="month" (keydown)="onlyNumber($event)" formControlName="from_month"
+                [readonly]="!expForm.controls['external_certificate'].value"> -->
+              </mat-form-field>
+              <div class="text-danger text-left small" *ngIf="errorMsg">
+                {{getErrorMessage('from_month') || errorMsgArr['from_month'] | translate}}</div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-4 col-sm-12">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>{{'to' | translate}}</mat-label>
+                <input matInput placeholder="Year" (keydown)="onlyNumber($event)" formControlName="to_year"
+                  [readonly]="!expForm.controls['external_certificate'].value">
+              </mat-form-field>
+              <!-- <div class="text-danger text-left small" *ngIf="errorMsg">
+                {{getErrorMessage('to_year') || errorMsgArr['to_year'] | translate}}</div> -->
+            </div>
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-select [disabled]="!expForm.controls['external_certificate'].value" formControlName="to_month"
+                  placeholder="{{'select' | translate}} {{'to_month' | translate}}">
+                  <mat-option *ngFor="let data of monthArr" [value]='data.index'>
+                    {{data.month}}</mat-option>
+                </mat-select>
+                <!-- <input matInput placeholder="Month" (keydown)="onlyNumber($event)" formControlName="to_month"
+                [readonly]="!expForm.controls['external_certificate'].value"> -->
+              </mat-form-field>
+              <!-- <div class="text-danger text-left small" *ngIf="errorMsg">
+                {{getErrorMessage('to_month') || errorMsgArr['to_month'] | translate}}</div> -->
+            </div>
+          </div>
+
+          <div class="col-lg-6 col-md-4 col-sm-12" *ngIf="expForm.controls['external_certificate'].value">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>{{'external_url' | translate}}</mat-label>
+                <input matInput formControlName="external_url">
+              </mat-form-field>
+              <div class="text-danger text-left small" *ngIf="errorMsg">
+                {{getErrorMessage('external_url') || errorMsgArr['external_url'] | translate}}</div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="user-btn-block">
+              <button *ngIf="data.action_type == 'add'" mat-button class="close-btn">{{ 'add' | translate}}</button>
+              <button *ngIf="data.action_type != 'add'" mat-button class="close-btn">{{ 'edit' | translate}}</button>
+              <button type="button" (click)="closePopup()" mat-button class="close-btn">{{'close' | translate}}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

@@ -1,0 +1,206 @@
+<section class="start_wrapper certificate-list">
+  <div class="user-certificate">
+    <div class="hpanel">
+      <div class="panel-heading clearfix">
+        <div class="pull-left">
+          <h3>{{'courses' | translate}} <span matTooltip="{{'phi_course_list' | translate}}" class="headTooltip"><i
+                class="material-icons"> help_outline</i></span></h3>
+        </div>
+        <div class="pull-right">
+          <button id="add_course" mat-button routerLink="/courseadd">
+            <i class="fa fa-hand-o-right fa-1x" style="font-size:20px;"></i> {{'add_course' | translate}}
+          </button>
+        </div>
+      </div>
+
+      <div class="panel-heading clearfix filter-search-box">
+        <fieldset class="scheduler-border" *ngIf="!advanceSearch">
+          <form [formGroup]="searchForm" (ngSubmit)="searchFormSubmit(searchForm.value)">
+            <div class="col-lg-6 col-md-4 col-sm-12">
+              <mat-form-field appearance="outline">
+                <mat-label>{{'search' | translate}}</mat-label>
+                <input matInput class="form-control" name="search" formControlName="search">
+              </mat-form-field>
+            </div>
+
+            <div class="col-lg-6 col-md-8 col-sm-12">
+              <div class="user-btn-block">
+                <button type="submit" class="filter-btn search" mat-button>{{'search' | translate}}</button>
+                <button type="submit" class="filter-btn search" mat-button
+                  (click)="advanceSearch = true">{{'advanced_search' | translate}}</button>
+                <button type="reset" class="filter-btn reset" mat-button
+                  (click)="resetSearchForm()">{{'reset' | translate}}</button>
+              </div>
+            </div>
+          </form>
+        </fieldset>
+
+        <fieldset class="scheduler-border" *ngIf="advanceSearch">
+          <form [formGroup]="searchForm" (ngSubmit)="searchFormSubmit(searchForm.value)">
+            <div class="col-md-6 col-sm-12">
+              <!-- <mat-form-field appearance="outline">
+                <mat-label>{{'title' | translate}}</mat-label>
+                <input matInput class="form-control" formControlName="title">
+              </mat-form-field> -->
+
+
+              <mat-form-field appearance="outline" class="autocomplete">
+                <input formControlName="title" (input)="getinputtitle($event.target.value)" [formControl]="titleControl" autocomplete="off" placeholder="{{'title' | translate}}"
+                  matInput [matAutocomplete]="auto_title">
+                <mat-autocomplete #auto_title="matAutocomplete" (optionSelected)="titleInput = $event.option.value">
+                  <mat-option *ngFor="let option of filterTitle| async" [value]="option.title">
+                    {{option.title}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <!-- <mat-form-field appearance="outline">
+                <mat-label>{{'code' | translate}}</mat-label>
+                <input matInput class="form-control" formControlName="code">
+              </mat-form-field> -->
+
+              <mat-form-field appearance="outline" class="autocomplete">
+                <input formControlName="code" (input)="getinputCode($event.target.value)" [formControl]="codeControl" autocomplete="off" placeholder="{{'code' | translate}}"
+                  matInput [matAutocomplete]="auto_code">
+                <mat-autocomplete #auto_code="matAutocomplete" (optionSelected)="codeInput = $event.option.value">
+                  <mat-option *ngFor="let option of filterCode| async" [value]="option.code">
+                    {{option.code}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <div class="user-btn-block">
+                <button type="submit" class="filter-btn search" mat-button>{{'search' | translate}}</button>
+                <button type="reset" class="filter-btn reset" mat-button
+                  (click)="resetSearchForm()">{{'reset' | translate}}</button>
+                <button type="reset" class="filter-btn reset" mat-button
+                  (click)="advanceSearch = false; searchForm.reset(); resetSearchForm()">{{'close' | translate}}</button>
+              </div>
+            </div>
+          </form>
+        </fieldset>
+      </div>
+      <div class="panel-body">
+        <div class="standter clearfix">
+          <div *ngIf="process" class="progress_animation">
+            <mat-spinner></mat-spinner>
+          </div>
+          <div class="row" *ngIf="!process">
+            <div class="col-sm-12">
+              <div class="alert alert-info no-records" *ngIf="certificateRes.count === 0">
+                {{'no_records_found' | translate}}
+              </div>
+            </div>
+
+            <div class="course-scroll scroll-window" slimScroll
+            (scrollChanged)="scrollChanged($event, searchForm.value)" [options]="options" infiniteScroll
+            [infiniteScrollDistance]="course_scrollDistance" [infiniteScrollThrottle]="course_throttle"
+            [scrollWindow]="false">
+            <div class="col-sm-3" *ngFor="let certi of certificates">
+              <div class="eng_group">
+                <div class="blockchain-main">
+                  <a>
+                    <img src="{{certi.logo}}" class="img-responsive">
+                  </a>
+                  <div class="blockchain-details">
+                    <div class="block-left">
+                      <h4>{{certi.title}}</h4>
+                    </div>
+                    <div class="block-right">
+                      <button mat-mini-fab *ngIf="certi.have_related_coc" matTooltip="{{'you_can_view_the_related_cert' | translate}}" class="certificate-btn" color="warn" (click)="onRedirectCert(certi.id)">
+                        <i class="material-icons">list</i>
+                      </button>
+                      <button mat-mini-fab class="certificate-btn" color="warn" routerLink="/courseadd/{{certi.id}}">
+                        <i class="material-icons">edit</i>
+                      </button>
+                    </div>
+                    <div class="identifier_name" *ngIf="certi.identifier && certi.identifier != null && certi.identifier != '' && certi.identifier != 'None'">
+                      <p>{{certi.identifier}}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="blockchain-submain">
+                  <a
+                    (click)="ngxSmartModalService.setModalData( certi.logo , 'viewCertBig');ngxSmartModalService.getModal('viewCertBig').open();">
+                    {{'view' | translate}}
+                  </a>
+                  <a *ngIf="( certi.is_active && apiService.pages.issue_certificate && testMode ) || ( certi.is_active && apiService.pages.issue_certificate && apiService.remaining_wallet >= 1 && !testMode)"
+                    (click)="redirectToStep2(certi.id)">{{'publish' | translate}}</a>
+
+                    <a (click)="detailView(certi)">{{'detail_preview' | translate}}</a>
+
+                  <div *ngIf="certi.can_delete" class="list_delete_icon"
+                    (click)="ngxSmartModalService.getModal('myModal').open();setCertId(certi.id);">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-smart-modal #myModal identifier="myModal" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+    <div>
+      <form [formGroup]="reasonForm" #resetFormID="ngForm" (ngSubmit)="reasonFormSubmit(reasonForm.value)">
+        <fieldset>
+          <legend>{{'confirm_delete' | translate}}</legend>
+          <div class="password-enter delete-container">
+            <h5>{{'are_you_sure' | translate}}?</h5>
+            <br>
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-select formControlName="reason_type" placeholder="{{'pls_select_reason_type' | translate}}">
+                    <mat-option (click)="getReasonType(1)" value='1'>{{'misspelling' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(2)" value='2'>{{'issued_by_mistake' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(3)" value='3'>{{'sanction' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(4)" value='4'>{{'test' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(5)" value='5'>{{'other' | translate}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="text-danger text-left small" *ngIf="reasonErrorMsg">
+                  {{getreasonErrorMsg('reason_type') | translate}}</div>
+              </div>
+
+              <div *ngIf="hideOtherField" class="col-sm-6 delete-input">
+                <mat-form-field appearance="outline">
+                  <input #otherTxt formControlName="reason" matInput class="form-control">
+                </mat-form-field>
+                <div class="text-danger text-left small" *ngIf="reasonErrorMsg">
+                  {{getreasonErrorMsg('reason') | translate}}</div>
+              </div>
+            </div>
+
+          </div>
+        </fieldset>
+        <div class="form-group" style="float: right">
+          <button type="submit" [disabled]="checkSubmit" mat-button class="password-submit"
+            style="margin-right:10px">{{'yes' | translate}}</button>
+          <button type="button" mat-button class="password-submit"
+            (click)="myModal.close()">{{'no' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </ngx-smart-modal>
+  <div class="acheivement-popup certificate-view-model">
+    <ngx-smart-modal #viewCertBig identifier="viewCertBig"
+      (onAnyCloseEvent)="ngxSmartModalService.resetModalData('viewCertBig')">
+      <div class="certificate-image-view" *ngIf="viewCertBig.hasData()">
+        <div class="center-image">
+          <img style="width:100%" src="{{viewCertBig.getData()}}">
+        </div>
+        <br>
+      </div>
+    </ngx-smart-modal>
+  </div>
+  <app-commonplanalert></app-commonplanalert>
+</section>

@@ -1,0 +1,778 @@
+<section class="start_wrapper canned-messgae">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'canned_message' | translate}} <span matTooltip="{{'phi_canned_msg' | translate}}" class="headTooltip"><i
+              class="material-icons"> help_outline</i></span></h3>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div *ngIf="apiService.userType === '2' || apiService.userType === '4'" class="standter clearfix">
+        <form class="form-horizontal" (ngSubmit)="submit(mailform.value)" [formGroup]="mailform">
+          <div class="">
+
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label> {{'select' | translate}} {{'mail_type' | translate}}</label>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <select class="form-control" formControlName="edutype"
+                  (change)="getSelectedValue($event.target.value, 'edutype')">
+                  <option value='firstcert'>{{'recipient_first_cert_issue_mail' | translate}}</option>
+                  <option value='certissue'>{{'recipient_cert_issue_mail' | translate}}</option>
+                  <option value='firstbadge'>{{'recipient_first_badge_issue_mail' | translate}}</option>
+                  <option value='badgeissue'>{{'recipient_badge_issue_mail' | translate}}</option>
+                  <option value='team_member_invite'>{{'team_member_invite_mail' | translate}}</option>
+                  <option value='email_share'>{{'recipient_email_share' | translate}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div *ngIf="mailform.controls['edutype'].value === 'team_member_invite'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="team_member_invite_subject" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('team_member_invite_subject') || errorMsgArr['team_member_invite_subject'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'team_member_invite_mail_required_key' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="team_member_invite_mail_content">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="team_member_invite_mail_content" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('team_member_invite_mail_content') || errorMsgArr['team_member_invite_mail_content'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="mailform.controls['edutype'].value === 'email_share'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="email_share_mail_subject" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('email_share_mail_subject') || errorMsgArr['email_share_mail_subject'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'email_share_mail_required_key' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="email_share_mail_content">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="email_share_mail_content" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('email_share_mail_content') || errorMsgArr['email_share_mail_content'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="mailform.controls['edutype'].value === 'firstcert'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="first_cert_email_sub" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('first_cert_email_sub') || errorMsgArr['first_cert_email_sub'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'first_cert_email_sub_badge_error_msg' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="first_cert_email">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="first_cert_email" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('first_cert_email') || errorMsgArr['first_cert_email'] | translate}}</div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="" *ngIf="mailform.controls['edutype'].value === 'certissue'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="sec_cert_email_sub" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('sec_cert_email_sub') || errorMsgArr['sec_cert_email_sub'] | translate}}</div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'sec_cert_email_sub_badge_error_msg' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="sec_cert_email">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="sec_cert_email" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('sec_cert_email') || errorMsgArr['sec_cert_email'] | translate}}</div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="mailform.controls['edutype'].value === 'firstbadge'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="first_cert_email_sub_badge" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('first_cert_email_sub_badge') || errorMsgArr['first_cert_email_sub_badge'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'first_cert_email_sub_badge_error_msg' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="first_cert_email_badge">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="first_cert_email_badge" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('first_cert_email_badge') || errorMsgArr['first_cert_email_badge'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="mailform.controls['edutype'].value === 'badgeissue'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="sec_cert_email_sub_badge" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('sec_cert_email_sub_badge') || errorMsgArr['sec_cert_email_sub_badge'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'sec_cert_email_sub_badge_error_msg' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="sec_cert_email_badge">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="sec_cert_email_badge" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('sec_cert_email_badge') || errorMsgArr['sec_cert_email_badge'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12 hide">
+              <div class="form-group">
+                <label>Student Registration <span class="mandatory">*</span></label>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12 hide">
+              <div class="form-group">
+                <textarea class="form-control" formControlName="student_email" rows="6"></textarea>
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('student_email') || errorMsgArr['student_email'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group canned-message-btn">
+                <button type="submit" mat-button class="btn btn-form-save">{{'save_button' | translate}}</button>
+              </div>
+            </div>
+
+          </div>
+        </form>
+        <div *ngIf="mailModel?.edu_keywords.length > 0" class="listData">
+          <h4>{{'mail_content_key_values' | translate}}</h4>
+          <div class="table-responsive">
+            <ul>
+              <li *ngFor="let listData of mailModel?.edu_keywords">
+                <table>
+                  <tr>
+                    <td>{{'{' + listData.key + '}'}}</td>
+                    <td>: </td>
+                    <td> {{listData.desc | translate}}</td>
+                  </tr>
+                </table>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="( apiService.userType === '3' || apiService.userType === '0' ) || ( apiService.userType === '5' && apiService.pages.canned_message_pre )"
+        class="standter clearfix">
+        <form class="form-horizontal" (ngSubmit)="supsubmit(supplymailform.value)" [formGroup]="supplymailform">
+          <div class="">
+
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label> {{'select' | translate}} {{'mail_type' | translate}}</label>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <select class="form-control" formControlName="supplytype"
+                  (change)="getSelectedValue($event.target.value, 'supplytype')">
+                  <option value='workflow'>{{'workflow_invite_mail' | translate}}</option>
+                  <option value='activity'>{{'activity_success_mail' | translate}}</option>
+                  <option value='member'>{{'member_welcome_mail' | translate}}</option>
+                  <option value='first_step'>{{'first_step_email' | translate}}</option>
+                  <option value='resend_mail'>{{'first_step_resend_mail' | translate}}</option>
+                  <option value='activity_modify'>{{'modify_activity_mail' | translate}}</option>
+                  <option value='activity_modify_own'>{{'modify_activity_mail_own' | translate}}</option>
+                  <option value='send_next_user_mail'>{{'send_next_user_mail' | translate}}</option>
+                  <option value='company_admin_mail'>{{'company_admin_mail' | translate}}</option>
+                  <option value='company_admin_mail_with_team_member'>
+                    {{'company_admin_mail_with_team_member' | translate}}</option>
+                  <option value='activity_share'>{{'activity_share' | translate}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div *ngIf="supplymailform.controls['supplytype'].value === 'resend_mail'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="first_step_resend_subject" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('first_step_resend_subject') || errorMsgArr['first_step_resend_subject'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'required_first_resend' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="first_step_resend_mail_content">
+                  </angular-editor>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('first_step_resend_mail_content', false) || errorMsgArr['first_step_resend_mail_content'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="supplymailform.controls['supplytype'].value === 'activity_share'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="activity_share_subject" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('activity_share_subject') || errorMsgArr['activity_share_subject'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'required_activity_share' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="activity_share_mail_content">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="activity_share_mail_content" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('activity_share_mail_content', false) || errorMsgArr['activity_share_mail_content'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="supplymailform.controls['supplytype'].value === 'activity_modify'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="modify_activity_mail_sub" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('modify_activity_mail_sub') || errorMsgArr['modify_activity_mail_sub'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'required_modify_activity' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="modify_activity_mail">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="modify_activity_mail" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('modify_activity_mail', false) || errorMsgArr['modify_activity_mail'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="supplymailform.controls['supplytype'].value === 'activity_modify_own'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="modify_activity_mail_own_sub" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('modify_activity_mail_own_sub') || errorMsgArr['modify_activity_mail_own_sub'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'required_modify_own' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="modify_activity_mail_own">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="modify_activity_mail_own" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('modify_activity_mail_own', false) || errorMsgArr['modify_activity_mail_own'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="supplymailform.controls['supplytype'].value === 'workflow'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="supy_chn_email_sub" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('supy_chn_email_sub') || errorMsgArr['supy_chn_email_sub'] | translate}}</div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'required_work_invite' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="supy_chn_email">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="supy_chn_email" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('supy_chn_email', false) || errorMsgArr['supy_chn_email'] | translate}}</div>
+                </div>
+              </div>
+            </div>
+
+
+            <div *ngIf="supplymailform.controls['supplytype'].value === 'activity'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="send_qr_email_sub" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('send_qr_email_sub') || errorMsgArr['send_qr_email_sub'] | translate}}</div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'required_activity_success' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="send_qr_email">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="send_qr_email" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('send_qr_email', false) || errorMsgArr['send_qr_email'] | translate}}</div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="supplymailform.controls['supplytype'].value === 'member'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="team_mail_subject" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('team_mail_subject', false) || errorMsgArr['team_mail_subject'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'required_member_mail' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="member_new_email">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="member_new_email" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('member_new_email', false) || errorMsgArr['member_new_email'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="supplymailform.controls['supplytype'].value === 'first_step'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="first_step_mail_sub" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('first_step_mail_sub', false) || errorMsgArr['first_step_mail_sub'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'required_first_step' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="first_step_mail">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="first_step_mail" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('first_step_mail', false) || errorMsgArr['first_step_mail'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="supplymailform.controls['supplytype'].value === 'send_next_user_mail'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="send_next_user_mail_sub" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('send_next_user_mail_sub', false) || errorMsgArr['send_next_user_mail_sub'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'required_next_step' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="send_next_user_mail">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="send_next_user_mail" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('send_next_user_mail', false) || errorMsgArr['send_next_user_mail'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="supplymailform.controls['supplytype'].value === 'company_admin_mail'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="company_admin_email_sub" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('company_admin_email_sub', false) || errorMsgArr['company_admin_email_sub'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{'required_company_mail' | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="company_admin_email">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="company_admin_email" rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('company_admin_email', false) || errorMsgArr['company_admin_email'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="supplymailform.controls['supplytype'].value === 'company_admin_mail_with_team_member'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="company_admin_with_team_member_sub"
+                    rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('company_admin_with_team_member_sub', false) || errorMsgArr['company_admin_with_team_member_sub'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                  <span class="alert-message">
+                      <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                        {{'required_company_team' | translate}}</p>
+                    </span>
+                <div class="form-group">
+                  <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="company_admin_with_team_member_email">
+                  </angular-editor>
+                  <!-- <textarea class="form-control" formControlName="company_admin_with_team_member_email"
+                    rows="6"></textarea> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsgSup('company_admin_with_team_member_email', false) || errorMsgArr['company_admin_with_team_member_email'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group canned-message-btn">
+                <button type="submit" mat-button class="btn btn-form-save">{{'save_button' | translate}}</button>
+              </div>
+            </div>
+
+          </div>
+        </form>
+        <!-- <div>
+          <ul *ngIf="mailModel?.supply_chain_keyword.length > 0">
+            <li *ngFor="let listData of mailModel?.supply_chain_keyword">
+              <span>{{'{' + listData.key + '}'}}</span>: {{listData.desc | translate}}
+            </li>
+          </ul>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>

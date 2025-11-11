@@ -1,0 +1,142 @@
+.data_lists{padding-bottom:20px;display:inline-block}
+.data_lists tr td img{width:80px;height:80px;object-fit:cover;border-radius:10px}
+.data_lists tr td{font-size:14px;padding:10px}
+.data_lists tr td p{margin-bottom:5px}
+.certificate-btn.mat-mini-fab.mat-warn{margin:5px}
+.alert{padding: 15px;}
+.general-tab p { text-align: left; font-weight: normal; color: #1e232b; font-size: 14px; font-family: 'Roboto-Regular'; }
+.pull-left.account-lang { padding-right:10px;}
+
+button.certificate-btn.mat-mini-fab.mat-accent .material-icons {
+    font-size: 18px;
+    bottom: 6px;
+    position: relative;
+    left: 0px;
+}
+button.certificate-btn.mat-mini-fab.mat-accent{
+    margin: 5px;
+    background-color: #262d37;
+    width: 28px;
+    height: 28px;
+}
+
+
+:host /deep/ .avatar-image { width:unset; height:unset}
+.avatar-image img { border-radius:100%; width:200px; height:200px !important; object-fit: fill}
+.text-info { margin-top: 10px; color: #1e232b}
+.select-file { position: relative; height:100%;margin-top:10%}
+:host /deep/ .btn-primary { background-color: #1e232b; border-color: #1e232b;color: #fff}
+:host /deep/ .start_wrapper .panel-body { margin-top:20px; }
+:host /deep/ .add-student-form .form-horizontal .control-label{color: #1e232b;margin-bottom:10px;text-transform:capitalize}
+:host /deep/ .add-student-form .form-horizontal .form-group { height:75px; }
+:host /deep/ .add-student-form .form-horizontal .form-group.textarea { height:auto;}
+:host /deep/ .add-student-form .form-horizontal .form-group.textarea textarea { height:155px !important;}
+:host /deep/ .add-student-form .form-horizontal .form-group.textarea-university { height:auto; }
+:host /deep/ .add-student-form .form-horizontal .form-group.textarea-university textarea { height:100px !important; }
+:host /deep/ .add-student-form .form-horizontal .form-group.ml { margin-left:0;margin-right:0;}
+:host /deep/ .add-student-form { padding:0px 15px; }
+:host /deep/ .add-student-form h4 { color:#1e232b; font-size:20px; padding:10px 20px 20px 20px; font-weight: bold;  border-bottom:2px solid #e5ecf5;}
+ul.general-list li label.btn.btn-primary.select-file { color:#fff; margin-top:0px; }
+ul.general-list.org_doc li { width:50%; vertical-align: top; }
+ul.general-list.org_doc li .sandbox-btn { margin-top:15px; }
+ul.general-list.org_doc li button.mat-mini-fab.mat-warn { margin:0 10px;}
+ul.general-list.org_doc .general-tab.sandbox { padding:10px 0; }
+.select_table { margin:10px 0;}
+.select_table p { font-size: 16px; font-weight: bold; }
+:host /deep/ .mat-tab-label { color: #1e232b; opacity:1; border-right:2px solid #e5ecf5; border-top:2px solid #e5ecf5; }
+:host /deep/ .mat-tab-label .mat-tab-label-content { color: #1e232b; }
+:host /deep/ .mat-tab-label.mat-tab-label-active .mat-tab-label-content { color: #ffffff; }
+:host /deep/ .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus .mat-tab-label-content { color: #ffffff; }
+:host /deep/ .mat-tab-group.mat-primary .mat-ink-bar, :host /deep/ .mat-tab-nav-bar.mat-primary .mat-ink-bar { background-color: transparent; }
+:host /deep/ .mat-tab-label.mat-tab-label-active, :host /deep/ .mat-tab-label.mat-tab-label-active:hover, :host /deep/ .mat-tab-label.mat-tab-label-active:focus, :host /deep/ .mat-tab-label.mat-tab-label-active:active, :host /deep/ .mat-tab-group.mat-primary .mat-tab-label:not(.mat-tab-disabled):focus { opacity:1;background-color:#1e232b; color:#fff; }
+:host /deep/ .onload-message {  background-color: rgba(255, 0, 0, 1); position: relative; }
+.account-lang.general-tab .dropdown { margin:0 0 10px 0; }
+:host /deep/ .red.mat-button { margin:0 7px;text-transform: capitalize;}
+ul.general-list { padding-left: 0px; margin-bottom: 0px; }
+ul.general-list li { padding:0px 0px; display: inline-block; }
+ul.general-list li:first-child { padding:0px 10px 0 0;}
+ul.general-list li:nth-child(2) { padding:0px 10px;}
+ul.general-list li:nth-child(2) .dropdown-menu li { padding:0 0; }
+.dropdown ul.general-list li:nth-child(2) { padding:0px 10px;}
+div.select_table table tr td { width:70%; padding:10px 0; word-break: break-all;}
+ul.general-list .show {display: inline-block!important;}
+ul.general-list.lang_list li { display: block; list-style-type: none;}
+.general-tab.sandbox.organization_tabs { padding:10px 0;}
+ul.editor-list { padding-left: 0px; margin-bottom: 0px; }
+ul.editor-list li { padding:0px 0px; display: inline-block; vertical-align: middle; }
+ul.editor-list li:first-child { width:80%;}
+ul.editor-list li .editor-copy { width:100%; text-align: center; margin:0px 10px;}
+ul.editor-list li textarea.form-control { min-height: 150px; }
+ul.editor-list li .editor-copy button.mat-button { background-color: #1e232b; border-color: #1e232b; color: #fff;}
+ul.general-list.org_doc li .sandbox-btn button.red.mat-button {background-color: #d0483e; font-weight: bold; }
+:host /deep/ .mat-tab-body-content { overflow: hidden;}
+.multiple-btn.mat-button { margin:5; }
+fieldset.scheduler-border {border:1px solid #c1c0c0 !important;padding: 0 1.4em 1.4em 1.4em !important;margin: 1.5em !important; -webkit-box-shadow:  0px 0px 0px 0px #e3e3e3;box-shadow:  0px 0px 0px 0px #e3e3e3;}
+legend.scheduler-border {font-size: 1.2em !important;font-weight: bold !important;text-align: left !important;width:auto;padding:0 10px;border-bottom:none;text-transform: capitalize;}
+fieldset label { font-weight: normal; color: #1e232b; font-size: 14px; text-align: left; font-family: 'Roboto-Regular'; } 
+ul.general-list li button.mat-button { color:#fff; font-size:14px; font-family: 'Roboto-Regular';background-color: #34495e;border-color: #34495e; line-height: 32px; padding: 0 12px; width:auto; }
+.general-tab.sandbox { position: relative; height: 100%; padding:25px 0; }
+.sandbox-btn { position: relative; height: 100%; top:20px; }
+fieldset .smtp_fields  { position: relative; margin-bottom:20px;}
+.blockchain-table { width:100%; display: inline-block; margin:15px 0; border:1px solid #ccc;}
+.blockchain-table tr th { font-size:14px; font-weight: 500; padding:10px 15px; color:#1e232b; background-color: #eee; border-right:1px solid #ccc; }
+.blockchain-table tr td { width:100%; font-size:14px; padding:10px 15px; color:#1e232b; border:1px solid #ccc; }
+.rwd-table { width:100%; display: inline-block; margin:15px 0; border:1px solid #ccc;}
+.rwd-table tr { width:100%; display: inline-block; }
+.rwd-table tr th { width:33.333%; display: inline-block; font-size:16px; font-weight: 500; padding:10px 15px; color:#1e232b; background-color: #eee; border-right:1px solid #ccc; }
+.rwd-table tr td { width:33.333%; display: inline-block; font-size:16px; padding:10px 15px; color:#1e232b; border:1px solid #ccc; }
+ul.cred-list { width:100%; padding-left:0; margin-bottom:0;}
+ul.cred-list li { display: inline-block; width:50%;}
+ul.cred-list li:nth-child(2) { text-align: right;}
+.cred_btn.mat-button {background-color: #1e232b;border-color: #1e232b;color: #fff; }
+:host /deep/ fieldset.scheduler-border.rwd-block {margin-top: 0em !important;}
+:host /deep/ .rwd-table .mat-checkbox { display: block;padding: 2px 0; }
+:host /deep/ .mat-checkbox-layout .mat-checkbox-label { font-weight: normal; }
+.col-set-height{min-height:90px;}
+.general-tab.error-activity .general-list li { display: block;}
+.general-tab.error-activity .general-list.bg_color_change li{display:inline-block}
+.hpanel .alert{margin-top:20px}
+.text-danger{bottom:auto !important}
+.avatar-image.avatar-image-new { width: 210px; position: relative;border: none; }
+.avatar-image-new .delete_icons { position: absolute; top: 6px; z-index: 99; cursor: pointer; right: 0; background: rgba(0,0,0,0.6); width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; color: #fff; border-radius: 50%; }
+.filter-search-box .mat-form-field{margin-top:30px}
+.add-student-form select{height:50px}
+:host /deep/ .add-student-form .form-horizontal .form-group.search_btn_clr{height:100%;margin-top:10px}
+fieldset .select-file label{color:#fff}
+
+:host /deep/ .report_multiple_language .ng-select .ng-select-container{height:32px}
+:host /deep/ .report_multiple_language .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder{top:9px}
+
+.save_btn_container{padding-top:40px}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) 
+{
+:host /deep/ .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-icon-button, :host /deep/ .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button {position:relative;top:10px;}
+.refresh-icon { bottom:auto; top:10px;} 
+}
+
+@media (max-width:1199px)
+{
+.general-tab { margin:0px 0px 10px 0px; }
+.general-tab.sandbox { padding:0;}
+.sandbox-btn { top:0px;}
+}
+
+@media (max-width:1100px)
+{
+ul.general-list.org_doc li { width:100%; }
+}
+
+@media (max-width:767px)
+{
+div.select_table table tr td:first-child { width:85%; padding:10px 0; word-break: break-all;}
+:host /deep/ .start_wrapper.account-setting .panel-heading .pull-right .account-lang { float:none !important; margin:5px 0px; }
+ul.general-list.org_doc li { width:100%; }
+:host /deep/ fieldset.scheduler-border.rwd-block {padding:0 10px 0 10px !important;margin: 0em !important;}
+
+}
+
+@media (max-width:480px)
+{
+.col-set-height{width:100%;min-height:auto;}
+}

@@ -1,0 +1,236 @@
+<section class="start_wrapper">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>Custom Feature <span matTooltip="{{'phi_cust_feature' | translate}}" class="headTooltip"><i class="material-icons"> help_outline</i></span></h3>
+      </div>
+      <div class="pull-right">
+        <button mat-button routerLink="/students">
+          <i class="fa fa-hand-o-left fa-1x" style="font-size:20px;"></i> {{'back_to_student_list' | translate}}</button>
+      </div>
+    </div>
+
+
+    <div class="panel-heading clearfix filter-search-box">
+      <fieldset class="scheduler-border">
+        <form>
+          <div class="col-lg-6 col-md-4 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Search</mat-label>
+              <input matInput class="form-control" name="search">
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="user-btn-block">
+              <button type="submit" class="filter-btn search" mat-button>{{'search' | translate}}</button>
+              <button type="reset" class="filter-btn reset" mat-button>{{'reset' | translate}}</button>
+            </div>
+          </div>
+        </form>
+      </fieldset>
+    </div>
+    <div class="panel-body">
+        <div class="add-student-form">
+          
+          <form class="form-horizontal" (ngSubmit)="submit(studentForm.value)" [formGroup]="studentForm">
+            <div class="col-lg-12 col-md-12 col-sm-12 avatar-upload">
+             <div class="col-md-5">
+                <div class="avatar-image">
+                  <img [src]="(studentModel.avatar)? studentModel.avatar : 'assets/images/avatar.jpeg'">            
+                </div>
+              </div>
+
+              <div class="col-md-7">
+                  <div class="avatar-info">
+                    <div class="label-btn">                
+                      <label class="btn btn-primary select-file-btn">{{'select_file' | translate}}
+                        <input type="file" accept=".jpg, .jpeg, .png" style="display: none" (change)="uploadFile($event)">
+                      </label>
+                    </div>
+                    <div class="text-info text-left"> ({{'image_quality_size' | translate}}: (200x200) <br> ({{'support_only' | translate}} jpeg, jpg, & png) </div>          
+                    <div class="text-danger text-left small" style="font-weight: normal;position:relative;margin-bottom:10px;">{{this.errorMsgArr['avatar']}}</div>             
+                  </div>
+              </div>              
+            </div>
+
+            
+             <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="username">Company code
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="student_id" placeholder="{{'student_id' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('student_id') || this.errorMsgArr['student_id'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="username"> SAP code
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="student_id" placeholder="{{'student_id' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('student_id') || this.errorMsgArr['student_id'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="username">Social security code
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="student_id" placeholder="{{'student_id' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('student_id') || this.errorMsgArr['student_id'] | translate}}</div>
+              </div>
+            </div>
+
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="group-field-block form-group">
+               <label class="control-label" for="group">{{'group' | translate}}</label>
+              <div class="group-field">
+                <mat-form-field appearance="outline" class="autocomplete">
+                  <input (input)="getinputgroupname($event.target.value)" formControlName="group_id" [(ngModel)]="search" [formControl]="myControl" placeholder="{{'group' | translate}}" matInput [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                      {{option.group_name}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                </div>
+                </div>
+              </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="username">{{'student_id' | translate}}
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="student_id" placeholder="{{'student_id' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('student_id') || this.errorMsgArr['student_id'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="username">{{'first_name' | translate}}
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="first_name" placeholder="{{'first_name' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('first_name') || this.errorMsgArr['first_name'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="fullname">{{'last_name' | translate}}
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="last_name" placeholder="{{'last_name' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('last_name') || this.errorMsgArr['last_name'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="email">{{'email' | translate}}
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" id="email" formControlName="email" placeholder="{{'email' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('email') || this.errorMsgArr['email'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="form-group">
+                  <label class="control-label">{{'phone_number' | translate}}</label>
+                  <input type="text" class="form-control" formControlName="phone" placeholder="{{'phone_number' | translate}}">
+                  <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('phone') || this.errorMsgArr['phone'] | translate}}</div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label">{{'gender' | translate}}</label>
+                <select class="form-control" formControlName="gender">
+                  <option [disabled]="true" [selected]="true" [value]="undefined" class="register-type">{{'select' | translate}} {{'gender' | translate}}</option>
+                  <option value="M" [selected]="studentModel.gender === 'M'"> {{'male' | translate}} </option>
+                  <option value="F" [selected]="studentModel.gender === 'F'"> {{'female' | translate}} </option>
+                </select>
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('gender') || this.errorMsgArr['gender'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="dob">{{'date_of_birth' | translate}}</label>                
+                <div>
+                <mat-form-field class="angular-datepicker">
+                  <input matInput [matDatepicker]="picker" (click)="picker.open()" [readonly]="true" placeholder="mm/dd/yyyy" formControlName="dob"
+                    (dateChange)="changeDateEvent($event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <div class="refresh-icon" (click)="refreshDobDate()"><mat-icon>refresh</mat-icon></div>
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('dob') || this.errorMsgArr['dob'] | translate}}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="address">{{'address' | translate}}</label>
+                <textarea type="text" class="form-control" id="address" formControlName="address" placeholder="{{'address' | translate}}"></textarea>
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('address') || this.errorMsgArr['address'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="city">{{'city' | translate}}</label>
+                <input type="text" class="form-control" id="city" formControlName="city" placeholder="{{'city' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('city') || this.errorMsgArr['city'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="state">{{'state' | translate}}</label>
+                <input type="text" class="form-control" id="state" formControlName="state" placeholder="{{'state' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('state') || this.errorMsgArr['state'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="country">{{'country' | translate}}</label>
+                <input type="text" class="form-control" id="country" formControlName="country" placeholder="{{'country' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('country') || this.errorMsgArr['country'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="zipcode">{{'zipcode' | translate}}</label>
+                <input type="text" class="form-control" id="zipcode" formControlName="zipcode" placeholder="{{'zipcode' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('zipcode') || this.errorMsgArr['zipcode'] | translate}}</div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="alert alert-danger" *ngIf="errorMsg">
+                {{errorMsg | translate}}
+              </div>
+              <br>
+            </div>
+            <div class="col-sm-10">
+              <div class="form-group">
+                <button type="button" *ngIf="process" class="btn btn-primary">{{'processing' | translate}}...</button>
+                <button type="submit" *ngIf="!process" mat-button class="btn btn-form-save">{{'save_button' | translate}}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
+</section>

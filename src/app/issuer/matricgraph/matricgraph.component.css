@@ -1,0 +1,5 @@
+:host{display: block;}
+.no_record { width:100%;display: inline-block; text-align:center;}
+.no_record h2 { font-size:16px; color:#1e232b;margin: 20px 0; }
+:host /deep/ .start_wrapper .panel-heading .pull-right button { background-color: transparent; padding:0 0;box-shadow:none;}
+:host /deep/ .start_wrapper .panel-heading .pull-right button span { color:#1e232b;}

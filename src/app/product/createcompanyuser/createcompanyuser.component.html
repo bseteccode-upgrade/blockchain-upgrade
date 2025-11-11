@@ -1,0 +1,199 @@
+<section class="start_wrapper issue-certificate-list">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'assign_reassign_for_workflow' | translate}} <span
+            matTooltip="{{'assign_reassign_for_workflow_info' | translate}}" class="headTooltip"><i
+              class="material-icons">
+              help_outline</i></span></h3>
+      </div>
+      <div class="pull-right">
+        <div class="form-group">
+          <button id="back_to_team" mat-button class="add-course-btn" routerLink="/membersassign">
+            <i class="fa fa-hand-o-left fa-1x" style="font-size:20px;"></i>
+            {{'back_to_notification_workflow' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="create_company_user">
+      <div *ngIf="errorMsg" class="alert alert-danger">{{'please_select_atleast_one_member' | translate}}</div>
+      <div class="select-form">
+        <div class="col-md-5 col-sm-12 col-xs-12 company_border">
+          <div class="company_title">
+            <h4>{{'member_list' | translate}}</h4>
+          </div>
+          <div class="form-group">
+            <div class="reviewer-layout-block" *ngIf="!loading && !no_member">
+              <ul class="workflowscroll" id="workflowScroll" slimScroll [options]="options">
+                <li *ngFor="let mem of cmpymemlist" class="wfClassAddLi">
+                  <p id="{{mem.id}}"><span>{{mem.first_name}}
+                      {{mem.last_name}}</span>
+                    <button (click)="selectMember(mem.id, false, true)" class="assign" mat-mini-fab>
+                      <i class="material-icons">arrow_forward</i></button></p>
+                </li>
+              </ul>
+            </div>
+            <div class="add_new_member" *ngIf="!loading && no_member">
+              <span>{{'please_create_and_add_member_to_workflow' | translate}}</span>
+              <a routerLink="/createmember">
+                {{'add_new_members' | translate}}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-7 col-sm-12 col-xs-12 company_border">
+          <div class="company_title">
+            <h4>{{'selected_member_list' | translate}}</h4>
+          </div>
+          <div class="form-group" *ngIf="!loading">
+            <ul class="user-list workflowscroll" slimScroll [options]="options">
+              <li *ngFor="let user of selectmemberDetailsList">
+                <p><span id="{{user.id}}">{{user.first_name}}
+                    {{user.last_name}}</span></p>
+                <button class="block" mat-mini-fab
+                  (click)="ngxSmartModalService.getModal('blockuser').open();deleteMember(user.id)" matTooltip="Block">
+                  <i class="material-icons">
+                    block
+                  </i></button>
+                <button class="re-assign" mat-mini-fab
+                  (click)="ngxSmartModalService.getModal('myModal').open(); reassignMemberIDSelect(user.id)"
+                  matTooltip="Reassign"> <span class="material-icons">assignment_late</span> </button>
+                <button matTooltip="Resend" (click)="onResendMember(user.id)" class="assign" mat-mini-fab>
+                  <i class="material-icons">send</i></button>
+                <!-- <button *ngIf="!user.activity_posted" class="block" mat-mini-fab (click)="ngxSmartModalService.getModal('blockuser').open();deleteMember(user.id)"
+                  matTooltip="Block"> <i class="material-icons">
+                    block
+                  </i></button>
+                <button *ngIf="!user.activity_posted" class="re-assign" mat-mini-fab
+                  (click)="ngxSmartModalService.getModal('myModal').open(); reassignMemberIDSelect(user.id)"
+                  matTooltip="Reassign"> <span class="material-icons">assignment_late</span> </button> -->
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+
+    <div class="save_btn">
+      <button mat-button class="save" (click)="saveSelectedMember()">Save</button>
+    </div>
+  </div>
+
+  <ngx-smart-modal #outbatchModal identifier="outbatchModal"
+    (onAnyCloseEvent)="ngxSmartModalService.resetModalData('outbatchModal')">
+    <div>
+      <form [formGroup]="assignOutbatchForm" #resetFormID="ngForm"
+        (ngSubmit)="onOutbatchSubmit(assignOutbatchForm.value)">
+        <fieldset>
+          <legend>{{'outbatch_list' | translate}}</legend>
+          <div class="password-enter delete-container">
+
+            <div class="row" *ngIf="resOutbatchDetails?.posted_activity.length > 0">
+              <div class="col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-select formControlName="workflow_db_id"
+                    placeholder="{{'select' | translate}} {{'outbatch' | translate}}">
+                    <mat-option *ngFor="let data of resOutbatchDetails?.posted_activity" [value]='data.out_batch_id'>
+                      {{data.out_batch_id}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="text-danger text-left small" *ngIf="reassignErrorMsg">
+                  {{getOutbatchErrorMsg('workflow_db_id') | translate}}</div>
+              </div>
+            </div>
+
+          </div>
+        </fieldset>
+        <div class="form-group" style="float: right">
+          <button *ngIf="resOutbatchDetails?.posted_activity.length > 0" type="submit" [disabled]="outbatchSubmit"
+            mat-button class="password-submit" style="margin-right:10px">{{'assign' | translate}}</button>
+          <button type="button" mat-button class="password-submit"
+            (click)="outbatchModal.close()">{{'close' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </ngx-smart-modal>
+
+  <ngx-smart-modal #myModal identifier="myModal" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+    <div>
+      <form [formGroup]="reassignForm" #resetFormID="ngForm" (ngSubmit)="reassignSubmit(reassignForm.value)">
+        <fieldset>
+          <legend>{{'resign_the_member' | translate}}</legend>
+          <div class="password-enter delete-container">
+            <h5>{{'resign_the_member_info' | translate}}</h5>
+            <br>
+
+            <div class="row" *ngIf="balanceMemList.length > 0">
+              <div class="col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-select formControlName="reassign_member"
+                    placeholder="{{'select' | translate}} {{'member' | translate}}">
+                    <mat-option *ngFor="let mem of balanceMemList" [value]='mem.id'>{{mem.first_name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="text-danger text-left small" *ngIf="reassignErrorMsg">
+                  {{getassignErrorMsg('reassign_member') | translate}}</div>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="balanceMemList.length === 0">
+              {{'you_are_assigned_all_the_users' | translate}}
+            </div>
+
+          </div>
+        </fieldset>
+        <div class="form-group" style="float: right">
+          <button *ngIf="balanceMemList.length > 0" type="submit" [disabled]="checkSubmit" mat-button
+            class="password-submit" style="margin-right:10px">{{'assign' | translate}}</button>
+          <button type="button" mat-button class="password-submit"
+            (click)="myModal.close()">{{'close' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </ngx-smart-modal>
+  <ngx-smart-modal #blockuser identifier="blockuser"
+    (onAnyCloseEvent)="ngxSmartModalService.resetModalData('blockuser')">
+    <div>
+      <fieldset>
+        <legend>{{'block_member' | translate}}</legend>
+        <div class="password-enter delete-container">
+          <h5>{{'block_member_info' | translate}}</h5>
+        </div>
+      </fieldset>
+      <div class="form-group" style="float: right">
+        <button type="button" [disabled]="checkSubmit" mat-button class="password-submit" style="margin-right:10px"
+          (click)="onBlockMember()">{{'block_button' | translate}}</button>
+        <button type="button" mat-button class="password-submit"
+          (click)="blockuser.close()">{{'cancel' | translate}}</button>
+      </div>
+    </div>
+  </ngx-smart-modal>
+
+  <ngx-smart-modal #resenduser identifier="resenduser"
+    (onAnyCloseEvent)="ngxSmartModalService.resetModalData('resenduser')">
+    <div>
+      <fieldset>
+        <legend>{{'resend_mail' | translate}}</legend>
+        <div class="password-enter delete-container">
+          <h5>{{'resend_mail_info' | translate}}</h5>
+        </div>
+      </fieldset>
+      <div class="form-group" style="float: right">
+        <button type="button" [disabled]="checkMailSubmit" mat-button class="password-submit" style="margin-right:10px"
+          (click)="onConfirmResend()">{{'resend' | translate}}</button>
+        <button type="button" mat-button class="password-submit"
+          (click)="resenduser.close()">{{'cancel' | translate}}</button>
+      </div>
+    </div>
+  </ngx-smart-modal>
+</section>

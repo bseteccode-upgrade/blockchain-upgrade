@@ -1,0 +1,108 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?ptwnar');
+  src:  url('fonts/icomoon.eot?ptwnar#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?ptwnar') format('truetype'),
+    url('fonts/icomoon.woff?ptwnar') format('woff'),
+    url('fonts/icomoon.svg?ptwnar#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-activity:before {
+  content: "\e900";
+}
+.icon-blockchain:before {
+  content: "\e901";
+}
+.icon-certificate:before {
+  content: "\e902";
+}
+.icon-course:before {
+  content: "\e903";
+}
+.icon-dashboard:before {
+  content: "\e904";
+}
+.icon-download-activity:before {
+  content: "\e905";
+}
+.icon-email-bounce:before {
+  content: "\e906";
+}
+.icon-issue-certificate:before {
+  content: "\e907";
+}
+.icon-logout:before {
+  content: "\e908";
+}
+.icon-management:before {
+  content: "\e909";
+}
+.icon-member-inbox:before {
+  content: "\e90a";
+}
+.icon-message:before {
+  content: "\e90b";
+}
+.icon-password:before {
+  content: "\e90c";
+}
+.icon-plan:before {
+  content: "\e90d";
+}
+.icon-product:before {
+  content: "\e90e";
+}
+.icon-report:before {
+  content: "\e90f";
+}
+.icon-settings:before {
+  content: "\e910";
+}
+.icon-student:before {
+  content: "\e911";
+}
+.icon-total-activity:before {
+  content: "\e912";
+}
+.icon-total-activity-old:before {
+  content: "\e913";
+}
+.icon-total-product:before {
+  content: "\e914";
+}
+.icon-total-review:before {
+  content: "\e915";
+}
+.icon-total-review-old:before {
+  content: "\e916";
+}
+.icon-total-workflow:before {
+  content: "\e917";
+}
+.icon-trace:before {
+  content: "\e918";
+}
+.icon-track:before {
+  content: "\e919";
+}
+.icon-vottun-logo:before {
+  content: "\e91a";
+}

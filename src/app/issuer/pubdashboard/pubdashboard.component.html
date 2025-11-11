@@ -1,0 +1,139 @@
+<div class="total-count-block">
+  <div class="col-md-3 col-sm-12">
+    <div class="total-student">
+      <div class="total-left">
+        <h4>{{'total_students' | translate}}</h4>
+        <h3>{{apiService.matrixData.student_count}}</h3>
+      </div>
+      <div class="total-right">
+        <span class="side-icon icon-student"></span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-3 col-sm-12">
+    <div class="total-addnew">
+      <div class="total-left">
+        <h4>{{'total_courses' | translate}}</h4>
+        <h3>{{apiService.matrixData.course_count}}</h3>
+      </div>
+      <div class="total-right">
+        <span class="side-icon icon-course"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-12">
+    <div class="total-certificate">
+      <div class="total-left">
+        <h4>{{'total_certificates' | translate}}</h4>
+        <h3>{{apiService.matrixData.certificate_count}}</h3>
+      </div>
+      <div class="total-right">
+        <span class="side-icon icon-certificate"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-12">
+    <div class="total-achievement">
+      <div class="total-left">
+        <h4>{{'total_achievements' | translate}}</h4>
+        <h3>{{ apiService.matrixData.total_achievements }}</h3>
+      </div>
+      <div class="total-right">
+        <span class="side-icon icon-issue-certificate"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="total-count-block">
+  <div class="col-md-3 col-sm-12">
+    <div class="total-student share">
+      <div class="total-left">
+        <h4>{{'total_share' | translate}}</h4>
+        <h3>{{apiService.matrixData.social_count}}</h3>
+      </div>
+
+      <div class="total-right">
+        <i class="material-icons">folder_shared</i>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-3 col-sm-12">
+    <div class="total-addnew download">
+      <div class="total-left">
+        <h4>{{'total_download' | translate}}</h4>
+        <h3>{{apiService.matrixData.download_count}}</h3>
+      </div>
+
+      <div class="total-right">
+        <i class="material-icons">cloud_download</i>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-12">
+    <div class="total-certificate login">
+      <div class="total-left">
+        <h4>{{'total_logged_in' | translate}}</h4>
+        <h3>{{apiService.matrixData.login_count}}</h3>
+      </div>
+
+      <div class="total-right">
+        <i class="material-icons">login</i>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-sm-12">
+    <div class="total-achievement review">
+      <div class="total-left">
+        <h4>{{'total_user_reviewed' | translate}}</h4>
+        <h3>{{apiService.matrixData.embed_count}}</h3>
+      </div>
+
+      <div class="total-right">
+        <i class="material-icons">preview</i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="start_wrapper change-pwd">
+  <div class="panel-heading clearfix">
+    <div class="pull-left">
+      <h3>{{'activity' | translate}}</h3>
+    </div>
+
+    <div class="pull-right">
+        <input *ngIf='displayRange' type="text" name="daterangeInput" daterangepicker [options]="options" (selected)="selectedDate($event, daterange)" class="custon_inputdate" />
+      <button mat-mini-fab [matMenuTriggerFor]="menu" class="user-status_menu"><span><i
+            class="material-icons">more_vert</i></span></button>
+      <mat-menu #menu="matMenu">
+        <button *ngFor="let type of types" mat-menu-item
+          (click)="onChangeType(type.value)">{{type.viewValue | translate}}</button>
+      </mat-menu>
+    </div>
+  </div>
+
+
+  <div *ngIf="norecordfound;else other_content" class="alert alert-info no-records">
+    <h2>{{'no_records_found' | translate}}</h2>
+  </div>
+
+  <ng-template #other_content>
+
+    <div class="col-md-12">
+      <canvas baseChart [chartType]="'line'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+        [legend]="true">
+      </canvas>
+    </div>
+
+  </ng-template>
+
+</section>

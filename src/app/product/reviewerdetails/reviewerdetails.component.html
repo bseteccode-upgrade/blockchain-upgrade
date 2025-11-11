@@ -1,0 +1,306 @@
+<section class="start_wrapper">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'reviewer' | translate}} <span matTooltip="{{'phi_workflow' | translate}}" class="headTooltip"><i
+              class="material-icons">
+              help_outline</i></span></h3>
+      </div>
+      <div class="pull-right">
+        <div class="form-group">
+          <button *ngIf="workflowid === null" id="back_to_team" mat-button class="add-course-btn"
+            routerLink="/reviewerlist">
+            <i class="fa fa-hand-o-left fa-1x" style="font-size:20px;"></i>
+            {{'back_to_reviewer' | translate}}
+          </button>
+          <button *ngIf="workflowid !== null" id="back_to_team" mat-button class="add-course-btn"
+            routerLink="/createreviewer/{{workflowid}}">
+            <i class="fa fa-hand-o-left fa-1x" style="font-size:20px;"></i>
+            {{'back_to_reviewer' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="add-student-form add-team">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="alert alert-success" *ngIf="successMsg">
+              {{successMsg}}
+            </div>
+            <br>
+          </div>
+          <form class="form-horizontal" [formGroup]="teamMemberForm" (ngSubmit)="submitForm(teamMemberForm.value)">
+
+            <div class="col-md-12 col-sm-12 avatar-upload" *ngIf="apiService.userType === '3' || apiService.userType === '0'">
+              <div class="col-md-4 col-sm-12 product-image-field">
+                <label class="control-label" for="name">{{'company_logo' | translate}}</label>
+                <div class="avatar-image">
+                  <img
+                    [src]="(teamModel.university_avatar)? teamModel.university_avatar : 'assets/images/university-logo.png'">
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-12">
+                <div class="select-file">
+                  <label class="btn btn-primary select-file-btn">{{'select_cmp_logo' | translate}}
+                    <input type="file" name="file" accept=".jpg, .jpeg, .png" style="display: none"
+                      (change)="uploadFileOrg($event)">
+                  </label>
+
+                  <div class="text-info text-left"> Image quality size is: (200x200) <br>
+                    {{'support_only_image' | translate}} </div>
+                  <div class="text-danger text-left small" style="position: relative;" *ngIf="errorMsg">
+                    {{this.errorMsgArr['image'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="name">{{'first_name' | translate}}
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="first_name"
+                  placeholder="{{'first_name' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{getErrorMsg('first_name') || this.errorMsgArr['first_name'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="name">{{'last_name' | translate}}
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="last_name"
+                  placeholder="{{'last_name' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{getErrorMsg('last_name') || this.errorMsgArr['last_name'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="email">{{'email' | translate}}
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="email" placeholder="{{'email' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{getErrorMsg('email') || this.errorMsgArr['email'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="phone">{{'phone_number' | translate}}</label>
+                <input type="text" class="form-control" formControlName="phone"
+                  placeholder="{{'phone_number' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{getErrorMsg('phone') || this.errorMsgArr['phone'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6" *ngIf="apiService.userType === '3' || apiService.userType === '0'">
+              <div class="form-group">
+                <label class="control-label" for="organization">{{'company_name' | translate}}
+                </label>
+                <input type="text" class="form-control" formControlName="organization"
+                  placeholder="{{'company_name' | translate}}">
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="role">{{'role' | translate}} <span *ngIf="apiService.userType === '3' || apiService.userType === '0'"
+                    class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="custom_template" placeholder="{{'role' | translate}}"
+                  [ngModel]="workflowrole" [readonly]="apiService.userType === '3' ? true : false">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{getErrorMsg('custom_template') || this.errorMsgArr['custom_template'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6" *ngIf="apiService.userType === '3' || apiService.userType === '0'">
+              <div class="form-group">
+                <label class="control-label" for="product">{{'activitys' | translate}} {{'steps' | translate}} <span
+                    class="mandatory">*</span></label>
+                <input type="text" class="form-control" formControlName="product_step" placeholder="{{'role' | translate}}"
+                  [ngModel]="workflowstep" readonly>
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{getErrorMsg('product_step') || this.errorMsgArr['product_step'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="name">{{'workflow_id' | translate}}</label>
+                <input type="text" class="form-control" formControlName="workflow_id"
+                  placeholder="{{'workflow_id' | translate}}" [ngModel]="workflowname" readonly>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="phone">{{'access_menu' | translate}}
+                  <span *ngIf="access_notify" class="access_notify_label">*{{'select_atleast_one' | translate}}</span>
+                </label>
+
+                <ul class="access-menu">
+                  <li>
+                    <mat-checkbox id='menupriviliage_1' (change)="onSelectTeamCheck(1, $event.checked)"
+                      formControlName="download">{{'download' | translate}}</mat-checkbox>
+                  </li>
+                  <li>
+                    <mat-checkbox id='menupriviliage_2' (change)="onSelectTeamCheck(1, $event.checked)"
+                      formControlName="all_steps">{{'all_steps' | translate}}</mat-checkbox>
+                  </li>
+                  <li>
+                    <mat-checkbox id='menupriviliage_3' (change)="onSelectTeamCheck(1, $event.checked)"
+                      formControlName="specific_step">{{'specific_steps' | translate}}</mat-checkbox>
+                  </li>
+                </ul>
+                <div class="col-md-12 col-sm-12" *ngIf="teamMemberForm.controls['specific_step'].value">
+                  <div class="form-group">
+                    <label class="control-label badge-id" for="barcode">{{'steps' | translate}}
+                      <span class="mandatory">*</span>
+                    </label>
+                    <ng-select formControlName="activity_field_set" (keypress)="onAvoidComma($event)" placeholder="{{'select' | translate}}
+                {{'steps' | translate}}" [searchFn]="customSearchFn" [selectOnTab]='true' [addTag]="true" [items]="wfuserlists" [multiple]="true"
+                      bindLabel="item" bindValue="id">
+                      <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                        {{item.email}}
+                        <span class="ng-value-icon right" (click)="clear(item); $event.stopPropagation()"
+                          aria-hidden="true">×</span>
+                      </ng-template>
+                      <ng-template ng-option-tmp let-item="item">
+                        {{item.email}} ({{item.workflow}}) ({{item.product_step}})
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="status">{{'status' | translate}}</label>
+                <div class="">
+                  <mat-radio-group [(ngModel)]="teamModel.is_active" formControlName="is_active">
+                    <mat-radio-button class="example-radio-button" *ngFor="let statuslist of statuslists"
+                      [value]="statuslist.value">
+                      {{statuslist.text | translate}}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="alert alert-danger" *ngIf="errorMsg">
+                {{errorMsg | translate}}
+              </div>
+              <br>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-group">
+                <button *ngIf="process" class="btn btn-primary">{{'processing' | translate}}...</button>
+                <button *ngIf="!process" [disabled]="disablebutton" mat-button
+                  class="btn btn-form-save">{{'save_button' | translate}}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ngx-smart-modal #myModal identifier="myModal" [closable]='false' [escapable]='false' [dismissable]='false'
+  (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+
+  <div class="add-select-title">
+    <h4>{{'add_select_drop_down' | translate}}</h4>
+  </div>
+
+  <div class="add-select-field">
+    <div class="row">
+      <div class="col-md-8 col-sm-12">
+        <input type="text" class="form-control" #optionval placeholder="{{'enter_option' | translate}}"
+          (keyup.enter)="addOptionsValues(myModal.getData().selectedIndex, optionval.value)">
+      </div>
+
+      <div class="col-md-4 col-sm-12">
+        <div class="add-opt">
+          <a (click)="addOptionsValues(myModal.getData().selectedIndex, optionval.value)" mat-button
+            href="javascript://" mat-button class="add_role">
+            {{'add_options' | translate}} <i class="material-icons">add_circle</i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="teamMemberForm.controls['field_set'].value.length > 0" class="add-custom-section">
+    <div
+      *ngFor="let optionVal of teamMemberForm.controls['field_set']?.value[myModal.getData()?.selectedIndex]?.options; let j = index"
+      class="evidence-field">
+
+      <ul class="optional-list">
+        <li><span>{{optionVal.key}}</span></li>
+
+        <li>
+          <a class="evidence-delete add-options" (click)="removeOptions(myModal.getData().selectedIndex, j)">
+            <i class="material-icons">delete</i>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <div class="dropdown-ok">
+    <button type="button" mat-button class="add-custom-ok"
+      (click)="ngxSmartModalService.getModal('myModal').close();">{{'ok' | translate}}</button>
+  </div>
+</ngx-smart-modal>
+
+<div class="acheivement-popup detailModelBox">
+  <ngx-smart-modal #showRole identifier="showRole" class="showRole">
+    <div class="info-tooltip"><a (click)="ngxSmartModalService.getModal('tooltipShow').open()"><i
+          class="material-icons"> info </i></a></div>
+
+    <div class="tool-image">
+      <img src="assets/images/activity-template.png" class="img-responsive">
+    </div>
+  </ngx-smart-modal>
+</div>
+
+<div class="acheivement-popup detailModelBox">
+  <ngx-smart-modal #graphicShow identifier="graphicShow" class="graphicShow">
+    <div class="info-tooltip"><a (click)="ngxSmartModalService.getModal('tooltipGraphic').open()"><i
+          class="material-icons"> info </i></a></div>
+
+    <div class="tool-image">
+      <img src="assets/images/step-UI.png" class="img-responsive">
+    </div>
+  </ngx-smart-modal>
+</div>
+
+
+
+
+
+<ngx-smart-modal #tooltipGraphic identifier="tooltipGraphic" class="tooltipGraphic">
+  <h4>{{'template_road_map_head' | translate}}</h4>
+  <p>{{'template_road_map_info' | translate}}</p>
+</ngx-smart-modal>
+
+<ngx-smart-modal #tooltipShow identifier="tooltipShow" class="tooltipShow">
+  <h4>{{'mobileview_center_layout_head' | translate}}</h4>
+  <p>{{'mobileview_center_layout_info' | translate}}</p>
+</ngx-smart-modal>

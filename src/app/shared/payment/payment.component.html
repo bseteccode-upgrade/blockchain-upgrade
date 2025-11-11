@@ -1,0 +1,369 @@
+<mat-spinner *ngIf="loading"></mat-spinner>
+<section class="start_wrapper new-assign" *ngIf="!loading">
+    <div class="hpanel">
+        <div class="panel-heading clearfix">
+            <div class="pull-left">
+                <h3>{{'plans' | translate}} <span matTooltip="{{'phi_plans' | translate}}" class="headTooltip"><i
+                            class="material-icons">
+                            help_outline</i></span></h3>
+            </div>
+            <div class="pull-right"></div>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-4 col-sm-4">
+                    <div class="pricing-details" [innerHTML]="paymentContent.message">
+                    </div>                    
+                </div>
+
+                <div class="col-md-8 col-sm-8">
+                    <div class="table-responsive pricing_table">
+                        <form class="form-horizontal" [formGroup]="paymentForm">
+
+                            <ul class="payment-list">
+                                <li>
+                                    <div class="currency-select">
+                                        <label class="control-label">{{'currency' | translate}}</label>
+                                        <select formControlName="currency" class="form-control"
+                                            (change)="callCurrencyCalculation($event.target.value, radioSelectedPlan)">
+                                            <option [value]="currency.value" *ngFor="let currency of currencyLists">
+                                                {{currency.label}}</option>
+                                        </select>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-group select-group" *ngIf="initialPay && apiService.blockchain_client == ''">
+                                        <label class="control-label"
+                                            for="tinNumber">{{'select_blockchain' | translate}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <mat-select formControlName="blockchainselect"
+                                                (change)="resetSelectFieldError()"
+                                                placeholder="{{ 'select_blockchain' | translate}}">
+                                                <mat-option value="" disabled selected>
+                                                    {{ 'select_blockchain' | translate}}
+                                                </mat-option>
+                                                <mat-option [value]="blklabel"
+                                                    *ngFor="let blklabel of defaultBadgeCount.blockchain_clients">
+                                                    {{blklabel}}</mat-option>
+                                            </mat-select>
+
+                                            <div class="text-danger text-left small payment-error" *ngIf="errorMsg">
+                                                {{geterrorMsgUser('blockchainselect') | translate}}</div>
+                                        </mat-form-field>
+                                    </div>
+                                </li>
+                            </ul>
+
+
+
+                            <table>
+
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th scope="col" colspan="2">
+                                            <mat-radio-group>
+                                                <mat-radio-button *ngIf="plans[1]" value="normal" (click)="selectPlan(plans[1], 'normal')"
+                                                    checked="{{normalPlanPurchased ? true : false}}">{{planNameNormal}}
+                                                </mat-radio-button>
+                                                <mat-radio-button value="api" (click)="selectPlan(plans[0], 'api')"
+                                                    checked="{{apiPlanPurchased ? true : false}}">{{planNameApi}}
+                                                </mat-radio-button>
+                                                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsgUser('paymentplan')
+                                                    | translate}}</div>
+                                            </mat-radio-group>
+                                        </th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+
+                                    <tr>
+                                        <th scope="row">{{'licensing' | translate}} <br></th>
+                                        <td *ngIf="plans[1]">
+                                            {{currencyFormat[currencyKey]}}{{plans[1][currencyKey]['amount']}} <span
+                                                class="purchase">{{normalPlanPurchased ?
+                                                'purchased' : '' | translate}}</span></td>
+                                        <td>{{currencyFormat[currencyKey]}}{{plans[0][currencyKey]['amount']}} <span
+                                                class="purchase">{{apiPlanPurchased ?
+                                                'purchased' : '' | translate}}</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">{{'transaction_fee' | translate}} <br><span>({{'per_blockchain_cert'
+                                                | translate}})</span></th>
+                                        <td *ngIf="plans[1]">{{currencyFormat[currencyKey]}}{{normalCertAmount}}</td>
+                                        <td>{{currencyFormat[currencyKey]}}{{apiCertAmount}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">{{'transaction_fee_digital' | translate}} <br><span>({{'per_digital'
+                                                |
+                                                translate}})</span></th>
+                                        <td *ngIf="plans[1]">{{currencyFormat[currencyKey]}}{{normalPlanCourseAmount}}
+                                        </td>
+                                        <td>{{currencyFormat[currencyKey]}}{{apiPlanCourseAmount}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">{{'transaction_batch' | translate}}</th>
+
+                                        <td *ngIf="plans[1]">
+
+                                            <ul class="payment_list">
+                                                <li>
+                                                    <select class="form-control" formControlName="badgecountnormal"
+                                                        #normalSelectVal (change)="onNormalPlan(normalSelectVal.value)"
+                                                        placeholder="batch" [(value)]="defaultBadgeCountselected">
+                                                        <option [value]="(i+5)*defaultBadgeCount.batch"
+                                                            *ngFor="let in of counter(496) ;let i = index">
+                                                            {{(i+5)*defaultBadgeCount.batch}}</option>
+                                                    </select>
+                                                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsgUser('badgecountnormal')
+                                                        || errorMsgArr['badgecountnormal'] | translate}}</div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="discount">
+                                                        <p>{{'discount' | translate}} {{displayDiscountNormal}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                        </td>
+
+                                        <td>
+                                            <ul class="payment_list">
+                                                <li>
+                                                    <select class="form-control" formControlName="badgecountapi"
+                                                        #apiSelectVal (change)="onApiPlan(apiSelectVal.value)"
+                                                        placeholder="batch" [(value)]="defaultBadgeCountselected">
+                                                        <option [value]="(i+5)*defaultBadgeCount.batch"
+                                                            *ngFor="let in of counter(496) ;let i = index">
+                                                            {{(i+5)*defaultBadgeCount.batch}}</option>
+                                                    </select>
+                                                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsgUser('badgecountapi')
+                                                        || errorMsgArr['badgecountapi'] | translate}}</div>
+                                                </li>
+
+                                                <li>
+                                                    <div class="discount">
+                                                        <p>{{'discount' | translate}} {{displayDiscountAPI}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">{{'total_cost' | translate}}</th>
+
+                                        <td *ngIf="plans[1]">
+                                            <ul class="payment_list total_price">
+                                                <li>
+                                                    <p>{{currencyFormat[currencyKey]}}{{finalnormalPlanAmount}}</p>
+                                                </li>
+
+                                                <li>
+                                                    <div class="discount-price">
+                                                        <p>{{'you_can_save' | translate}}
+                                                            {{currencyFormat[currencyKey] + normalDiscount}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                        </td>
+
+                                        <td>
+                                            <ul class="payment_list total_price">
+                                                <li>
+                                                    <p>{{currencyFormat[currencyKey]}}{{finalapiPlanAmount}}</p>
+                                                </li>
+
+                                                <li>
+                                                    <div class="discount-price">
+                                                        <p>{{'you_can_save' | translate}}
+                                                            {{currencyFormat[currencyKey] + apiDiscount}}</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="pricing-details">
+                            </div>
+                            <div class="buynow">
+                                <button mat-button *ngIf="!process" (click)="initializePayment();">{{'buy_now' |
+                                    translate}}</button>
+                                <button mat-button *ngIf="process" class="plan-btn" disabled style="color:#fff">{{'processing'
+                                    | translate}}...</button>
+                            </div>
+
+                            <div class="info_text">
+                                {{'do_you_need_an_invoice' | translate}}
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="stripe-payment">
+    <ngx-smart-modal #myModal identifier="myModal" [closable]='false' [escapable]='false' [dismissable]='false'>
+        <section [ngClass]="{ hidden : !paymentView }">
+            <div class="col-md-12 col-sm-12">
+                <div class="plan-title">
+                    <h3>{{ 'stripe_payment' | translate}}</h3>
+                </div>
+                <div *ngIf="originalAmount >= 1 && !initialPay && !samePlan">
+                    <h4>{{ 'current_plan_amount' | translate}} :
+                        {{currencyFormat[currencyKey]}}{{ (currencyKey == 'usd') ? currentPlan['plan_amount'] : currentPlan['plan_amount_eur']}}</h4>
+                    <h4 *ngIf="plan.amount_used">{{ 'used_plan_amount' | translate }} :
+                        {{currencyFormat[currencyKey]}}{{plan.amount_used}}</h4>
+                    <h4>{{ 'new_plan_amount' | translate }} : {{currencyFormat[currencyKey]}}{{ (currencyKey == 'usd') ? radioSelectedPlanDetails.plan_amount : radioSelectedPlanDetails.plan_amount_eur}}</h4>
+                </div>
+                <h4> {{ 'plan' | translate}} : {{radioSelectedPlan === 'api' ? planNameApi : planNameNormal }}</h4>
+                <h4> {{ 'make_payment' | translate}}: {{currencyFormat[currencyKey]}}{{originalAmount}} </h4>
+                <form novalidate (ngSubmit)="buy()">
+                    <div #cardElement id="card-element" class="field payment-box"></div>
+
+                    <div class="payment-btn" *ngIf="process">
+                        <div class="make-payment-section"><button mat-button class="plan-btn" disabled
+                                style="color:#fff">{{'processing'
+                                | translate}}...</button></div>
+                    </div>
+
+                    <div class="payment-btn">
+                        <div class="make-payment-section" *ngIf="!process">
+                            <button type="submit" id="submit-button" mat-button class="plan-btn">{{'make_payment_caps'
+                                | translate}}</button>
+                        </div>
+                        <div class="make-payment-section" *ngIf="!process">
+                            <button type="button" mat-button class="plan-btn" (click)="closeMyModelPopup()">{{'cancel'
+                                | translate}}</button>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="col-sm-12">
+                    <div class="alert alert-danger" *ngIf="errorMsgStrip">
+                        <span [innerHTML]=errorMsgStrip></span>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </section>
+    </ngx-smart-modal>
+</div>
+
+<ngx-smart-modal #otherModel identifier="otherModel" [closable]='false' [escapable]='false' [dismissable]='false'>
+    <section>
+        <div class="col-md-12 col-sm-12">
+            <div class="plan-title">
+                <h3>{{ 'stripe_payment' | translate}}</h3>
+            </div>
+            <div *ngIf="0 >= originalAmount && !initialPay" class="col-md-12 col-sm-12">
+                <h4>{{ 'current_plan_amount' | translate}} :
+                    {{currencyFormat[currencyKey]}}{{(currencyKey == 'usd') ? currentPlan['plan_amount'] : currentPlan['plan_amount_eur'] }}</h4>
+                <h4 *ngIf="plan.amount_used">{{ 'used_plan_amount' | translate }} :
+                    {{currencyFormat[currencyKey]}}{{plan.amount_used}}</h4>
+                <h4>{{ 'new_plan_amount' | translate }} : {{currencyFormat[currencyKey]}}{{ (currencyKey == 'usd') ? plan.plan_amount : plan.plan_amount_eur}}</h4>
+            </div>
+            <div *ngIf="originalAmount === 0 && !initialPay" class="account-wallet">
+                <p><i class="material-icons">account_balance_wallet</i></p>
+                <p>{{'zero_payment_info' | translate}}</p>
+            </div>
+            <div *ngIf="0 > originalAmount && !initialPay" class="account-wallet">
+                <p><i class="material-icons">account_balance_wallet</i></p>
+                <p>{{'minues_payment_info' | translate}} {{currencyFormat[currencyKey]}}{{originalAmount * -1}}</p>
+            </div>
+            <div class="col-sm-12">
+                <div class="alert alert-danger" *ngIf="errorMsgStrip">
+                    <span [innerHTML]=errorMsgStrip></span>
+                </div>
+                <br>
+            </div>
+            <div *ngIf="0 >= originalAmount && !initialPay">
+                <div class="payment-btn" *ngIf="process">
+                    <div class="make-payment-section"><button mat-button class="plan-btn" disabled style="color:#fff">{{'processing'
+                            | translate}}...</button></div>
+                </div>
+
+                <div class="payment-btn" *ngIf="!process">
+                    <div class="make-payment-section"><button type="button" mat-button class="plan-btn"
+                            (click)="withOutStripSubmit()">{{'make_payment_caps'
+                            | translate}}</button></div>
+
+                    <div class="make-payment-section" *ngIf="!process"><button type="button" mat-button class="plan-btn"
+                            (click)="closeOtherPopup()">{{'cancel'
+                            | translate}}</button></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</ngx-smart-modal>
+
+<ngx-smart-modal #iframeModal identifier="iframeModal" [closable]='false' [escapable]='false' [dismissable]='false'>
+    <section>
+        <div class="col-md-12 col-sm-12">
+            <div class="plan-title alert_title">
+                <h3>{{ 'infoabout_secure_transaction' | translate}}</h3>
+            </div>
+            <div class="col-md-12 col-sm-12 payment_success">
+                <div id="3dlayout"></div>
+            </div>
+        </div>
+    </section>
+</ngx-smart-modal>
+
+<ngx-smart-modal #successModel identifier="successModel" [closable]='false' [escapable]='false' [dismissable]='false'>
+    <section>
+        <div class="col-md-12 col-sm-12">
+            <div class="plan-title alert_title">
+                <h3>{{ 'alert' | translate}}</h3>
+            </div>
+            <div *ngIf="!errorMsgStrip" class="col-md-12 col-sm-12 payment_success">
+                <i class="material-icons"> check_circle_outline</i>
+                <h4>{{ 'payment_made_successful' | translate}}</h4>
+            </div>
+            <div class="col-sm-12">
+                <div class="alert alert-danger" *ngIf="errorMsgStrip">
+                    <!-- <h4>{{ 'payment_failed' | translate}}</h4> -->
+                    <span [innerHTML]=errorMsgStrip></span>
+                </div>
+                <br>
+            </div>
+            <div>
+                <div class="payment-btn">
+                    <div class="make-payment-section">
+                        <button type="button" mat-button class="plan-btn" (click)="closeSuccessPopup()">{{'ok' |
+                            translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</ngx-smart-modal>
+
+<ngx-smart-modal #userVerifyPopup identifier="userVerifyPopup" [closable]='false' [escapable]='false'
+    [dismissable]='false'>
+    <div style="text-align: center">
+        <div class="view-evidence-title">
+            <h4> {{'verify_user_info' | translate}} </h4>
+        </div>
+        <div class="model-view-evidence">
+            <h3> {{'verify_user_content' | translate}} </h3>
+            <button type="button" mat-button (click)="onClosePopupVerify()"
+                class="view-evidence-btn green">{{'ok' | translate}}</button>
+        </div>
+    </div>
+</ngx-smart-modal>

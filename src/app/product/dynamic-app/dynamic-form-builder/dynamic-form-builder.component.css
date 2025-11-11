@@ -1,0 +1,9 @@
+.dynamic-button-block { width: 100%;display:inline-block; margin:15px 0 0}
+.form-control { border-color: #bfbfbf!important; width:100%;}
+.mat-button[disabled][disabled] { color:#fff;}
+.text-message .text-danger { position: relative; text-align: center; }
+
+.form-build-container{width:100%;display:inline-block}
+form.form-horizontal{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;flex-wrap:wrap}
+form.form-horizontal > [class*='col-lg'] {display:flex;flex-direction:column}
+

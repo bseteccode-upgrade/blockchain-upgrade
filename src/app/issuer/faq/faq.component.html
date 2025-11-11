@@ -1,0 +1,83 @@
+<section class="start_wrapper change-pwd">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'faq' | translate}} <span matTooltip="{{'faq_tooltip_info' | translate}}" class="headTooltip"><i
+              class="material-icons"> help_outline</i></span></h3>
+      </div>
+    </div>
+
+    <div class="faq-container">
+
+      <h3>{{'have_questions' | translate}}?</h3>
+      <h4>{{'get_answer_for_question' | translate}}.</h4>
+
+
+      <div class="row">
+        <div class="form-section">
+          <form [formGroup]="searchForm" (ngSubmit)="searchFormSubmit(searchForm.value)">
+            <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
+              <mat-form-field appearance="outline">
+                <mat-label>{{'search' | translate}}</mat-label>
+                <input #searchVal matInput class="form-control" formControlName="search">
+              </mat-form-field>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+              <button mat-button type="submit" class="separate_btn">{{'search' | translate}}</button>
+              <button type="reset" mat-button class="separate_btn"
+                (click)="searchFormReset()">{{'reset' | translate}}</button>
+            </div>
+          </form>
+        </div>
+      </div> 
+
+      <div class="spinner" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+      </div>
+
+      <div class="alert alert-info no-records" *ngIf="!isLoadingResults && resResult.results.length === 0">
+          {{ 'no_records_found' | translate }}
+      </div>
+
+      <table mat-table #table [dataSource]="dataSource" class="table table-hover">
+
+        <ng-container matColumnDef="sample">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{element.title}}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <p [innerHTML]="element.answer"></p>
+                <div *ngIf="element.file_list.length > 0">
+                  <p>{{'attachments' | translate}}:</p>
+                  <ul class="file-list">
+                    <li *ngFor="let file of element.file_list">
+                      <img [src]="file.extension == 'png' || file.extension == 'jpg' || file.extension == 'doc' || file.extension == 'pdf' ? 'assets/images/' + file.extension + '.svg' : 'assets/images/default.svg'">
+
+                      <a [href]="file.path"
+                        target="_blank">{{file.name}}{{file.extension ? '.' + file.extension : ''}}</a>
+                    </li>
+                  </ul>
+                </div>
+
+
+
+              </mat-expansion-panel>
+            </mat-accordion>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [hidePageSize]="true" [length]="resultsLength" [pageSize]="5">
+      </mat-paginator>
+
+    </div>
+  </div>
+</section>

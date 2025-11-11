@@ -1,0 +1,33 @@
+.alert{ padding: 5px; }
+.form-group { margin-bottom:20px;}
+.text-danger { font-weight: normal; }
+.form-group.signup-button { margin-bottom: 0px; }
+.signup-logo  { padding:0px;}
+.signup-block .signup-container { background-color: #1e232b; display: inline-block; position: relative; height: 100%; padding: 0px; box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.5); margin-top: 0%; margin-bottom:0%; }
+.signup-logo img { vertical-align: middle; display: inline-block; width:200px; height:auto; object-fit: contain; }
+.form-group input[type=checkbox].signup-checkbox { display: inline-block; top:5px; }
+.form-group .signup-accept-label { float: left; left:0px; top:0px;}
+.signup-block .container{width:100%; position: absolute; left: 0;right: 0;bottom: 0;top: 0;margin: auto;margin-top:8%;margin-bottom:3%;}
+ul.sign-container {width:100%;position: relative;padding-left:0px;margin-bottom:0px;}
+ul.sign-container li { width:50%; display: inline-block; vertical-align: middle;}
+ul.sign-container li:first-child { text-align: center;}
+ul.sign-container li:nth-child(2) { background-color: #fff; }
+.email-verify { width:100%; text-align: center; display: inline-block;position: relative;top: 24px; }
+.email-verify .material-icons { color: orange;font-size: 55px;}
+
+@media (min-width:1400px)
+{
+.signup-block .signup-container { width:75%; }
+.signup-block .signup-section { text-align: center; }
+}
+
+@media (max-width:767px)
+{
+ul.sign-container li { width:10%; display: unset; }
+.signup-block .signup-container { margin-top:5%; margin-bottom:5%; }
+.signup-block container { margin:10% 0%;}
+.signup-block { overflow: auto;position: relative;display: inline-block;}
+.signup-logo  img {width:150px; margin:20px 0px;}
+.form-group input[type=checkbox].signup-checkbox { position: relative;}
+.form-group .signup-accept-label { padding:5px 0px; }
+}

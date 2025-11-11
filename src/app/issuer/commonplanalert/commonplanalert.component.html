@@ -1,0 +1,15 @@
+<ngx-smart-modal #planPopupInfo identifier="planPopupInfo" [closable]='false' [escapable]='false' [dismissable]='false'>
+  <div style="text-align: center">
+    <div class="view-evidence-title">
+      <h4> {{'info' | translate}} </h4>
+    </div>
+    <div class="model-view-evidence">
+      <h3>{{'buy_additional_info' | translate}}</h3>
+      <button mat-button *ngIf="userDetails.show_upgrade && apiService.userType === '2'" (click)="ngxSmartModalService.getModal('planPopupInfo').close();" routerLink="/payment" class="view-evidence-btn green">
+        {{'plans' | translate}}</button>
+      <a mat-button *ngIf="!userDetails.show_upgrade && apiService.userType === '2'" (click)="ngxSmartModalService.getModal('planPopupInfo').close();" target="_blank" href="https://www.certtun.com/contact-us/" class="view-evidence-btn green">{{'contact_us' | translate}}</a>
+      <button mat-button (click)="onClose()" class="view-evidence-btn green">
+          {{'close' | translate}}</button>
+    </div>
+  </div>
+</ngx-smart-modal>

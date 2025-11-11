@@ -1,0 +1,139 @@
+<section class="signup-block">
+  <div class="container">
+    <div class="col-md-8 col-sm-12 col-md-offset-2 signup-section">
+      <div class="signup-container">
+        <ul class="sign-container">
+          <li>
+            <div class="signup-block-one">
+              <div class="signup-logo">
+                <a routerLink="/">
+                  <img src="{{pagelogo}}" class="img-responsive">
+                </a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="signup-block-two">
+              <div class="signup-form">
+                <h3>{{'registration_form' | translate}}</h3>
+                <form class="form-horizontal" [formGroup]="regForm" (ngSubmit)="userRegistration(regForm.value)">
+                  <div class="form-group" *ngIf="regForm.controls['register_type'].value === '6'">
+                    <div class="col-sm-12">
+                      <select class="form-control" formControlName="translator">
+                        <option [disabled]="true" [selected]="true" [value]="null" class="register-type">Select Language
+                        </option>
+                        <option *ngFor="let lang of languages" value={{lang.id}}>
+                          {{lang.language_name | translate}}
+                        </option>
+                      </select>
+                      <div class="text-danger text-left small" *ngIf="errorMsg && geterrorMsg('translator')">
+                        {{geterrorMsg('translator') || this.errorMsgArr['translator'] | translate}}</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control" id="firstname" formControlName="first_name"
+                        placeholder="{{'first_name' | translate}}">
+                      <div class="text-danger text-left small" *ngIf="errorMsg">
+                        {{geterrorMsg('first_name') || this.errorMsgArr['first_name'] | translate}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control" id="lastname" formControlName="last_name"
+                        placeholder="{{'last_name' | translate}}">
+                      <div class="text-danger text-left small" *ngIf="errorMsg">
+                        {{geterrorMsg('last_name') || this.errorMsgArr['last_name'] | translate}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control" #email id="email" formControlName="email"
+                        (input)="enterEmailSearch($event.target.value)" placeholder="{{'email' | translate}}"
+                        [readonly]="isReadOnly">
+                      <div class="text-danger text-left small" *ngIf="errorMsg">
+                        {{geterrorMsg('email') || this.errorMsgArr['email'] | translate}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group" *ngIf="!displayRegTypeField">
+                    <div class="col-sm-12">
+                      <input type="password" class="form-control" id="password1" #pass1 formControlName="password1"
+                        placeholder="{{'password' | translate}}">
+                      <div class="text-danger text-left small" *ngIf="errorMsg">
+                        {{geterrorMsg('password1') || this.errorMsgArr['password1'] | translate}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group" *ngIf="!displayRegTypeField">
+                    <div class="col-sm-12">
+                      <input type="password" class="form-control" id="password2" #pass2 formControlName="password2"
+                        placeholder="{{'confirm_password' | translate}}" required>
+                      <div class="text-danger text-left small" *ngIf="errorMsg">
+                        {{geterrorMsg('password2') || this.errorMsgArr['password2'] | translate}}</div>
+                      <div class="text-danger text-left small"
+                        *ngIf="pass1?.value && pass2?.value && pass1?.value !== pass2?.value && errorMsg">
+                        {{'password_mismatch' | translate}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <label for="terms" class="signup-accept-label">
+                        <input type="checkbox" class="form-control signup-checkbox" formControlName="terms" id="terms">
+                        {{'agree_vottun' | translate}}
+                        <a href="https://www.vottun.com/terms-of-service/" target="_blank"
+                          class="form-terms">{{'term_of_use' | translate}}</a>
+                        <div class="text-danger text-left small" *ngIf="errorMsg && geterrorMsg('terms')">
+                          {{'agree_terms' | translate}}</div>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="alert alert-danger" *ngIf="errorMsg && existingUserData?.list_actual?.length !== 0">
+                      {{errorMsg | translate}}
+                    </div>
+                  </div>
+                  <div class="">
+                    <div class="col-sm-12">
+                      <button *ngIf="!disableReg" class="btn btn-signin-form"
+                        type="submit">{{'create_account' | translate}}!</button>
+                      <button *ngIf="disableReg" class="btn btn-signin-form"
+                        disabled>{{'acc_login' | translate}}...</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<ngx-smart-modal #userexists [closable]='false' [escapable]='false' [dismissable]='false' identifier="userexists"
+  class="emailverifypopup">
+  <div class="email-verify">
+    <i class="material-icons"> report_problem </i>
+    <h4 *ngIf="userexists.getData()?.list_actual?.length !== 0">{{'note_for_user_already_exists' | translate}}</h4>
+    <h4 *ngIf="userexists.getData()?.list_actual?.length === 0">
+      {{'you_are_registered_all_user_please_login' | translate}}</h4>
+    <button *ngIf="userexists.getData()?.list_actual?.length !== 0" (click)="userexists.close(); closeTheApproch();"
+      mat-button class="green">{{'no' | translate}}</button>
+    <button *ngIf="userexists.getData()?.list_actual?.length !== 0" (click)="userexists.close(); okTheApproch();"
+      mat-button class="green">{{'yes' | translate}}</button>
+    <button *ngIf="userexists.getData()?.list_actual?.length === 0" (click)="userexists.close(); closeEmailVerify();"
+      mat-button class="green">{{'login' | translate}}</button>
+  </div>
+</ngx-smart-modal>
+<ngx-smart-modal #emailverifypopup [closable]='false' [escapable]='false' [dismissable]='false'
+  identifier="emailverifypopup" class="emailverifypopup">
+  <div class="email-verify">
+    <i class="material-icons"> report_problem </i>
+    <h4>{{emailverifypopup.getData()}}</h4>
+    <button (click)="emailverifypopup.close(); closeEmailVerify();" mat-button
+      class="green">{{'close' | translate}}</button>
+  </div>
+</ngx-smart-modal>

@@ -1,0 +1,27 @@
+.add-student-form .form-horizontal .control-label{width:100%;padding-top:0;min-height:30px;line-height:40px}
+.text-info{margin-top:10px;color:#1e232b}
+.avatar-image img{border-radius:100%;width:200px;height:200px!important;-o-object-fit:fill;object-fit:fill}
+.select-file{padding:30px 0}
+.btn-primary{background-color:#1e232b;border-color:#1e232b;color:#fff}
+:host /deep/ .mat-form-field-appearance-legacy .mat-form-field-wrapper{padding:0.25em}
+.barcode-note{font-size:10px;margin:0px 2px;color:#3498db;float:right}
+.product-image-field{padding-left:0}
+
+:host /deep/ .angular-editor .angular-editor-wrapper .angular-editor-textarea{min-height:30px!important}
+
+@media (max-width:1199px)
+{
+.product-image-field{padding-left:15}
+}
+
+@media (min-width:767px) and (max-width:1199px)
+{
+.barcode-note{font-size:8px;height:28px;width:100%}
+.refresh-icon{margin:0 2px}
+.avatar-image{width:200px;height:200px;border:none}
+}
+
+@media (max-width: 480px)
+{
+.avatar-image{width:200px;height:200px}
+}

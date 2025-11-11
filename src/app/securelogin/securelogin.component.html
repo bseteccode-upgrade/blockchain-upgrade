@@ -1,0 +1,86 @@
+<section class="signup-block">
+    <div class="container">
+      <div class="col-md-8 col-sm-12 col-md-offset-2 signin-section">
+  
+        <div class="signin-container">
+          <ul class="sign-container">
+            <li>
+              <div class="img-container">
+                <img src="{{pagelogo}}">
+              </div>
+            </li>
+  
+            <li>
+              <div class="signup-block-two">
+                <div class="form-group signup-button">
+                  <mat-spinner></mat-spinner>
+                </div>
+                <div class="col-md-12 sign-footer">
+                  <div class="col-md-12">
+                    <div class="vottun-footer">
+                      <p><a [href]="siteName" target="_blank">{{'blockchained_by' | translate}} {{appName}}</a></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  
+  <ngx-smart-modal #fromadmin [closable]='false' [escapable]='false' [dismissable]='false' identifier="fromadmin"
+    class="emailveri-block">
+    <h4>{{'header_admin_user_login' | translate}}</h4>
+    <p>{{'info_about_admin_backdoor_login' | translate}}</p>
+    <div class="emailVerify_btn">
+      <button mat-button class="wrong_ok"
+        (click)="ngxSmartModalService.getModal('fromadmin').close()">{{'login' | translate}}</button>
+    </div>
+  </ngx-smart-modal>
+  
+  <div class="signin_modal">
+    <ngx-smart-modal #myModal identifier="myModal" [closable]='false' [escapable]='false' [dismissable]='false'>
+      <div>
+        <fieldset>
+          <legend>
+            {{'act_like_now' | translate}}
+            <span class="help_icon" matTooltip="{{'info_act_like_now' | translate}}"><i class="material-icons">
+                help_outline </i></span>
+          </legend>
+  
+          <div class="password-enter delete-container">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="col-lg-6 col-md-6 col-sm-12" *ngFor="let registerDetails of myModal.getData()">
+                  <button id="publisherLogin" mat-button (click)="onCheckWho(registerDetails)"
+                    class="signin-popup-btn">{{register_list[registerDetails] | translate}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </ngx-smart-modal>
+    <ngx-smart-modal #emailverifypopup [closable]='false' [escapable]='false' [dismissable]='false'
+      identifier="emailverifypopup" class="emailverifypopup">
+      <div class="email-verify">
+        <i class="material-icons"> email </i>
+        <h4>{{emailverifypopup.getData()}}</h4>
+      </div>
+    </ngx-smart-modal>
+    <ngx-smart-modal #workwrongurl [closable]='false' [escapable]='false' [dismissable]='false' identifier="workwrongurl"
+      class="emailveri-block">
+      <div class="email-verify-warning">
+        <i class="material-icons"> warning </i>
+        <h4>{{'wrong_url_content' | translate}}</h4>
+      </div>
+  
+      <div class="emailVerify_btn">
+        <button mat-button class="wrong_ok"
+          (click)="ngxSmartModalService.getModal('workwrongurl').close()">{{'ok' | translate}}</button>
+      </div>
+    </ngx-smart-modal>
+  </div>

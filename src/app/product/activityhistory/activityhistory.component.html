@@ -1,0 +1,74 @@
+<h1 mat-dialog-title>{{'history_of_activity_data' | translate}}</h1>
+<mat-dialog-content>
+  <div *ngFor="let certData of data.certData">
+    <h4 class="time-details">{{certData.created}}</h4>
+
+    <div *ngIf="certData.show_transaction" class="col-md-12 col-sm-12 dynamic-details-sub-new">
+      <ul class="col-md-12 col-sm-12">
+        <li>{{'transaction_id' | translate}}: <span>{{certData.transaction_address}} </span> </li>
+        <li *ngIf="certData.evidence && certData.evidence != 'None'">{{'evidence' | translate}}:
+          <span><a target="_blank" href="{{certData.evidence}}">{{'click_here' | translate}}</a></span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-12 col-sm-12 no-padding">
+      <div class="table-responsive popup-table">
+
+        <table *ngIf="certData.show_inoutbatch" class="table">
+          <tr class="col-md-6 col-sm-12 col-xs-12" *ngIf="certData.in_batch_id && certData.in_batch_id != 'None'">
+            <td>
+              <h2>{{'batchid' | translate}}:</h2>
+            </td>
+            <td>
+              <h2>{{certData.in_batch_id || '&nbsp;'}}</h2>
+            </td>
+          </tr>
+          <tr class="col-md-6 col-sm-12 col-xs-12">
+            <td>
+              <h2>{{'subproductbatch' | translate}}:</h2>
+            </td>
+            <td>
+              <h2>{{certData.out_batch_id || '&nbsp;'}}</h2>
+            </td>
+          </tr>
+        </table>
+
+        <table class="table">
+          <tr class="col-md-6 col-sm-12 col-xs-12" *ngFor="let details of certData.field_set">
+            <td>
+              <h2>{{details.label}}:</h2>
+            </td>
+            <td *ngIf="details.type !== 'document' && details.type !== 'productimage'">
+              <h2>{{details.value}}</h2>
+            </td>
+            <td *ngIf="details.type === 'document' || details.type === 'productimage'">
+              <a *ngIf="details.value && details.value != null && details.value !== ''" target="_blank"
+                href="{{details.value}}">{{'click_here' | translate}}</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-12" *ngIf="certData.company_admin_product.length > 0">
+      <div class="product_details_title">
+        <h4>{{'product_information' | translate}}</h4>
+      </div>
+      <div class="col-md-6 col-sm-6" *ngFor="let productdata of certData.company_admin_product">
+        <div class="product_details">
+          <ul class="product_list">
+            <li>
+              <img [src]="productdata.image != '' ? productdata.image: 'assets/images/university-image.png'">
+            </li>
+            <li>
+              <p>{{productdata.title}}</p>
+              <p [innerHtml]="productdata.description"></p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button class="close-btn" [mat-dialog-close]="false">{{'close' | translate}}</button>
+</mat-dialog-actions>

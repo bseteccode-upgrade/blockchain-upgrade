@@ -1,0 +1,7 @@
+.total-student { height:100%; background-color: #1abc9c; width:100%; padding:25px 15px; display: inline-block; position: relative;margin-bottom:15px;}
+.total-certificate { height:100%; background-color: #f1c40f;width:100%; padding:25px 15px; display: inline-block; position: relative;margin-bottom:15px;}
+.total-achievement { height:100%; background-color: #3498db;width:100%; padding:25px 15px; display: inline-block; position: relative;margin-bottom:15px;}
+.total-addnew { height:100%; background-color: #fb2b44;width:100%; padding:25px 15px; display: inline-block; position: relative;margin-bottom:15px;}
+.total-member { height:100%; background-color: #4caf50;width:100%; padding:25px 15px; display: inline-block; position: relative;margin-bottom:15px;}
+.total-workflow { height:100%; background-color: #03a9f4;width:100%; padding:25px 15px; display: inline-block; position: relative;margin-bottom:15px;}
+.total-activity { height:100%; background-color: #673ab7;width:100%; padding:25px 15px; display: inline-block; position: relative;margin-bottom:15px;}

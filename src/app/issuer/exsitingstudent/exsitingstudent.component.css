@@ -1,0 +1,35 @@
+.no-record { text-align: center; margin-bottom:10px;}
+.add-btn.mat-button { color:#fff; background-color: #29b6d8; border-color: #29b6d8; font-size: 14px; padding: 0px 15px; margin-right:20px; }
+.badge-details-modelpopup.student-detail-popup { margin:20px 0px; }
+.student-info { margin:20px 0px; position: relative; width:100%; display: inline-block;}
+.student-header { width:100%; text-align: center; display: inline-block; }
+.student-header img { width: 200px; height: 200px; display: inline-block; text-align: center; border: 4px solid #ccc; object-fit: contain; }
+ul.student-list { padding-left:0px; margin-bottom:0px; width:100%; }
+ul.student-list li:first-child { width:30%; }
+ul.student-list li { display: inline-block; padding:0px 0px;}
+ul.student-list li p { color:#006cb5; font-size: 16px;font-family: 'Roboto-Regular'; }
+ul.student-list li span { color:#262d37;font-size: 16px;font-family: 'Roboto-Regular';}
+:host /deep/ .text-danger { bottom: 0px; }
+.panel-body .certificate-img { width:100%; border-radius: 4px; border: 2px solid #ccc; padding:15px; display: inline-block; position: relative; text-align: center;}
+.panel-body .certificate-img img { width:100%; height:180px; object-fit: contain; display:inline-block; }
+.existing-fields { position: relative;}
+:host /deep/ .existing-fields .mat-form-field-appearance-outline .mat-form-field-infix { padding: 0em 0 0em 0; }
+.add-btn-block { position: relative; top:5px; width:100%; text-align: right; display: inline-block; }
+.existing-fields .pull-right { float:right; }
+
+@media (max-width:1199px)
+{
+.existing-fields .pull-left { width:100%; }
+.existing-fields .pull-right { width:100%; }
+.add-btn-block {text-align:center;}
+} 
+
+@media (max-width:991px)
+{
+.add-btn-block { text-align: center; }
+.student-info  {  }
+ul.student-list { margin-bottom:20px;}
+ul.student-list li:first-child { width:100%; }
+ul.student-list li p  { margin-bottom: 0px;}
+ul.student-list li { list-style-type: none; padding:0px 0px;}
+}

@@ -1,0 +1,341 @@
+<div class="activity-pro-loc">
+  <section class="start_wrapper issue-certificate-list">
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="hpanel form-section">
+          <br>
+          <form [formGroup]="searchForm" (ngSubmit)="searchProdLoc(searchForm.value);" class="filter-search-box">
+            <div class="col-md-4 col-sm-12">
+              <mat-form-field appearance="outline">
+                <mat-label>{{'search' | translate}} <span class="mandatory">*</span></mat-label>
+                <input matInput formControlName="search" class="form-control" #searchRef [ngModel]="batchId">
+              </mat-form-field>
+              <div class="text-danger text-left small" *ngIf="errorMsg">
+                {{getErrorMsg('search') || this.errorMsgArr['search'] | translate}}</div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+              <mat-form-field appearance="outline">
+                <mat-label>{{'workflow_id' | translate}} <span class="mandatory">*</span></mat-label>
+                <input matInput formControlName="workflow" class="form-control" #searchRef [ngModel]="workflow_id">
+              </mat-form-field>
+              <div class="text-danger text-left small" *ngIf="errorMsg">
+                {{getErrorMsg('workflow') || this.errorMsgArr['workflow'] | translate}}</div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+              <button mat-button class="separate_btn">{{'search' | translate}}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12" *ngIf="!process">
+      <div class="alert alert-info" *ngIf="!resultfound">
+        {{resultMsg | translate}}
+      </div>
+    </div>
+
+    <div class="row" *ngIf="!process && resultfound">
+      <div class="col-md-12">
+        <div class="hpanel">
+          <div class="panel-heading clearfix">
+            <div class="product_details">
+              <div class="row row-eq-height">
+                <div class="col-md-12 col-sm-12 product-fourth-block sub-section">
+                  <div class="sub-block">
+                    <div class="row no-margin">
+                      <agm-map [(latitude)]="lat" [(longitude)]="lng" [fitBounds]="true">
+                        <agm-marker *ngFor="let data of actDetail?.localtion_list" [latitude]="data.location.lat"
+                          [longitude]="data.location.lng" [label]="data.label" [agmFitBounds]="true">
+                        </agm-marker>
+                      </agm-map>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-eq-height" *ngIf="!process && resultfound">
+      <div class="product-fifth-block col-md-12 col-sm-12 sub-section">
+        <div class="sub-block">
+          <div class="product-block-title product-full-row">TRAZABILIDAD DEL PRODUCTO</div>
+          <div class="main-timeline">
+            <div class="timeline" *ngFor="let certi of actDetail.certificates">
+              <a *ngIf="certi != ''"
+                (click)="ngxSmartModalService.setModalData(certi, 'myModal');ngxSmartModalService.getModal('myModal').open()">
+                <span class="timeline-icon"></span>
+                <div class="profile">
+                  <div class="profile_left">
+                    <h3>{{certi.company_name}}</h3>
+                  </div>
+                  <div class="profile_right" *ngIf="certi.company_logo && certi.company_logo !== 'None'">
+                    <img src="{{certi.company_logo}}" class="cmpny-logo">
+                  </div>
+                </div>
+                <div class="timeline-content" *ngIf="!certi?.out_box_fields || certi?.out_box_fields?.length === 0">
+                  <h3>{{'role' | translate}}
+                    :<br>{{certi.certifier_designation !== 'None'? certi.certifier_designation : certi.role !== 'None' ? certi.role : ''}}
+                  </h3>
+                  <p class="date">{{'date' | translate}}:</p>
+                  <p class="date">{{certi.date_issued}}</p>
+                </div>
+                <div class="timeline-content" *ngIf="certi?.out_box_fields?.length > 0">
+                  <span *ngFor="let out_box_value of certi.out_box_fields">
+                    <h3>
+                      {{out_box_value.label + ' :'}}
+                    </h3>
+                    <p class="date" *ngIf="out_box_value.type !== 'document'">{{out_box_value.value}}</p>
+                    <p class="date" *ngIf="out_box_value.type === 'document'"><a target="_blank"
+                        href="{{out_box_value.value}}">click</a></p>
+                  </span>
+                </div>
+              </a>
+              <div class="hover_tooltip">
+                <div class="popup_box"
+                  (click)="ngxSmartModalService.setModalData(certi, 'myModal');ngxSmartModalService.getModal('myModal').open()">
+                  <p>{{'click_to_view_more' | translate}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+</div>
+
+<div class="row">
+  <div class="col-md-12 my_pagefooter">
+    <p><a [href]="siteName" target="_blank">{{'blockchained_by' | translate}} {{appName}}</a></p>
+  </div>
+</div>
+
+
+
+<div class="product-activity_popup">
+  <ngx-smart-modal #myModal identifier="myModal" dismissable="false"
+    (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+    <div class="badge-detail-separate" *ngIf="myModal.hasData()">
+
+      <div class="product-detail-list">
+        <div class="col-md-12 col-dm-12">
+          <div class="product-title">
+            <h3>{{actDetail.title}}</h3>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12"
+          *ngIf="myModal.getData().issuer_eth_address && myModal.getData().issuer_eth_address !== 'None'">
+          <div class="product_field">
+            <h4>{{'transaction_id' | translate}}:</h4>
+            <p>{{myModal.getData().issuer_eth_address || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12" *ngIf="myModal.getData().evidence && myModal.getData().evidence !== 'None'">
+          <div class="product_field">
+            <h4>{{'evidence' | translate}}:</h4>
+            <a href="{{myModal.getData().evidence}}" target="_blank"> {{'view_evidence' | translate}} </a>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12">
+          <div class="product-title">
+            <h3>{{'activity' | translate}}</h3>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().in_batch_id && myModal.getData().in_batch_id != 'None'">
+          <div class="product_field">
+            <h4>{{'batchid' | translate}}:</h4>
+            <p>{{myModal.getData().in_batch_id || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+          <div class="product_field">
+            <h4>{{'subproductbatch' | translate}}:</h4>
+            <p>{{myModal.getData().out_batch_id || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <ng-container *ngFor="let displaycontent of myModal.getData().field_set">
+          <div class="col-md-6 col-sm-12" *ngIf="displaycontent.in_box">
+            <div class="product_field">
+              <h4><b>{{displaycontent.label}}</b>:</h4>
+              <p
+                *ngIf="displaycontent.type !== 'document' && displaycontent.type !== 'date' && displaycontent.type !== 'timestamp'">
+                {{displaycontent.value || '&nbsp;'}}</p>
+
+              <p *ngIf="displaycontent.type === 'date'">
+                <span
+                  *ngIf="displaycontent.dateformat == 1;else dmyy">{{displaycontent.value | date:'MM/dd/yyyy'}}</span>
+                <ng-template #dmyy>
+                  <span>{{displaycontent.value | date:'dd/MM/yyyy'}}</span>
+                </ng-template>
+              </p>
+              <p *ngIf="displaycontent.type === 'timestamp'">
+                <span
+                  *ngIf="displaycontent.dateformat == 1;else dmyytime">{{displaycontent.value != '' ? convertDateToStringMM(displaycontent.value) : ''}}</span>
+                <ng-template #dmyytime>
+                  <span>{{displaycontent.value != '' ? convertDateToString(displaycontent.value) : ''}}</span>
+                </ng-template>
+              </p>
+              <p *ngIf="displaycontent.type === 'document'"><a
+                  *ngIf="displaycontent.value && displaycontent.value != null && displaycontent.value !== ''"
+                  target="_blank" href="{{displaycontent.value}}">{{'click' | translate}}</a></p>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('country_certified') && myModal.getData().country_certified && myModal.getData().country_certified != 'None'">
+          <div class="product_field">
+            <h4>{{'certified_country' | translate}}:</h4>
+            <p>{{myModal.getData().country_certified || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('certifier_name') && myModal.getData().certifier_name && myModal.getData().certifier_name != 'None'">
+          <div class="product_field">
+            <h4>{{'certifier_name' | translate}}:</h4>
+            <p>{{myModal.getData().certifier_name || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('certifier_designation') && myModal.getData().certifier_designation && myModal.getData().certifier_designation != 'None'">
+          <div class="product_field">
+            <h4>{{'certifier_designation' | translate}}:</h4>
+            <p>{{myModal.getData().certifier_designation || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('certificate_number') && myModal.getData().certificate_number && myModal.getData().certificate_number != 'None'">
+          <div class="product_field">
+            <h4>{{'certificate_number' | translate}}:</h4>
+            <p>{{myModal.getData().certificate_number || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('date_issued') && myModal.getData().date_issued && myModal.getData().date_issued != 'None'">
+          <div class="product_field">
+            <h4>{{'certified_date' | translate}}:</h4>
+            <p>{{myModal.getData().date_issued || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('manufacture_date') && myModal.getData().manufacture_date && myModal.getData().manufacture_date != 'None'">
+          <div class="product_field">
+            <h4>{{'manufacture_date' | translate}}:</h4>
+            <p>{{actDetail.manufacture_date || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div
+          *ngIf="myModal.getData().activity_field_set.includes('expire_date') && actDetail.expire_date && actDetail.expire_date !== 'None'"
+          class="col-md-6 col-sm-12">
+          <div class="product_field">
+            <h4>{{'expiry_date' | translate}}:</h4>
+            <p>{{actDetail.expire_date || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('transport') && myModal.getData().transport && myModal.getData().transport != 'None'">
+          <div class="product_field">
+            <h4>{{'transport' | translate}}:</h4>
+            <p>{{myModal.getData().transport || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('shipping') && myModal.getData().shipping && myModal.getData().shipping != 'None'">
+          <div class="product_field">
+            <h4>{{'shipping' | translate}}:</h4>
+            <p>{{myModal.getData().shipping || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('category') && myModal.getData().category && myModal.getData().category != 'None'">
+          <div class="product_field">
+            <h4>{{'category' | translate}}:</h4>
+            <p>{{myModal.getData().category || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('weight') && myModal.getData().weight && myModal.getData().weight != 'None'">
+          <div class="product_field">
+            <h4>{{'weight' | translate}}:</h4>
+            <p>{{myModal.getData().weight || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('grade') && myModal.getData().grade && myModal.getData().grade != 'None'">
+          <div class="product_field">
+            <h4>{{'grade' | translate}}:</h4>
+            <p>{{myModal.getData().grade || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('packing_type') && myModal.getData().packing_type && myModal.getData().packing_type != 'None'">
+          <div class="product_field">
+            <h4>{{'packing_type' | translate}}:</h4>
+            <p>{{myModal.getData().packing_type || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('shell_life') && myModal.getData().shell_life && myModal.getData().shell_life != 'None'">
+          <div class="product_field">
+            <h4>{{'minimum_shell_life' | translate}}:</h4>
+            <p>{{myModal.getData().shell_life || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('storage_condition') && myModal.getData().storage_condition && myModal.getData().storage_condition != 'None'">
+          <div class="product_field">
+            <h4>{{'storage_condition' | translate}}:</h4>
+            <p>{{myModal.getData().storage_condition || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12"
+          *ngIf="myModal.getData().activity_field_set.includes('processing_plant') && myModal.getData().processing_plant && myModal.getData().processing_plant != 'None'">
+          <div class="product_field">
+            <h4>{{'processing_plant' | translate}}:</h4>
+            <p>{{myModal.getData().processing_plant || '&nbsp;'}}</p>
+          </div>
+        </div>
+
+        <div
+          *ngIf="myModal.getData().activity_field_set.includes('description') && myModal.getData().description && myModal.getData().description !== 'None'"
+          class="col-md-12 col-sm-12">
+          <div class="product_field">
+            <h4>{{'description' | translate}}:</h4>
+            <p [innerHtml]="myModal.getData().description || 'None'"></p>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </ngx-smart-modal>
+</div>

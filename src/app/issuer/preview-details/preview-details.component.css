@@ -1,0 +1,109 @@
+:host /deep/ .certificate-view-model .nsm-dialog-animation-fade.nsm-dialog.nsm-dialog-open .nsm-dialog-btn-close { right:40px}
+:host /deep/ .block-left { width:60%;  }
+:host /deep/ .block-left.block-course-title { width:100%;}
+.block-right { width:33%; display: inline-block;  }
+:host /deep/ .block-left.block-course-title h4 { padding-top:5px;  width:100%; height: 22px; overflow: hidden; display: inline-block; font-size: 14px; color: #2ab6d7; margin-top: 0px; margin-bottom: 0px; font-family: 'Roboto-Regular'; font-weight: normal; white-space: nowrap;  word-break: break-word; overflow: hidden; text-overflow: ellipsis;}
+:host /deep/ .blockchain-details { padding:22px 10px 15px; }
+
+:host /deep/ .delete-input .mat-form-field-appearance-outline .mat-form-field-infix { padding:3px 0}
+:host /deep/ .view-evidence-btn.mat-button { margin:10px 0px;text-transform: capitalize}
+:host /deep/ a.view-evidence-btn.mat-button {width:auto;min-width:auto;margin:10px;text-transform: capitalize}
+
+.main-block{width:100%; margin:20px 0}
+.head-block{width:100%; background-color:#3381bf; padding:10px; text-align: left}
+.head-block h3{color:#fff; font-family:'Roboto-Regular'}
+.head-block h4{color:#fff; font-family:'Roboto-Regular'}
+.content-block{background-color:#e8e8e8;padding:10px 20px;width:100%;height:auto;text-align:left;word-break:break-word;word-wrap:break-word;margin:10px 0 20px 0}
+.content-block div{word-break:break-word;word-wrap:break-word}
+.content-block p{white-space:pre-wrap;word-break:break-word;word-wrap:break-word}
+.badge-block.right-side.issue_dateblock { text-align:center;display: inline-block; padding: 10px; min-width: 210px; max-width:435px;margin:0px;position: relative;}
+.badge-block.right-side.issue_dateblock h4 { font-weight: 600;color:#000;margin-top: 0;overflow-wrap: break-word;}
+.badge-details-block .badge-block p{overflow-wrap: break-word;}.badge-block.right-side.issue_dateblock h6 { font-weight: 600;color:#000;}
+.spacing { margin:10px 0px;position: relative;display: inline-block;padding:5px;width: 100%;}
+.panel-body.badge-details-block { width: 100%;height: auto;position: relative;display: inline-block;margin-top: 0px;margin-bottom: 10px;background-color: #fff;border: 2px solid #d8d8d8;padding: 15px;}
+.achievement-btn.achievements-group { position: relative; display: inline-block; margin-bottom:20px;}
+.badge-details-modelpopup.student-detail-popup { margin-top:20px; bottom:0px;}
+.student-block { width:100%; position: relative; padding-bottom:10px; display: inline-block; }
+.student-detail-popup h4 { font-size: 16px; color:#29b6d8; }
+.student-detail-popup h4 { font-size: 14px; }
+.student-header { width:100%; position: relative; text-align: center; display: inline-block; }
+.student-header img { width:100px; height:100px; object-fit: contain; display: inline-block; }
+ul.student-list { padding-left:0px; margin-bottom:0px; width:100%; }
+ul.student-list li { display: inline-block; width:48.9%; padding:0px 0; vertical-align: middle; }
+ul.student-list li p { color:#006cb5; font-size: 14px; margin:5px 0;}
+ul.student-list li span { color:#262d37;font-size: 14px;word-break: break-word}
+.student-btn { width:100%; text-align: center; display: inline-block; padding:10px 0px;}
+
+
+
+.password-enter.already-container { display: inline-block; width: 100%; padding: 10px 50px; }
+.badge-img-block { width:200px; display: inline-block; position: relative;}
+.badge-img-block .verified-label img { top:-10; right:-10; width:50; height:50; }
+.verified-label img{ position: absolute; width: 70px; height: 70px; top: 0px; right: 0px; border:none; }
+
+.certificate-image-view{padding:0px 30px;}
+.badge-block.qr-code img { width:120px; height:120px; }
+.badge_info i { font-size: 30px; color: #ccc;position: absolute;right: -45px;bottom: 0px;top: 30%;margin: auto;}
+:host /deep/ .select_all_container .mat-checkbox-inner-container{width:24px;height:24px}
+:host /deep/ .select_all_container .mat-checkbox-layout .mat-checkbox-label{font-size:18px}
+.select_all_container button.mat-mini-fab.select_all_delete{margin:10px;background:#F44336;font-size:22px;line-height:16px}
+.select_all_container button.mat-mini-fab .mat-button-wrapper{padding:0 0 }
+.email-popup .view-evidence-title h4 { text-align: center; color:#1e232b; font-size: 22px; text-transform: capitalize; font-weight: bold; color: #1e232b; text-shadow: none; }
+
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) 
+{
+:host /deep/ .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-icon-button, :host /deep/ .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button {position:relative;top:10px;}
+}
+
+@media (min-width:991px) and (max-width: 1200px)
+{
+:host /deep/ .blockchain-details { min-height:120px; height:100%;}
+}
+
+@media (min-width: 991px) and (max-width: 1150px)
+{
+:host /deep/ .block-left { padding: 0px 0px;}
+}
+
+@media (min-width: 980px) and (max-width:1280px)
+{
+:host /deep/ .block-left { width:100%;padding: 0px 5px;}
+:host /deep/ .block-right { width:100%;}
+.certify_name { width:100%; }
+}
+
+@media (max-width:991px)
+{
+:host /deep/ .scheduler-border .achievement-btn .filter-btn.mat-button { width:100%;}
+:host /deep/ .no-float.issuer-section { width: 100%; display: inline-block; }
+:host /deep/ .certificate-view-model.badgewindow .nsm-dialog-animation-fade.nsm-dialog.nsm-dialog-open { min-width: 50%; width: 65%; }
+:host /deep/ .certificate-view-model.badgewindow .nsm-dialog-animation-fade.nsm-dialog.nsm-dialog-open .nsm-dialog-btn-close { right: 0px; top: 0px; }
+.verified-label img{ width:30px; height:30px; }
+}
+
+@media (max-width:767px)
+{
+.badge-details-modelpopup .panel-body { padding:15px 0; }
+.badge-details-block .badge-block .badge-img-block img { width:100px; height:auto;}
+.badge-block .badge-img-block { width:unset;}
+.badge-block h4 { font-size: 14px; }
+}
+
+@media (max-width: 640px)
+{
+.badge-details-modelpopup > div,.panel-body.badge-details-block,
+.panel-body.badge-details-block > div{padding:10px 0;}
+}
+    
+@media (max-width: 480px)
+{
+.badge-block.right-side.issue_dateblock{width: 182px;max-width:100%;min-width:100%;}
+.badge-block.right-side.issue_dateblock h4{font-size: 20px;}
+.main-block .content-block h4 { font-size: 10px; }
+.issuer-section .badge-link a { font-size: 12px;padding: 0px 0px 0px 0px; margin: 5px 0px;}
+.issuer-section .badge-link {margin: 0px 0px 20px; }
+.badge-certificate-title h3 { font-size: 18px;}
+.issuer-section { padding-left:0px; padding-right:0px; }
+:host /deep/ a.view-evidence-btn.mat-button span{word-break: break-word;display: inline-block;width: 100%;white-space: pre-line;line-height: normal;}
+}

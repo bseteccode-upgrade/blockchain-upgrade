@@ -1,0 +1,338 @@
+<section class="start_wrapper certificate-list">
+  <div class="user-certificate">
+    <div class="hpanel">
+      <div class="panel-heading clearfix">
+        <div class="pull-left">
+          <h3>{{ 'request_list' | translate}} <span matTooltip="{{'phi_request_list' | translate}}"
+              class="headTooltip"><i class="material-icons"> help_outline</i></span></h3>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="standter clearfix">
+
+          <div class="example-container mat-elevation-z8">
+            <div class="example-loading-shade" *ngIf="isLoadingResults">
+              <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+            </div>
+
+
+            <div class="table-responsive">
+
+              <table mat-table #table [dataSource]="dataSource" class="table table-striped table-bordered table-hover">
+
+                <ng-container matColumnDef="avatar">
+                  <th mat-header-cell *matHeaderCellDef>{{'avatar' | translate}} </th>
+                  <td mat-cell *matCellDef="let element">
+                    <div class="student-profile">
+                      <img style="max-width:100px;height:100px;"
+                        [src]="(element.avatar)? element.avatar : 'assets/images/avatar.jpeg'">
+                    </div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>{{'name' | translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.first_name }} {{ element.last_name }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                  <th mat-header-cell *matHeaderCellDef> {{'email' | translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.email }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="created">
+                  <th mat-header-cell *matHeaderCellDef> {{'requested_date' | translate}}</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.created | date }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef> {{'actions' | translate}} </th>
+                  <td mat-cell *matCellDef="let element" class="edt_delt">
+                    <button *ngIf="!element.has_info" mat-button class="green"
+                      (click)="redirectToExsit(element.email)">{{'add_info' | translate}}</button>
+                    <button *ngIf="element.has_info" mat-button class="green"
+                      (click)="issueCertUser(element.student_id, element.id);ngxSmartModalService.getModal('myModal').open();">{{'issue_id' | translate}}</button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+              <mat-paginator [hidePageSize]="true" [length]="resultsLength" [pageSize]="5">
+              </mat-paginator>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <ngx-smart-modal #myModal identifier="myModal" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+    <div>
+      <form [formGroup]="certIssueForm" #resetFormID="ngForm" (ngSubmit)="certIssueFormSubmit(certIssueForm.value)">
+        <fieldset>
+          <legend>{{'issue_certificate' | translate}}</legend>
+          <div class="password-enter delete-container">
+
+            <div class="row">
+              <div class="col-sm-12">
+                <label class="control-label" for="{{'certificate' | translate}}">{{'certificate' | translate}}</label>
+                <select class="form-control" formControlName="certificate">
+                  <option [value]="null" [selected]="true" [disabled]="true">{{'select' | translate}}
+                    {{'actions' | translate}}</option>
+                  <option *ngFor="let certdetail of certificatelists" [value]="certdetail.id">
+                    {{certdetail.text | translate}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label class="control-label" for="issue_date">{{'issue_date' | translate}}
+                    <span class="mandatory">*</span>
+                    <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                      matTooltip="{{'pick_date_issue' | translate}}" [matTooltipPosition]="position.value">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                  </label>
+                  <div>
+                    <mat-form-field class="angular-datepicker">
+                      <input matInput placeholder="mm/dd/yyyy" [readonly]="true" [matDatepicker]="issueDate"
+                        (click)="issueDate.open()" formControlName="issue_date" id="issue_date"
+                        (dateChange)="onStartDateChange($event.value);changeDateEvent($event);">
+                      <mat-datepicker-toggle matSuffix [for]="issueDate"></mat-datepicker-toggle>
+                      <mat-datepicker #issueDate disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                    <div class="refresh-icon" (click)="refreshIssueDate(1)">
+                      <mat-icon>refresh</mat-icon>
+                    </div>
+                    <div class="text-danger text-left small" *ngIf="errorMsg">
+                      {{geterrorMsg('issue_date') || this.errorMsgArr['issue_date'] | translate}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label class="control-label" for="end_validity">{{'expire_date' | translate}}
+                    <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                      matTooltip="{{'pick_date_expire' | translate}}" [matTooltipPosition]="position.value">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                  </label>
+
+                  <div>
+                    <mat-form-field class="angular-datepicker">
+                      <input matInput placeholder="mm/dd/yyyy" [readonly]="true" [matDatepicker]="endValidity"
+                        (click)="endValidity.open()" min={{minendDate}} formControlName="end_validity" id="end_validity"
+                        (dateChange)="changeendDateEvent($event);">
+                      <mat-datepicker-toggle matSuffix [for]="endValidity"></mat-datepicker-toggle>
+                      <mat-datepicker #endValidity disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                    <div class="refresh-icon" (click)="refreshIssueDate(2)">
+                      <mat-icon>refresh</mat-icon>
+                    </div>
+                    <div class="text-danger text-left small" *ngIf="errorMsg">
+                      {{geterrorMsg('end_validity') || this.errorMsgArr['end_validity'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group" *ngIf="certIssueForm.controls['end_validity'].value">
+                  <label class="control-label" for="expiry_actions">{{'action_on_expire' | translate}}
+                    <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                      matTooltip="{{'action_expire_day' | translate}}" [matTooltipPosition]="position.value">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                  </label>
+                  <select class="form-control" formControlName="expiry_actions">
+                    <option [value]="null" [selected]="true" [disabled]="true">{{'select' | translate}}
+                      {{'action' | translate}}</option>
+                    <option *ngFor="let action of expireAction" [value]="action.id">
+                      {{action.text}}
+                    </option>
+                  </select>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('certificate') || this.errorMsgArr['certificate'] | translate}}</div>
+                </div>
+
+                <div class="form-group" *ngIf="certIssueForm.controls['expiry_actions'].value === '4'">
+                  <label class="control-label" for="barcode" style="width:100%;">{{'email' | translate}}
+                    <span class="mandatory">*</span>
+                    <span style="font-size:10px;margin:0px 2px;color: #3498db; float: right;">({{'note' | translate}}:
+                      Please enter emails seperated by comma ',')</span>
+                  </label>
+                  <input type="text" formControlName="expiry_text" [readOnly]="mode === 'view'" class="form-control"
+                    placeholder="{{'email' | translate}}">
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('barcode') || errorMsgArr['barcode'] | translate}}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label class="control-label" for="start_date">{{'start_date' | translate}}
+                    <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                      matTooltip="{{'pick_date_start' | translate}}" [matTooltipPosition]="position.value">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                  </label>
+
+                  <div>
+                    <mat-form-field class="angular-datepicker">
+                      <input matInput placeholder="mm/dd/yyyy" [readonly]="true" [matDatepicker]="startDate"
+                        (click)="startDate.open()" formControlName="start_date"
+                        (dateChange)="changeStartDateEvent($event);">
+                      <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                      <mat-datepicker #startDate disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                    <div class="refresh-icon" (click)="refreshIssueDate(3)">
+                      <mat-icon>refresh</mat-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label class="control-label" for="issue_date">{{'end_date' | translate}}
+                    <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                      matTooltip="{{'pick_date_end' | translate}}" [matTooltipPosition]="position.value">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                  </label>
+
+                  <div>
+                    <mat-form-field class="angular-datepicker">
+                      <input matInput placeholder="mm/dd/yyyy" [readonly]="true" [matDatepicker]="endDate"
+                        (click)="endDate.open()" formControlName="end_date" (dateChange)="changeEndDateEvent($event);">
+                      <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                      <mat-datepicker #endDate disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                    <div class="refresh-icon" (click)="refreshIssueDate(4)">
+                      <mat-icon>refresh</mat-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label class="control-label" for="title">{{'achiv_cert_num' | translate}}
+                    <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                      matTooltip="{{'select_certificate_number' | translate}}" [matTooltipPosition]="position.value">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                  </label>
+                  <input type="text" class="form-control" formControlName="certificate_number">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group border">
+                  <label class="control-label" for="testimonial">{{'testimonial' | translate}}
+                    <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                      matTooltip="{{'enter_feedback' | translate}}" [matTooltipPosition]="position.value">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                  </label>
+                  <quill-editor [style]="{height: '250px'}" formControlName="testimonial"></quill-editor>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <label class="control-label" for="evidence">{{'evidence' | translate}}
+                  <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                    matTooltip="{{'multiple_evidence' | translate}}" [matTooltipPosition]="position.value">
+                    <i class="fa fa-info-circle"></i>
+                  </span>
+                </label>
+                <div formArrayName="evidence" class="evidence_content">
+                  <div *ngFor="let child of certIssueForm.controls.evidence['controls']; let i = index">
+                    <div formGroupName="{{i}}">
+                      <div class="form-group border">
+                        <div class="col-sm-7" style="padding: 0px">
+                          <input style="width:100%" type="text" class="form-control evidence-input"
+                            placeholder="Evidence Link" formControlName="evid" />
+                        </div>
+                        <div class="col-sm-4">
+                          <input style="width:100%" type="text" class="form-control evidence-input"
+                            formControlName="lable" placeholder="Evidence Label" />
+                        </div>
+                        <div class="col-sm-1" style="padding: 0px">
+                          <a class="evidence-delete" (click)="removeEvidence(i)">
+                            <i class="material-icons">delete</i>
+                          </a>
+                        </div>
+                        <div class="col-sm-12" style="padding: 0px"
+                          *ngIf="errorMsg && certIssueForm.controls.evidence['controls'][i]['controls']['evid'].hasError('pattern')">
+                          <div class="text-danger text-left small">
+                            {{'invalid_url' | translate}}
+                          </div>
+                          <br>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-2">
+                <div class="form-group border add-evidence-btn">
+                  <a mat-button class="btn btn-form-save add-evidence"
+                    (click)="addEvidence()">{{'add_evidence' | translate}} +</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group border">
+                  <label class="control-label" for="share">{{'social_media_sharing' | translate}}
+                    <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                      matTooltip="{{'social_media_sharing_info' | translate}}" [matTooltipPosition]="position.value">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+                  </label>
+                  <div class="form-group share-radio">
+                    <mat-radio-group formControlName="social_media_sharing">
+                      <mat-radio-button value='1' checked>{{'enable' | translate}}</mat-radio-button>
+                      <mat-radio-button value='2'>{{'disable' | translate}}</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-sm-12">
+            <div class="alert alert-danger" *ngIf="errorMsg">
+              {{errorMsg | translate}}
+            </div>
+            <br>
+          </div>
+        </fieldset>
+        <div class="form-group" style="float: right">
+          <button type="submit" mat-button class="password-submit"
+            style="margin-right:10px">{{'post_blockchain' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </ngx-smart-modal>
+</section>

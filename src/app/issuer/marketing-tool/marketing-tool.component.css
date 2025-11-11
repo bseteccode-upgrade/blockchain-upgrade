@@ -1,0 +1,38 @@
+:host /deep/ button.certificate-btn.mat-mini-fab.mat-accent{background-color:#1e232b;width:30px;height:30px}
+:host /deep/ button.certificate-btn.mat-mini-fab.mat-accent i{font-size:18px}
+:host /deep/ button.certificate-btn.mat-mini-fab .mat-button-wrapper{
+    line-height: 18px;
+    padding: 0 0;
+    position: relative;
+    bottom: 2px;
+}
+
+ul.canned_list{width:100%;display:inline-block}
+ul.canned_list li{display:inline-block}
+ul.canned_list li h4{font-size:16px;color:#ffffff;width: 50%;text-align: center;padding: 10px;}
+ul.canned_list li:first-child{width:30%}
+ul.canned_list li:nth-child(2){width:58%}
+ul.canned_list li:last-child{width:10%}
+
+
+.spinner_center{width:100%;text-align:center;display:inline-block}
+.spinner_center mat-spinner{display:inline-block}
+
+
+.list_contain ul.canned_list li.facebook h4{background:#4267b2;}
+.list_contain ul.canned_list li.twitter h4{background:#00acee;}
+.list_contain ul.canned_list li.linkedin h4{background:#006fa6;}
+.list_contain ul.canned_list li.whatsapp h4{background:#28b72e;}
+.list_contain > div:last-child ul.canned_list li h4{background:#eb4549;}
+
+
+
+@media (max-width:767px)
+{
+ul.canned_list{width:100%;padding-left:0}
+ul.canned_list li{text-align:center}
+ul.canned_list li:first-child{width:100%;text-align:center;display:block}
+ul.canned_list li h4{width:100%}
+ul.canned_list li:nth-child(2){width:100%}
+ul.canned_list li:last-child{width:100%}
+}

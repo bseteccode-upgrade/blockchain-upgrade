@@ -1,0 +1,28 @@
+
+.student_count { position: relative; width:100%; text-align: left; }
+.student_count p { font-family: 'Roboto-Regular'; font-size: 16px; color:#0f1115;  }
+ul.report-list { padding-left:0px; margin-bottom:0px; }
+ul.report-list li { display: inline-block; padding:0px 5px; }
+.failed-message { width:100%; position: relative; display: inline-block; text-align: center; }
+.failed-message p { font-family: 'Roboto-Regular'; font-size: 12px; color:#0f1115; }
+.failed-message .material-icons { color: #F20; font-size: 70px; }
+.button-container { width:100%; display: inline-block; text-align: center; }
+ul.report-email { margin-bottom:0px; padding-left:0px; width: 55%; margin: 0 auto; margin-bottom:10px;}
+ul.report-email li { display: inline-block;list-style-type: none;width: 50%;padding: 2px 10px; }
+.model-view-evidence h3 { font-size:16px; }
+.model-view-evidence .material-icons { font-size:40px; color: orange; }
+.step-secound{margin-top:10px;margin-bottom:20px}
+
+@media (max-width:991px)
+{
+:host /deep/ a.export-btn.mat-button { margin-bottom:10px; right:0px; margin-right:10px; }
+:host /deep/ .start_wrapper .panel-heading .pull-right button { margin-right:10px; }
+.bulk-upload .panel-heading .pull-right { text-align: center; }
+}
+
+
+@media (max-width: 535px)
+{
+:host /deep/ .mat-stepper-horizontal-line { border-top-color: transparent; } 
+:host /deep/ .mat-horizontal-stepper-header-container { white-space: unset; display: inline;}
+}

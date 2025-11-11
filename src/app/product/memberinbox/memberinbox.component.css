@@ -1,0 +1,35 @@
+/* Structure */
+.alert.alert-info.no-records { margin-top:15px;}
+:host /deep/ .start_wrapper .table > tbody > tr > td:last-child { padding: 15px 3%; text-align: left;font-family: 'Roboto-Regular';}
+:host /deep/ .start_wrapper .table>thead:first-child>tr:first-child>th {background-color:#f5f5f5;}
+table { width: 100%; }
+.mat-form-field { font-size: 14px;   }
+:host /deep/ .mat-form-field-appearance-outline .mat-form-field-infix { padding:0;}
+.start_wrapper .panel-heading .pull-left h3 { text-transform: capitalize; }
+:host /deep/ .start_wrapper .table > thead > tr > th:first-child { width:20%;}
+:host /deep/ td button.filter-btn.search {background-color: #1e232b;color: #fff; box-shadow: none; border: none; padding: 5px 15px; border-radius: 4px; margin: 5px 0;}
+:host /deep/ .start_wrapper td.mat-cell:first-child, :host /deep/ .start_wrapper td.mat-footer-cell:first-child, :host /deep/ .start_wrapper th.mat-header-cell:first-child { position: relative;min-width:100px;}
+.activityStatus {font-size: 18px;padding: 0 10px;text-transform: capitalize;font-weight:normal; position: absolute;right:0;top:15px;}
+.activityStatus.Invite {color:#e74c3c;}
+.activityStatus.Invite:before { content:'\f003 '; font-family: FontAwesome; display: inline-block; position: relative;padding-right: 5px;}
+.activityStatus.Pending{color:#c76e00;}
+.activityStatus.Pending:before { content:'\f017'; font-family: FontAwesome; display: inline-block; position: relative;padding-right: 5px;}
+.activityStatus.Completed{color:#62cb31;}
+.activityStatus.Completed:before { content:'\f00c'; font-family: FontAwesome; display: inline-block; position: relative;padding-right: 5px;}
+.activityStatus.status_invite {color:#e74c3c;}
+.activityStatus.status_invite:before { content:'\f003 '; font-family: FontAwesome; display: inline-block; position: relative;padding-right: 5px;}
+.activityStatus.status_pending{color:#c76e00;}
+.activityStatus.status_pending:before { content:'\f017'; font-family: FontAwesome; display: inline-block; position: relative;padding-right: 5px;}
+.activityStatus.status_completed{color:#62cb31;}
+.activityStatus.status_completed:before { content:'\f00c'; font-family: FontAwesome; display: inline-block; position: relative;padding-right: 5px;}
+.member-date { display: inline-block; padding:15px; }
+.form-group.selectDrop .form-control{font-size: 14px;height:42px;margin-bottom:20px;font-weight:normal;font-family: 'Roboto-Regular'}
+.scheduler-border .user-btn-block{text-align:left}
+.scheduler-border .user-btn-block button{margin-bottom:20px}
+.scheduler-border form .form-group{margin-bottom:25px}
+
+
+@media(max-width:991px)
+{
+.activityStatus{font-size:14px}
+}

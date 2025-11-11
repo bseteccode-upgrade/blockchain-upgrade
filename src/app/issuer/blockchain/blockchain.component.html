@@ -1,0 +1,1177 @@
+<section class="start_wrapper issue-certificate-list">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'achievements' | translate}} <span matTooltip="{{'phi_achievement_list' | translate}}"
+            class="headTooltip"><i class="material-icons"> help_outline</i></span></h3>
+      </div>
+      <div *ngIf="privilegeSearch.issue_certificate" class="pull-right">
+
+        <button *ngIf="selectedStudent.length == 0" style="margin: 5px" mat-button routerLink="/certificateissuer">
+          <i class="material-icons">cloud_upload</i> {{'upload' | translate}} </button>
+        <button *ngIf="certificateList.length >= 1 && selectedStudent.length == 0" style="margin: 5px" mat-button
+          routerLink="/achievement-export"> <i class="fa fa-cloud-download"></i> {{'achievement_export' | translate}}
+        </button>
+
+        <button [disabled]="exportprocess"
+          *ngIf="selectedStudent.length > 0 || (paramsString != '' && paramsString != 'page=1' && certificateList.length != 0)"
+          style="margin: 5px" mat-button (click)="confirmExport()"><span *ngIf="exportprocess">processing</span>
+          <span *ngIf="!exportprocess">{{'export_pdf' | translate}}</span> <i
+            class="material-icons">autorenew</i></button>
+
+        <button *ngIf="selectedStudent.length == 0" id="add_achievement" style="margin: 5px" mat-button
+          (click)="onAddAchievement()">
+          {{'add_achievement' | translate}}
+          <i class="fa fa-plus-circle"></i></button>
+
+        <!-- <button *ngIf="resentButtonDisplay" style="margin: 5px" mat-button
+          (click)="ngxSmartModalService.getModal('resend').open()">
+          {{'resend' | translate}} <i class="material-icons">autorenew</i></button> -->
+        <button *ngIf="selectedStudent.length > 0" style="margin: 5px" mat-button
+          (click)="ngxSmartModalService.getModal('resend').open();ngxSmartModalService.setModalData({is_check_all: checkall,total_count: totalAchCount,countAchSelect : coursesArray.length}, 'resend');">
+          {{'resend' | translate}} <i class="material-icons">autorenew</i></button>
+
+        <button *ngIf="selectedStudent.length > 0" type="button" mat-button
+          (click)="ngxSmartModalService.getModal('deletemyModal').open();ngxSmartModalService.setModalData({is_check_all: checkall,total_count: totalAchCount,countAchSelect : coursesArray.length}, 'deletemyModal');">
+          {{'delete' | translate}} <i aria-hidden="true" class="fa fa-trash-o"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel-heading clearfix filter-search-box">
+      <fieldset class="scheduler-border" *ngIf="!advanceSearch && allowSearch">
+        <form [formGroup]="searchForm" (ngSubmit)="searchDataAchievement(searchForm.value)">
+          <div class="col-lg-6 col-md-4 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'search' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="search">
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="user-btn-block">
+              <button type="submit" class="filter-btn search" mat-button
+                [disabled]="process">{{'search' | translate}}</button>
+              <button type="reset" class="filter-btn search" mat-button
+                (click)="advanceSearch = true; advancedSearchFun()">{{'advanced_search'
+                | translate}}</button>
+              <button type="reset" [disabled]="process" class="filter-btn reset" mat-button
+                (click)="refreshDataAchievement([])">{{'reset'
+                | translate}}</button>
+            </div>
+          </div>
+        </form>
+      </fieldset>
+
+      <fieldset class="scheduler-border" *ngIf="advanceSearch">
+        <form [formGroup]="searchForm" (ngSubmit)="searchDataAchievement(searchForm.value, true)">
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <mat-form-field class="angular-datepicker field-datepicker">
+              <input matInput placeholder="{{'from_date' | translate}}" [readonly]="true"
+                (dateChange)="changeDateEvent($event, 'from_date')" [matDatepicker]="fromdate"
+                formControlName="from_date" id="from_date" (click)="fromdate.open()">
+              <mat-datepicker-toggle matSuffix [for]="fromdate"></mat-datepicker-toggle>
+              <mat-datepicker #fromdate></mat-datepicker>
+            </mat-form-field>
+            <div class="refresh-icon" (click)="refreshFromDate()">
+              <mat-icon>refresh</mat-icon>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <mat-form-field class="angular-datepicker field-datepicker">
+              <input matInput placeholder="{{'to_date' | translate}}" [matDatepicker]="todate" [readonly]="true"
+                (dateChange)="changeDateEvent($event, 'to_date')" formControlName="to_date" id="to_date"
+                (click)="todate.open()">
+              <mat-datepicker-toggle matSuffix [for]="todate"></mat-datepicker-toggle>
+              <mat-datepicker #todate></mat-datepicker>
+            </mat-form-field>
+            <div class="refresh-icon" (click)="refreshToDate()">
+              <mat-icon>refresh</mat-icon>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'title' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="title">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <mat-label>{{'title' | translate}}</mat-label>
+              <input formControlName="title" (input)="getinputTitle($event.target.value)" [formControl]="titleControl"
+                autocomplete="off" placeholder="{{'title' | translate}}" matInput [matAutocomplete]="auto_title">
+              <mat-autocomplete #auto_title="matAutocomplete" (optionSelected)="titleInput = $event.option.value">
+                <mat-option *ngFor="let option of filterTitle | async" [value]="option.title">
+                  {{option.title}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'certificate_code' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="code">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <mat-label>{{'certificate_code' | translate}}</mat-label>
+              <input formControlName="code" (input)="getinputCode($event.target.value)" [formControl]="codeControl"
+                autocomplete="off" placeholder="{{'certificate_code' | translate}}" matInput
+                [matAutocomplete]="auto_code">
+              <mat-autocomplete #auto_code="matAutocomplete" (optionSelected)="codeInput = $event.option.value">
+                <mat-option *ngFor="let option of filterCode | async" [value]="option.code">
+                  {{option.code}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'student_id' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="student_id">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <mat-label>{{'student_id' | translate}}</mat-label>
+              <input (input)="getinputStudentId($event.target.value)" formControlName="student_id"
+                [formControl]="filterStudentIdOptions" placeholder="{{'student_id' | translate}}" autocomplete="off"
+                matInput [matAutocomplete]="auto_student_id">
+              <mat-autocomplete #auto_student_id="matAutocomplete"
+                (optionSelected)="studentIdInput = $event.option.value">
+                <mat-option *ngFor="let option of filterStudentIdOptions | async" [value]="option.student_id">
+                  {{option.student_id}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'email' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="email">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <mat-label>{{'email' | translate}}</mat-label>
+              <input (input)="getinputemail($event.target.value)" formControlName="email"
+                (input)="getinputemail($event.target.value)" [formControl]="emailControl" autocomplete="off"
+                placeholder="{{'email' | translate}}" matInput [matAutocomplete]="auto_email">
+              <mat-autocomplete #auto_email="matAutocomplete" (optionSelected)="emailInput = $event.option.value">
+                <mat-option *ngFor="let option of filterEmail | async" [value]="option.email">
+                  {{option.email}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'first_name' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="first_name">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <mat-label>{{'first_name' | translate}}</mat-label>
+              <input formControlName="first_name" (input)="getinputfirstname($event.target.value)"
+                [formControl]="firstNameControl" placeholder="{{'first_name' | translate}}" autocomplete="off" matInput
+                [matAutocomplete]="auto_first_name">
+              <mat-autocomplete #auto_first_name="matAutocomplete"
+                (optionSelected)="firstNameInput = $event.option.value">
+                <mat-option *ngFor="let option of filterFirstName | async" [value]="option.first_name">
+                  {{option.first_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'last_name' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="last_name">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <mat-label>{{'last_name' | translate}}</mat-label>
+              <input formControlName="last_name" (input)="getinputlastname($event.target.value)"
+                [formControl]="lastNameControl" placeholder="{{'last_name' | translate}}" autocomplete="off" matInput
+                [matAutocomplete]="auto_last_name">
+              <mat-autocomplete #auto_last_name="matAutocomplete"
+                (optionSelected)="lastNameInput = $event.option.value">
+                <mat-option *ngFor="let option of filterLastName | async" [value]="option.last_name">
+                  {{option.last_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'select' | translate}}</mat-label>
+              <mat-select placeholder="Select" class="form-control" formControlName="block_chain">
+                <mat-option [value]="true">Blockchain</mat-option>
+                <mat-option [value]="false">Not Posted</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>{{'group' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="group_name">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline" class="autocomplete">
+              <input formControlName="group_name" (input)="getinputgroup($event.target.value)"
+                [formControl]="groupNameControl" autocomplete="off" placeholder="{{'group' | translate}}" matInput
+                [matAutocomplete]="auto_group_name">
+              <mat-autocomplete #auto_group_name="matAutocomplete"
+                (optionSelected)="groupNameInput = $event.option.value">
+                <mat-option *ngFor="let option of filterGroupName | async" [value]="option.group_name">
+                  {{option.group_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-12 col-sm-12">
+            <div class="col-lg-4 col-md-6 col-sm-12" *ngIf="!apiService.is_gdpr">
+              <mat-checkbox formControlName="show_deleted">
+                <span> {{'include_delete' | translate}} </span>
+              </mat-checkbox>
+            </div>
+
+            <div class="col-lg-8 col-md-6 col-sm-12">
+              <div class="achievement-btn achievements-group">
+                <button type="submit" class="filter-btn" mat-button
+                  [disabled]="process">{{'search' | translate}}</button>
+                <button type="reset" [disabled]="process" class="filter-btn" mat-button
+                  (click)="refreshDataAchievement([])">{{'reset' |
+                  translate}}</button>
+                <button type="reset" class="filter-btn" mat-button (click)="advanceSearch = false; searchForm.reset()">{{'close' |
+                  translate}}</button>
+              </div>
+            </div>
+          </div>
+
+
+        </form>
+      </fieldset>
+    </div>
+    <!-- <div>
+      <button *ngIf="resentButtonDisplay" class="resend-btn" mat-button
+          (click)="ngxSmartModalService.getModal('resend').open()">
+          {{'resend' | translate}} <i class="material-icons">autorenew</i></button>
+    </div> -->
+
+    <!--  -->
+    <div class="panel-body standter">
+      <div class="col-md-12 col-sm-12">
+        <div class="select_all_container" *ngIf="certificateList.length !== 0">
+          <form [formGroup]="achMultiSelectForm">
+            <mat-checkbox *ngIf="totalAchCount != 0" formControlName="multi_select_achv"
+              (change)="onChangeSelectAll($event.checked)" [checked]="allselect">{{'select_all' | translate}}
+            </mat-checkbox> <span *ngIf="checkall && totalAchCount != 0">{{'- (' + totalAchCount + ')'}}</span><span
+              *ngIf="!checkall && selectedStudent.length > 0">{{'- (' + selectedStudent.length + ')'}}</span>
+            <span *ngIf="totalAchCount != 0" matTooltip="{{'delete_selected_achievement' | translate}}"
+              class="headTooltip"><i class="material-icons"> help_outline</i></span>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <div class="panel-body standter">
+      <div class="standter clearfix">
+        <div class="col-sm-12">
+          <div class="alert alert-info no-records" *ngIf="certificateList.length === 0">
+            {{'no_records_found' | translate}}
+          </div>
+        </div>
+        <div *ngIf="certificateList.length > 0" class="search-results-stud scroll-window" slimScroll
+          (scrollChanged)="scrollChanged($event)" [options]="options" infiniteScroll
+          [infiniteScrollDistance]="issue_scrollDistance" infiniteScrollUpDistance='issue_scrollUpDistance'
+          [infiniteScrollThrottle]="issue_throttle" [scrollWindow]="false"
+          (scrolled)="onScrollDownIssue(searchForm.value)">
+          <div class="col-sm-3" *ngFor="let certi of certificateList">
+            <div class="eng_group">
+
+              <div *ngIf="certi.is_test" class="corner-ribbon top-left sticky"><span>{{'test' | translate}}</span></div>
+
+
+              <div *ngIf="certi.is_deleted" class="delete-ribbon top-right sticky">
+                <span>{{'deleted' | translate}}</span></div>
+
+              <div class="blockchain-main">
+                <div class="center-image">
+                  <img id="{{certi.id}}" *ngIf="!certi.is_certificate && certi.post_blockchain"
+                    src="{{certi.transaction_address !== null ? (certi.course_image || certi.badge) : 'assets/images/awaiting.gif'}}"
+                    class="img-responsive {{certi.is_invalidated ? 'cls-invalidado' : certi.is_apple_wallet && certi.is_expired ? 'cls-expirado' : certi.is_expired ? 'cls-expired' : 'testsam'}}">
+                  <img id="{{certi.id}}" *ngIf="!certi.is_certificate && !certi.post_blockchain"
+                    src="{{(certi.course_image || certi.badge)}}"
+                    class="img-responsive {{certi.is_invalidated ? 'cls-invalidado' : certi.is_apple_wallet && certi.is_expired ? 'cls-expirado' : certi.is_expired ? 'cls-expired' : 'testsam'}}">
+                  <img id="{{certi.id}}" *ngIf="certi.is_certificate"
+                    src="{{certi.uploads_thum ? certi.uploads_thum : 'assets/images/awaiting.gif'}}"
+                    class="img-responsive {{certi.is_invalidated ? 'cls-invalidado' : certi.is_apple_wallet && certi.is_expired ? 'cls-expirado' : certi.is_expired ? 'cls-expired' : 'testsam'}}">
+
+                  <div class="label-display">
+                    <img src="assets/images/expirado.png" class="cls-expirado">
+                    <img
+                      src="{{certi.is_deleted ? 'assets/images/deleted-img.png' : 'assets/images/course-expired.png'}}"
+                      class="cls-expired">
+                    <img src="assets/images/invalidado.png" class="cls-invalidado">
+                  </div>
+                </div>
+                <div class="blockchain-details">
+
+                  <div class="block-left">
+                    <div class="certify_name">{{certi.name}} {{certi.last_name}}</div>
+                  </div>
+
+                  <div class="block-right">
+                    <img src="{{certi.avatar}}" (error)="certi.avatar = 'assets/images/avatar.jpeg'"
+                      style="width:30px; height:30px;display: inline-block;margin: 5px 0px;">
+                    <img *ngIf="certi.post_blockchain"
+                      src="{{'assets/images/blockchain/blkimg_' + certi.blockchain_client_img + '.png'}}"
+                      style="width:30px; height:30px;display: inline-block;margin: 5px 0px;">
+                    <!-- <span *ngIf="certi.post_blockchain" class="block-left block-course-title">{{certi.blockchain_client}}</span> -->
+                    <!-- <span *ngIf="certi.post_blockchain" class="icon"
+                      style="display: inline-block;margin:0px 4px; font-size:20px; vertical-align: middle;">
+                      <img
+                          src="{{'assets/images/blockchain/blkimg_' + certi.blockchain_client_img + '.png'}}">
+                          <span>{{certi.blockchain_client}}</span>
+
+
+                    </span> -->
+                  </div>
+
+                  <div class="block-left block-course-title">
+                    <h4> {{certi.course_title || certi.title}} </h4>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="blockchain-submain">
+                <div id="{{'overlay'+certi.id}}">
+                  <a *ngIf="certi.uploads && certi.is_certificate" (click)="getIssuedCertiDetail2(certi.id);"
+                    target="_blank">
+                    <i class="fa fa-link"></i> {{'blockchain_certificate' | translate}}</a>
+                  <a *ngIf="!certi.is_certificate && certi.post_blockchain" (click)="getIssuedBadge(certi.id)">
+                    <i class="fa fa-eye"></i> {{ 'blockchain_course' | translate }}</a>
+                  <a *ngIf="!certi.is_certificate && !certi.post_blockchain" (click)="getIssuedBadge(certi.id)">
+                    <i class="fa fa-eye"></i> {{ 'digital_course' | translate }}</a>
+                </div>
+                <a (click)="getIssuedCertiDetail(certi.id)">
+                  <i class="fa fa-eye"></i> {{'detail_view' | translate}}</a>
+                <a (click)="getStudentDetailView(certi.student_id)">
+                  <i class="fa fa-eye"></i> {{'view_student' | translate}}</a>
+
+                <div class="list_delete_icon" *ngIf="!certi.is_deleted"
+                  (click)="ngxSmartModalService.getModal('deletemyModal').open();ngxSmartModalService.setModalData({gdpr : certi.is_gdpr}, 'deletemyModal');setCertId(certi.id);">
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </div>
+              </div>
+
+              <div class="select_checkbox">
+                <mat-checkbox *ngIf="!certi.is_deleted" (change)="onChangeAch(certi.id, $event.checked)"
+                  [checked]="certi.selected">
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="acheivement-popup certificate-view-model  {{ selectedCertificate.is_apple_wallet ? 'badgewindow' : '' }}">
+  <ngx-smart-modal #myModal identifier="myModal"
+    (onAnyCloseEvent)="myTemplate = '';ngxSmartModalService.resetModalData('myModal')"
+    [ngClass]="{'modelCertificate': modelOpen}">
+
+    <div class="info-tooltip">
+      <a (click)="ngxSmartModalService.getModal('CertInfoPopup').open()"><i class="material-icons"> info </i></a>
+    </div>
+
+    <div class="certificate-image-view" *ngIf="myModal.hasData()">
+      <div class="center-image">
+        <img style="width:100%" src="{{myModal.getData()}}" class="certificate-imge-popup">
+        <div *ngIf="selectedCertificate.is_invalidated || selectedCertificate.is_expired" class="expired-label big">
+          <img
+            src="{{selectedCertificate.is_deleted ? 'assets/images/deleted-img.png' : selectedCertificate.is_invalidated ? 'assets/images/invalidado.png' : selectedCertificate.is_apple_wallet ? 'assets/images/expirado.png' : selectedCertificate.badges === '13' ? 'assets/images/expirado.png': 'assets/images/course-expired.png'}}"
+            class="img-responsive">
+        </div>
+
+      </div>
+      <br>
+      <br>
+    </div>
+  </ngx-smart-modal>
+</div>
+
+
+<ngx-smart-modal #myModal2 identifier="myModal2" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal2')"
+  [ngClass]="{'modelEvidence': modelOpen}">
+  <div *ngIf="myModal2.hasData()" style="text-align: center">
+    <div class="view-evidence-title">
+      <h4> {{'view_evidence_list' | translate}} </h4>
+    </div>
+    <div *ngFor="let evidencelist of myModal2.getData(); let i = index" class="model-view-evidence">
+      <a *ngIf="evidencelist.evid && evidencelist.evid !== 'None' && i < (myModal2.getData().length - 1)"
+        href="{{evidencelist.evid}}" class="view-evidence-btn"
+        matTooltip="{{(evidencelist.label)? evidencelist.label : 'view_evidence' | translate}}" mat-button
+        target="_blank">
+        <i class="fa fa-eye"></i> {{(evidencelist.label)? evidencelist.label : 'view_evidence' | translate}}
+      </a>
+      <a *ngIf="evidencelist.blockchainType !== 'oracle' && evidencelist.evid && evidencelist.evid !== 'None' && i === (myModal2.getData().length - 1)"
+        href="{{evidencelist.evid}}" class="view-evidence-btn"
+        matTooltip="{{(evidencelist.label)? evidencelist.label : 'view_evidence' | translate}}" mat-button
+        target="_blank">
+        <span *ngIf="evidencelist.transaction"><i class="fa fa-eye"></i>{{ 'view_blockchain' | translate}}</span>
+        <span *ngIf="!evidencelist.transaction"><i class="fa fa-eye"></i>{{(evidencelist.label)? evidencelist.label :
+          'view_evidence' | translate}}</span>
+      </a>
+      <div
+        *ngIf="evidencelist.blockchainType === 'oracle' && evidencelist.evid && evidencelist.evid !== 'None' && i === (myModal2.getData().length - 1)">
+        <span *ngIf="evidencelist.transaction">
+          <h4>Blockchain Transaction ID :</h4>
+          <p>{{evidencelist.transaction}}</p>
+        </span>
+      </div>
+    </div>
+  </div>
+</ngx-smart-modal>
+
+<app-commonplanalert></app-commonplanalert>
+
+<!-- Detail view popup start -->
+<div class="acheivement-popup detailModelBox">
+  <ngx-smart-modal id="#detailMOdal" #myModal3 identifier="myModal3"
+    (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal3')">
+    <div *ngIf="myModal3.hasData()" style="text-align: center">
+      <div class="" *ngIf="certiSelected">
+        <div class="">
+          <div class="badge-details-modelpopup">
+            <div class="">
+              <div class="col-md-12 col-sm-12 issuer-section">
+                <div class="panel-heading">
+                  <div class="pull-right close-icons"></div>
+                </div>
+
+                <div class="panel-body">
+                  <div class="col-md-12 col-sm-12 badge-details-block">
+                    <div class="col-md-4 col-sm-12">
+                      <div class="badge-block">
+                        <img *ngIf="selectedCertificate.is_certificate"
+                          src="{{selectedCertificate.uploads ? selectedCertificate.uploads : 'assets/images/awaiting.gif'}}"
+                          class="img-responsive">
+                        <img *ngIf="!selectedCertificate.is_certificate"
+                          src="{{selectedCertificate.badges ? selectedCertificate.badges : 'assets/images/awaiting.gif'}}"
+                          class="img-responsive">
+                        <div *ngIf="selectedCertificate.is_expired || selectedCertificate.is_invalidated"
+                          class="expired-label">
+                          <img
+                            src="{{selectedCertificate.is_deleted ? 'assets/images/deleted-img.png' : selectedCertificate.is_invalidated ? 'assets/images/invalidado.png' : selectedCertificate.is_apple_wallet ? 'assets/images/expirado.png' : selectedCertificate.badges === '13' ? 'assets/images/expirado.png': 'assets/images/course-expired.png'}}"
+                            class="img-responsive">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                      <div class="badge-certificate-title">
+                        <h3>{{ selectedCertificate.title}} {{(selectedCertificate.course_name)? '- ' +
+                          selectedCertificate.course_name: ''}}</h3>
+                        <span class="certificate-unline"></span>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                      <div class="issuer-details">
+                        <a href="{{selectedCertificate.university_website}}" target="_blank">
+                          <img
+                            [src]="(selectedCertificate.university_logo)? selectedCertificate.university_logo : 'assets/images/Univer-logo.png'"
+                            class="img-responsive">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="col-md-6 col-sm-12">
+                        <div class="main-block description-blog" *ngIf="selectedCertificate.issue_date">
+                          <div class="content-block">
+                            <h4>{{'issue_date' | translate}} : {{selectedCertificate.issue_date_dateformat}}</h4>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="selectedCertificate.end_validity_dateformat" class="col-md-6 col-sm-12">
+                        <div class="main-block description-blog">
+                          <div class="content-block">
+                            <h4>{{'expire_date' | translate}} : {{selectedCertificate.end_validity_dateformat ||
+                              'None'}}</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div *ngIf="selectedCertificate.start_date" class="col-md-6 col-sm-12">
+                        <div class="main-block description-blog">
+                          <div class="content-block">
+                            <h4>{{'start_date' | translate}} : {{selectedCertificate.start_date}}</h4>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="selectedCertificate.end_date" class="col-md-6 col-sm-12">
+                        <div class="main-block description-blog">
+                          <div class="content-block">
+                            <h4>{{'end_date' | translate}} : {{selectedCertificate.end_date}}</h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <div class="content-block badge-link" *ngIf="selectedCertificate.evidence">
+                      <a (click)="viewEvidence(selectedCertificate);">{{'view_evidence' | translate}}
+                        <i class="fa fa-angle-double-right" style="font-size: 22px;float: right;"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <div class="content-block badge-link"
+                      *ngIf="selectedCertificate.uploads && selectedCertificate.is_certificate">
+                      <a
+                        (click)="this.ngxSmartModalService.setModalData( selectedCertificate.uploads , 'myModal');ngxSmartModalService.getModal('myModal').open();">
+                        {{'view_certificate' | translate}}
+                        <i class="fa fa-angle-double-right" style="font-size: 22px;float: right;"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <div class="content-block badge-link" *ngIf="!selectedCertificate.is_certificate">
+                      <a (click)="getIssuedBadge(selectedCertificate.id);">
+                        {{'view_course' | translate}}
+                        <i class="fa fa-angle-double-right" style="font-size: 22px;float: right;"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-sm-12" *ngIf="selectedCertificate.skills.length != 0">
+                    <div class="main-block description-blog skills_container">
+                      <div class="head-block">
+                        <h3>{{'skills' | translate}}</h3>
+                      </div>
+
+                      <div class="content-block">
+                        <span *ngFor="let skill of selectedCertificate.skills">{{skill | translate}}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-sm-12" *ngIf="selectedCertificate.description">
+                    <div class="main-block description-blog">
+                      <div class="head-block">
+                        <h3>{{'description' | translate}}</h3>
+                      </div>
+
+                      <div class="content-block">
+                        <p [innerHtml]="convertStyle(selectedCertificate.description)"></p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-sm-12" *ngIf="selectedCertificate.criteria">
+                    <div class="main-block description-blog">
+                      <div class="head-block">
+                        <h3>{{'criteria' | translate}}</h3>
+                      </div>
+
+                      <div class="content-block">
+                        <p [innerHtml]="convertStyle(selectedCertificate.criteria)"></p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-sm-12" *ngIf="selectedCertificate.testimonial">
+                    <div class="main-block description-blog">
+                      <div class="head-block">
+                        <h3>{{'testimonial' | translate}}</h3>
+                      </div>
+
+                      <div class="content-block">
+                        <p [innerHtml]="selectedCertificate.testimonial"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button *ngIf="!selectedCertificate.is_deleted" mat-button class="badge-delete"
+                matTooltip="{{'delete_achievement_details' | translate}}"
+                (click)="ngxSmartModalService.getModal('deletemyModal').open();ngxSmartModalService.setModalData({gdpr :selectedCertificate.is_gdpr}, 'deletemyModal');setCertId(selectedCertificate.id);">{{'delete'
+                | translate}}
+                <i class="fa fa-trash-o" style="font-size:18px;"></i>
+              </button>
+              <button *ngIf="!selectedCertificate.is_deleted" mat-button class="badge-delete expired-revoke"
+                matTooltip="{{selectedCertificate.is_expired ? 'revoke' : 'experied' | translate}}"
+                (click)="experiedCertId(selectedCertificate.id, selectedCertificate.is_expired);">{{
+                selectedCertificate.is_expired ? 'revoke' : 'experied' | translate}}
+                <i class="fa fa-ban" style="font-size:18px;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ngx-smart-modal>
+</div>
+<!-- Detail view popup end -->
+
+<!-- Badge detail popup start -->
+<div class="acheivement-popup detailModelBox">
+  <ngx-smart-modal id="#detailMOdal" #myModal4 identifier="myModal4"
+    (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal4')">
+    <div *ngIf="myModal4.hasData()" style="text-align: center">
+      <div class="" *ngIf="certiSelected">
+        <div class="badge-details-modelpopup">
+          <div class="col-md-12 col-sm-12">
+            <div class="panel-heading">
+              <div class="pull-right close-icons"></div>
+            </div>
+
+            <div *ngIf="selectedCertificate.transaction_address" class="panel-body badge-details-block">
+              <div class="col-md-12 col-sm-12">
+                <div class="col-md-12 col-sm-12">
+                  <div class="badge-block">
+                    <div class="badge-img-block">
+                      <img
+                        src="{{selectedCertificate.uploads ? selectedCertificate.uploads : 'assets/images/awaiting.gif'}}"
+                        class="img-responsive">
+                      <div class="badge_info">
+                        <a (click)="ngxSmartModalService.getModal('CertificateInfoPopup').open()"><i
+                            class="material-icons">
+                            info </i> </a>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                  <div class="badge-block right-side issue_dateblock">
+                    <h4>{{selectedCertificate.title}}</h4>
+                    <h6>{{'issued_on' | translate}} : {{selectedCertificate.originalIssueDate}}</h6>
+                    <h6 *ngIf="selectedCertificate.end_validity">{{'expire_date' | translate}} :
+                      {{selectedCertificate.end_validity_dateformat}}</h6>
+                    <h6 *ngIf="selectedCertificate.start_date">{{'initial_date' | translate}} :
+                      {{selectedCertificate.start_date}}</h6>
+                    <h6 *ngIf="selectedCertificate.end_date">{{'final_date' | translate}} :
+                      {{selectedCertificate.end_date}}</h6>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                  <div class="badge-block">
+                    <h4>Blockchain Transaction ID</h4>
+                    <p>{{selectedCertificate.transaction_address}}</p>
+                  </div>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                  <div class="badge-block">
+                    <h4>Blockchain Public Key</h4>
+                    <p>{{selectedCertificate.studentAddress}}</p>
+                  </div>
+                </div>
+                <div *ngIf="selectedCertificate.qr_uploads" class="col-md-12 col-sm-12">
+                  <div class="badge-block qr-code">
+
+                    <ul class="qr-user-list">
+                      <li>
+                        <img src="{{selectedCertificate.qr_uploads}}" class="img-responsive">
+                        <br />
+                        <div class="qr-user-delete">
+                          <a href="{{selectedCertificate.qr_uploads}}"><i class="material-icons">
+                              cloud_download
+                            </i></a>
+                        </div>
+                      </li>
+                    </ul>
+
+                  </div>
+                </div>
+              </div>
+              <div style="float: right; display: inline-block;text-align: right">
+                <div style="width:100%;position: relative;display: inline-block;top:0px;">
+                  <h4
+                    style="font-family: 'Verdana', sans-serif;font-size: 12px;display: inline-block;margin-top:0px;margin-bottom:0px;color:#000;padding-right:1vw;font-style: italic;font-weight: normal;">
+                    <a [href]="siteName" target="_blank"
+                      style="color:#000;text-decoration:none;">{{'blockchained_by' | translate}} {{appName}}</a></h4>
+                </div>
+              </div>
+              <div *ngIf="selectedCertificate.is_expired" class="expired-label big">
+                <img
+                  src="{{selectedCertificate.is_deleted ? 'assets/images/deleted-img.png' : 'assets/images/course-expired.png'}}"
+                  class="img-responsive">
+              </div>
+            </div>
+            <div *ngIf="!selectedCertificate.transaction_address" class="panel-body badge-details-block">
+              <div class="col-md-12 col-sm-12">
+                <div class="col-md-12 col-sm-12">
+                  <div class="badge-block">
+                    <img src="{{selectedCertificate.logo}}" class="img-responsive">
+                  </div>
+                </div>
+                <div class="spacing"></div>
+                <div class="col-md-12 col-sm-12">
+                  <div class="badge-block right-side issue_dateblock">
+                    <h4>{{selectedCertificate.title}}</h4>
+                    <h6>{{'issued_on' | translate}} : {{selectedCertificate.originalIssueDate}}</h6>
+                    <h6 *ngIf="selectedCertificate.end_validity">{{'expire_date' | translate}} :
+                      {{selectedCertificate.end_validity_dateformat}}</h6>
+                    <h6 *ngIf="selectedCertificate.start_date">{{'initial_date' | translate}} :
+                      {{selectedCertificate.start_date}}</h6>
+                    <h6 *ngIf="selectedCertificate.end_date">{{'final_date' | translate}} :
+                      {{selectedCertificate.end_date}}</h6>
+                  </div>
+                </div>
+
+                <div class="spacing"></div>
+                <div *ngIf="selectedCertificate.qr_uploads" class="col-md-12 col-sm-12">
+                  <div class="badge-block qr-code">
+                    <ul class="qr-user-list">
+                      <li>
+                        <img src="{{selectedCertificate.qr_uploads}}" class="img-responsive">
+                        <br />
+                        <div class="qr-user-delete">
+                          <a target="_blank" href="{{selectedCertificate.qr_uploads}}"><i class="material-icons">
+                              cloud_download
+                            </i></a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div style="float: right; display: inline-block;text-align: right">
+                <div style="width:100%;position: relative;display: inline-block;top:0px;">
+                  <h4
+                    style="font-family: 'Verdana', sans-serif;font-size:12px;display: inline-block;margin-top:0px;margin-bottom:0px;color:#000;padding-right:1vw;font-style: italic;font-weight: normal;">
+                    <a [href]="siteName" target="_blank"
+                      style="color:#000;text-decoration:none;">{{'blockchained_by' | translate}} {{appName}}</a></h4>
+                </div>
+              </div>
+              <div *ngIf="selectedCertificate.is_expired" class="expired-label big">
+                <img
+                  src="{{selectedCertificate.is_deleted ? 'assets/images/deleted-img.png' : 'assets/images/course-expired.png'}}"
+                  class="img-responsive">
+              </div>
+            </div>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ngx-smart-modal>
+</div>
+<app-user-verify-popup></app-user-verify-popup>
+<!-- Badge detail popup end -->
+
+<ngx-smart-modal id="#badgeModalNew" #badgeModalNew identifier="badgeModalNew"
+  (onAnyCloseEvent)="ngxSmartModalService.resetModalData('badgeModalNew')" class="acheivement-popup detailModelBox">
+  <div *ngIf="badgeModalNew.hasData()" style="text-align: center">
+    <div class="" *ngIf="certiSelected">
+      <div class="badge-details-modelpopup">
+        <div class="col-md-12 col-sm-12">
+          <div class="panel-heading">
+            <div class="pull-right close-icons"></div>
+          </div>
+
+          <div *ngIf="selectedCertificate.transaction_address" class="panel-body badge-details-block">
+            <div class="col-md-12 col-sm-12">
+              <div class="col-md-12 col-sm-12">
+                <div class="badge-block">
+                  <div class="badge-img-block">
+                    <img
+                      src="{{selectedCertificate.uploads ? selectedCertificate.uploads : 'assets/images/awaiting.gif'}}"
+                      class="img-responsive">
+                    <div class="badge_info">
+                      <a (click)="ngxSmartModalService.getModal('CertInfoPopup').open()"><i
+                          class="material-icons">
+                          info </i> </a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12">
+                <div class="badge-block right-side issue_dateblock">
+                  <h4>{{selectedCertificate.title}}</h4>
+                  <h6>{{'issued_on' | translate}} : {{selectedCertificate.originalIssueDate}}</h6>
+                  <h6 *ngIf="selectedCertificate.end_validity">{{'expire_date' | translate}} :
+                    {{selectedCertificate.end_validity_dateformat}}</h6>
+                  <h6 *ngIf="selectedCertificate.start_date">{{'initial_date' | translate}} :
+                    {{selectedCertificate.start_date}}</h6>
+                  <h6 *ngIf="selectedCertificate.end_date">{{'final_date' | translate}} :
+                    {{selectedCertificate.end_date}}</h6>
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12">
+                <div class="badge-block">
+                  <h4>Blockchain Transaction ID</h4>
+                  <p>{{selectedCertificate.transaction_address}}</p>
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12">
+                <div class="badge-block">
+                  <h4>Blockchain Public Key</h4>
+                  <p>{{selectedCertificate.studentAddress}}</p>
+                </div>
+              </div>
+              <div *ngIf="selectedCertificate.qr_uploads" class="col-md-12 col-sm-12">
+                <div class="badge-block qr-code">
+
+                  <ul class="qr-user-list">
+                    <li>
+                      <img src="{{selectedCertificate.qr_uploads}}" class="img-responsive">
+                      <br />
+                      <div class="qr-user-delete">
+                        <a href="{{selectedCertificate.qr_uploads}}"><i class="material-icons">
+                            cloud_download
+                          </i></a>
+                      </div>
+                    </li>
+                  </ul>
+
+                </div>
+              </div>
+            </div>
+            <div style="float: right; display: inline-block;text-align: right">
+              <div style="width:100%;position: relative;display: inline-block;top:0px;">
+                <h4
+                  style="font-family: 'Verdana', sans-serif;font-size: 12px;display: inline-block;margin-top:0px;margin-bottom:0px;color:#000;padding-right:1vw;font-style: italic;font-weight: normal;">
+                  <a [href]="siteName" target="_blank"
+                    style="color:#000;text-decoration:none;">{{'blockchained_by' | translate}} {{appName}}</a></h4>
+              </div>
+            </div>
+            <div *ngIf="selectedCertificate.is_expired" class="expired-label big">
+              <img
+                src="{{selectedCertificate.is_deleted ? 'assets/images/deleted-img.png' : 'assets/images/course-expired.png'}}"
+                class="img-responsive">
+            </div>
+          </div>
+          <div *ngIf="!selectedCertificate.transaction_address" class="panel-body badge-details-block">
+            <div class="col-md-12 col-sm-12">
+              <div class="col-md-12 col-sm-12">
+                <div class="badge-block">
+                  <img src="{{selectedCertificate.logo}}" class="img-responsive">
+                </div>
+              </div>
+              <div class="spacing"></div>
+              <div class="col-md-12 col-sm-12">
+                <div class="badge-block right-side issue_dateblock">
+                  <h4>{{selectedCertificate.title}}</h4>
+                  <h6>{{'issued_on' | translate}} : {{selectedCertificate.originalIssueDate}}</h6>
+                  <h6 *ngIf="selectedCertificate.end_validity">{{'expire_date' | translate}} :
+                    {{selectedCertificate.end_validity_dateformat}}</h6>
+                  <h6 *ngIf="selectedCertificate.start_date">{{'initial_date' | translate}} :
+                    {{selectedCertificate.start_date}}</h6>
+                  <h6 *ngIf="selectedCertificate.end_date">{{'final_date' | translate}} :
+                    {{selectedCertificate.end_date}}</h6>
+                </div>
+              </div>
+
+              <div class="spacing"></div>
+              <div *ngIf="selectedCertificate.qr_uploads" class="col-md-12 col-sm-12">
+                <div class="badge-block qr-code">
+                  <ul class="qr-user-list">
+                    <li>
+                      <img src="{{selectedCertificate.qr_uploads}}" class="img-responsive">
+                      <br />
+                      <div class="qr-user-delete">
+                        <a target="_blank" href="{{selectedCertificate.qr_uploads}}"><i class="material-icons">
+                            cloud_download
+                          </i></a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div style="float: right; display: inline-block;text-align: right">
+              <div style="width:100%;position: relative;display: inline-block;top:0px;">
+                <h4
+                  style="font-family: 'Verdana', sans-serif;font-size:12px;display: inline-block;margin-top:0px;margin-bottom:0px;color:#000;padding-right:1vw;font-style: italic;font-weight: normal;">
+                  <a [href]="siteName" target="_blank"
+                    style="color:#000;text-decoration:none;">{{'blockchained_by' | translate}} {{appName}}</a></h4>
+              </div>
+            </div>
+            <div *ngIf="selectedCertificate.is_expired" class="expired-label big">
+              <img
+                src="{{selectedCertificate.is_deleted ? 'assets/images/deleted-img.png' : 'assets/images/course-expired.png'}}"
+                class="img-responsive">
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</ngx-smart-modal>
+
+<ngx-smart-modal id="#blockchainCertModal" #blockchainCertModal identifier="blockchainCertModal" class="acheivement-popup certificate-view-model  {{ selectedCertificate.is_apple_wallet ? 'badgewindow' : '' }}"
+  (onAnyCloseEvent)="myTemplate = '';ngxSmartModalService.resetModalData('blockchainCertModal')">
+  <div class="info-tooltip">
+    <a (click)="ngxSmartModalService.getModal('CertInfoPopup').open()"><i class="material-icons"> info </i></a>
+  </div>
+
+  <div class="certificate-image-view" *ngIf="blockchainCertModal.hasData()">
+    <div class="center-image">
+      <img style="width:100%" src="{{blockchainCertModal.getData()}}" class="certificate-imge-popup">
+      <div *ngIf="selectedCertificate.is_invalidated || selectedCertificate.is_expired" class="expired-label big">
+        <img
+          src="{{selectedCertificate.is_deleted ? 'assets/images/deleted-img.png' : selectedCertificate.is_invalidated ? 'assets/images/invalidado.png' : selectedCertificate.is_apple_wallet ? 'assets/images/expirado.png' : selectedCertificate.badges === '13' ? 'assets/images/expirado.png': 'assets/images/course-expired.png'}}"
+          class="img-responsive">
+      </div>
+
+    </div>
+    <br>
+    <br>
+  </div>
+</ngx-smart-modal>
+
+<!-- View student modelpopup start -->
+<ngx-smart-modal id="#detailMOdal" #myModal6 identifier="myModal6"
+  (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal6')">
+  <div class="badge-details-modelpopup student-detail-popup">
+    <div class="student-block">
+      <div class="col-md-12 col-sm-12">
+        <div class="col-md-4 col-sm-12">
+          <div class="student-header">
+            <img *ngIf='selectedStudents.avatar' src="{{selectedStudents.avatar}}" class="img-responsive">
+            <img *ngIf='!selectedStudents.avatar' src="{{'/assets/images/avatar.jpeg'}}" class="img-responsive">
+          </div>
+        </div>
+
+        <div class="col-md-8 col-sm-12">
+          <ul class="student-list">
+            <li>
+              <p>{{'student_id' | translate}}:</p>
+            </li>
+            <li><span>{{selectedStudents.student_id}}</span></li>
+          </ul>
+          <ul class="student-list">
+            <li>
+              <p>{{'first_name' | translate}}:</p>
+            </li>
+            <li><span>{{selectedStudents.first_name}}</span></li>
+          </ul>
+          <ul class="student-list">
+            <li>
+              <p>{{'last_name' | translate}}:</p>
+            </li>
+            <li><span>{{selectedStudents.last_name}}</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12">
+
+      <div class="col-md-12 col-sm-12">
+        <ul class="student-list">
+          <li>
+            <p>{{'email' | translate}}:</p>
+          </li>
+          <li><span>{{selectedStudents.email}}</span></li>
+        </ul>
+      </div>
+
+      <div class="col-md-12 col-sm-12" *ngIf="selectedStudents.phone">
+        <ul class="student-list">
+          <li>
+            <p>{{'phone_number' | translate}}:</p>
+          </li>
+          <li><span>{{selectedStudents.phone}}</span></li>
+        </ul>
+      </div>
+
+      <div class="col-md-12 col-sm-12" *ngIf="selectedStudents.gender">
+        <ul class="student-list">
+          <li>
+            <p>{{'gender' | translate}}</p>
+          </li>
+          <li><span>{{gender[selectedStudents.gender]}}</span></li>
+        </ul>
+      </div>
+
+      <div class="col-md-12 col-sm-12" *ngIf="selectedStudents.dob">
+        <ul class="student-list">
+          <li>
+            <p>{{'date_of_birth' | translate}}:</p>
+          </li>
+          <li><span>{{selectedStudents.dob}}</span></li>
+        </ul>
+      </div>
+
+      <div class="student-btn">
+        <button mat-button class="btn-info btn-danger"
+          (click)="viewStudentAchievements(selectedStudents.email, selectedStudents.first_name, selectedStudents.last_name)">{{'view_achievement'
+          | translate}} - {{selectedStudents.first_name}}</button>
+      </div>
+
+    </div>
+  </div>
+</ngx-smart-modal>
+<!-- View student modelpopup end -->
+<ngx-smart-modal #deletemyModal identifier="deletemyModal"
+  (onAnyCloseEvent)="ngxSmartModalService.resetModalData('deletemyModal')">
+  <div>
+    <form [formGroup]="reasonForm" #resetFormID="ngForm"
+      (ngSubmit)="reasonFormSubmit(reasonForm.value, deletemyModal.getData().countAchSelect)">
+      <fieldset>
+        <legend>{{'confirm_delete' | translate}}</legend>
+        <div class="password-enter delete-container">
+          <h5
+            *ngIf="deletemyModal.getData() && deletemyModal.getData().countAchSelect && deletemyModal.getData().is_check_all">
+            {{'count_of_selected_achievement' | translate}} : {{deletemyModal.getData().total_count}}</h5>
+          <h5
+            *ngIf="deletemyModal.getData() && deletemyModal.getData().countAchSelect && !deletemyModal.getData().is_check_all">
+            {{'count_of_selected_achievement' | translate}} : {{deletemyModal.getData().countAchSelect}}</h5>
+          <h5 *ngIf="deletemyModal.getData() && !deletemyModal.getData().countAchSelect">
+            {{'hard_delete_info' | translate}}</h5>
+          <h5>{{'are_you_sure' | translate}}?</h5>
+          <br>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="reason_type" placeholder="{{'pls_select_reason_type' | translate}}">
+                  <mat-option (click)="getReasonType(1)" value='1'>{{'misspelling' | translate}}</mat-option>
+                  <mat-option (click)="getReasonType(2)" value='2'>{{'issued_by_mistake' | translate}}</mat-option>
+                  <mat-option (click)="getReasonType(3)" value='3'>{{'sanction' | translate}}</mat-option>
+                  <mat-option (click)="getReasonType(4)" value='4'>{{'test' | translate}}</mat-option>
+                  <mat-option (click)="getReasonType(5)" value='5'>{{'other' | translate}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="text-danger text-left small" *ngIf="reasonErrorMsg">{{getreasonErrorMsg('reason_type') |
+                translate}}</div>
+            </div>
+
+            <div *ngIf="hideOtherField" class="col-sm-6 delete-input">
+              <mat-form-field appearance="outline">
+                <input #otherTxt formControlName="reason" matInput class="form-control">
+              </mat-form-field>
+              <div class="text-danger text-left small" *ngIf="reasonErrorMsg">{{getreasonErrorMsg('reason') |
+                translate}}</div>
+            </div>
+          </div>
+
+        </div>
+      </fieldset>
+      <div class="form-group" style="float: right">
+        <button type="submit" [disabled]="checkSubmit" mat-button class="password-submit" style="margin-right:10px">{{'yes'
+          | translate}}</button>
+        <button type="button" mat-button class="password-submit"
+          (click)="deletemyModal.close()">{{'no' | translate}}</button>
+      </div>
+    </form>
+  </div>
+</ngx-smart-modal>
+<ngx-smart-modal #myErrorStudModal identifier="myErrorStudModal"
+  (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myErrorStudModal')">
+  <div>
+    <fieldset>
+      <legend>{{'message' | translate}}</legend>
+
+      <div class="password-enter already-container">
+        <div class="student_message">
+          <h3> <i class="material-icons"> info </i> {{'student_already' | translate}}</h3>
+        </div>
+
+        <div class="row">
+          <div class="student_message">
+            <p *ngFor="let stud of displayStudent">{{stud}}</p>
+          </div>
+        </div>
+      </div>
+
+    </fieldset>
+  </div>
+</ngx-smart-modal>
+
+<ngx-smart-modal #CertificateInfoPopup identifier="CertificateInfoPopup" class="CertificateInfoPopup confirmationPopup">
+  <h4>{{'cert_info' | translate}}</h4>
+  <p>{{'cert_info_content' | translate}}</p>
+</ngx-smart-modal>
+
+<ngx-smart-modal id="#CertInfoPopup" #CertInfoPopup identifier="CertInfoPopup" class="CertificateInfoPopup confirmationPopup">
+  <h4>{{'cert_info' | translate}}</h4>
+  <p>{{'cert_info_content' | translate}}</p>
+</ngx-smart-modal>
+
+<ngx-smart-modal #exportpdfwarning identifier="exportpdfwarning" class="CertificateInfoPopup confirmationPopup">
+  <h4>{{'export_pdf' | translate}}</h4>
+  <p>{{'export_pdf_warning_info' | translate}}</p>
+  <div class="form-group" style="float: right">
+    <button type="button" mat-button class="password-submit"
+      (click)="exportpdfwarning.close()">{{'cancel' | translate}}</button>
+  </div>
+</ngx-smart-modal>
+
+<ngx-smart-modal #exportConfirmation identifier="exportConfirmation" class="CertificateInfoPopup confirmationPopup">
+  <h4>{{'export_pdf' | translate}}</h4>
+  <p>{{'export_pdf_info' | translate}}</p>
+  <p *ngIf="coursesArray.length == 0">
+    {{'count_of_selected_achievement' | translate}} : {{totalAchCount}}</p>
+  <p *ngIf="coursesArray.length > 0">
+    {{'count_of_selected_achievement' | translate}} : {{coursesArray.length}}</p>
+  <div class="form-group" style="float: right">
+    <button *ngIf="!exportprocess" type="button" mat-button class="password-submit" style="margin-right:10px"
+      (click)="exportPdfFile()">{{'ok'
+      | translate}}</button>
+    <button *ngIf="!exportprocess" type="button" mat-button class="password-submit"
+      (click)="exportConfirmation.close()">{{'cancel' | translate}}</button>
+    <button *ngIf="exportprocess" type="button" mat-button class="password-submit">{{'processing' | translate}}</button>
+  </div>
+</ngx-smart-modal>
+
+<ngx-smart-modal #resend identifier="resend" class="CertificateInfoPopup confirmationPopup" [closable]='false'
+  [escapable]='false' [dismissable]='false' (onAnyCloseEvent)="ngxSmartModalService.resetModalData('resend')">
+  <h4>{{'confirmation' | translate}}</h4>
+  <p>{{'info_resend_content' | translate}}</p>
+  <!-- <p>{{'count_of_student' | translate}} {{certificateListRes.count}}</p> -->
+  <p *ngIf="resend.getData() && resend.getData().countAchSelect && resend.getData().is_check_all">
+    {{'count_of_selected_achievement' | translate}} : {{resend.getData().total_count}}</p>
+  <p *ngIf="resend.getData() && resend.getData().countAchSelect && !resend.getData().is_check_all">
+    {{'count_of_selected_achievement' | translate}} : {{resend.getData().countAchSelect}}</p>
+
+  <div class="form-group" style="float: right">
+    <button *ngIf="!processResend" type="button" mat-button class="password-submit" style="margin-right:10px"
+      (click)="resendMailtoSearchUser(resend.getData().countAchSelect)">{{'ok'
+      | translate}}</button>
+    <button *ngIf="!processResend" type="button" mat-button class="password-submit"
+      (click)="resend.close()">{{'cancel' | translate}}</button>
+    <button *ngIf="processResend" type="button" mat-button class="password-submit">{{'processing' | translate}}</button>
+  </div>
+</ngx-smart-modal>
+
+<!-- <ngx-smart-modal #select_all identifier="select_all" class="CertificateInfoPopup confirmationPopup">
+  <h4>{{'delete_all_title' | translate}}</h4>
+
+  <p>{{'delete_all_descriptions' | translate}}</p>
+
+  <div class="form-group" style="float: right">
+    <button type="button" mat-button class="password-submit" style="margin-right:10px">{{'yes'
+      | translate}}</button>
+    <button type="button" mat-button class="password-submit" (click)="select_all.close()">{{'no' | translate}}</button>
+  </div>
+</ngx-smart-modal> -->

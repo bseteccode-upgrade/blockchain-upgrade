@@ -1,0 +1,50 @@
+<section class="start_wrapper issue-certificate-list">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+          <h3>{{'canned_message' | translate}} <span matTooltip="{{'phi_canned_msg' | translate}}" class="headTooltip"><i
+        class="material-icons"> help_outline</i></span></h3>
+      </div>
+
+      <div class="pull-right">
+        <button mat-button routerLink="/add-canned">
+          {{'add_canned_message' | translate}}
+          <i class="fa fa-plus-circle"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <div *ngIf="process" class="col-sm-12 spinner_center">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div *ngFor="let data of cannedDatas">
+
+<ul class="canned_list">
+  <li><h4>{{data.title}}</h4></li>
+
+<li>      
+  <button mat-mini-fab class="certificate-btn" routerLink="/edit-canned/{{data.id}}">
+  <i class="material-icons">mode_edit</i>
+</button>
+
+<button mat-mini-fab class="certificate-btn">
+  <i class="material-icons" (click)="onDelete(data.id)">delete</i>
+</button>
+</li>
+</ul>
+    </div>
+
+
+    <div class="col-sm-12">
+      <div class="alert alert-info" *ngIf="!process && cannedDatas.length == 0">
+        {{ 'no_records_found' | translate }}
+      </div>
+    </div>
+
+
+
+
+</div>
+
+</section>

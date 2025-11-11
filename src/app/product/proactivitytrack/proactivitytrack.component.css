@@ -1,0 +1,484 @@
+.trace-diagram-container{width:100%;padding:10px;display:inline-block}
+.nested_container{max-width: 100%;
+    position: relative;
+    display: inline-block;
+    border: 1px solid #354052;
+    width: 100%;}
+.nested_container_sub{max-width: 100%;
+    position: relative;
+    display: inline-block;
+    width: 100%;}
+#chartDiv{padding:0 15px}
+.col-sm-12.no_data ~ .trace-diagram-container{display:none}
+.example-container ~ .trace-diagram-container{display:none!important}
+.hint_option{padding:10px;text-align:center}
+#chartDiv div{overflow-x:scroll}
+
+
+/* :host /deep/ rect{height:500px!important}
+:host /deep/ g{height:500px!important}
+:host /deep/ path{height:500px!important} */
+
+.example-container{width:100%;padding:20px;display:inline-block}
+#mynetwork {width: 600px;height: 400px;border: 1px solid lightgray}
+#brandingLogo{display:none}
+.alert.alert-info.no-records { margin-top:10px}
+.product-title { width:100%; text-align:center;padding:5px; margin-bottom:10px;border-bottom:1px solid #dfe2e5;padding-bottom:10px; background-color: #fff}
+.product-title h3 { color:#354052;font-weight: 600; text-transform: capitalize}
+.product_field { width:100%; display: inline-block; border-bottom:1px solid #dfe2e5;height:68px;min-height:58px}
+.product_field h4 { margin-bottom:0;font-size:15px; color:#354052;font-weight: 600; text-transform: capitalize}
+.product_field a { margin-bottom:0;font-size: 15px;position: relative;display: inline-block; width: 100%;word-wrap: break-word;color: #3381bf;font-weight: bold}
+.product-title .subtitle { text-align: left}
+:host /deep/ .nsm-dialog-btn-close { right:15px; top:15px}
+.product-detail-list { width:100%;display: inline-block; position: relative; padding:10px; border:1px solid #dfe2e5; background-color: #fff}
+.product-detail-list p { position: relative; display: inline-block; width: 100%; word-wrap: break-word;text-transform: capitalize}
+.scheduler-border .filter-btn.mat-button { width:100%}
+.graphical-container {display: inline-block;min-height: 360px;white-space:nowrap;padding:0 10px}
+.mat-button.blue-btn {background-color: #29b6d8;color:#fff;margin:8px;border-color: #29b6d8;font-size: 14px;padding: 0 15px}
+.calender-container::after {top:18px;content: '';position:absolute;height:100%;border:3px solid #000;z-index: 9;right: 120px}
+.calender-container::before {top:18px;content: '';position:absolute;height:100%;border:3px solid #000;z-index: 9}
+.calender-container { width:100%; display: inline-block;height:38px;position: relative}
+ul.calender_tree {padding-left:0;margin-bottom:0;width:100%;position: relative;height:38px;background-color:#fff}
+ul.calender_tree li {color:#000;display: inline-block;vertical-align: middle;height: 100%}
+ul.calender_tree li span { text-transform: capitalize; padding: 10px;height: 100%;color: #000;font-size: 10px;margin: auto;display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;justify-content: center;align-items: center}
+.start-date { top:30%; left:20px; color:#000; z-index:99; font-size: 10px; text-transform: capitalize}
+.end-date { top:30%; right:135px; color:#000; z-index:99; font-size: 10px; text-transform: capitalize;text-align: right;display: inline-block; width: 100%;padding-right: 120px}
+.graphical_tree .bar-img {width: 28px; height: 28px;float: left;margin-right: 5px !important; position: relative;top: 6px}
+.graphical_tree {list-style: none}
+.graphical_tree, .graphical_tree * {margin: 0;padding: 0}
+.graphical_tree > li {padding-left: 0}
+.graphical_tree > li::before, .graphical_tree > li::after {display: none}
+li span::before { font-family: 'Roboto-Regular';}
+.graphical_tree .empty_tree ~ ul::before { width:240px; }
+.graphical_tree .empty_tree ~ ul { padding-left:240px; }
+.graphical_tree p { display: table; margin-right:40px;}
+.graphical_tree > li:first-child {padding-left:0;padding-top:0;}
+.graphical_tree li {display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;flex-direction: row;align-items: center; padding-top:60px;padding-bottom:60px;position: relative; padding-left: 60px;}
+.graphical_tree li::before {content: '';position: absolute;left: 0;top: 50%;border-top: 5px solid #dfeaf1;width: 60px;}
+.graphical_tree li::after {content: '';position: absolute;left: 0;border-left: 5px solid #dfeaf1;}
+.graphical_tree li:last-of-type::after {height: 50%;top: 0;}
+.graphical_tree li:first-of-type::after {height: 50%;bottom: 0;}
+.graphical_tree span label { height: 24px; width: 12px;border-bottom-left-radius: 90px; border-top-left-radius: 90px;background-color: #0f5e8c;position: absolute;right: 0;top: 25px;}
+.graphical_tree li ul li:last-of-type::after {height: 50%;top: 0;}
+.graphical_tree li ul li:first-of-type::after {height: 50%;bottom: 0;}
+.graphical_tree li.firstLi::after {/*height: 0% !important;*/}
+.graphical_tree li.firstLi ~ li::after {/*height: 100% !important;top:-33px!important;*/}
+.graphical_tree li:first-child ul:first-of-type > li.firstLi:first-child::after { /*height:0px;*/ }
+.graphical_tree li:first-child ul:first-of-type > li.firstLi:first-child ul li.firstLi:first-child::after { /*height:50%;*/ }
+.graphical_tree li:not(:first-of-type):not(:last-of-type)::after {height: 100%;}
+/* .graphical_tree span ~ ul { padding-left:60px; } */
+.graphical_tree span ~ ul { padding-left:120px}
+.graphical_tree span.qc-main ~ ul { padding-left:120px}
+/* .graphical_tree span ~ ul::before { width:60px; } */
+.graphical_tree span ~ ul::before { width:120px}
+.graphical_tree span.qc-main ~ ul::before { width:120px}
+.graphical_tree ul, .graphical_tree ol {padding-left: 120px;position: relative;}
+.graphical_tree ul::before, .graphical_tree ol::before {content: '';position: absolute;left: 0;top: 50%;border-top: 5px solid #dfeaf1;width: 120px;}
+.graphical_tree span {background-color: #ffffff;z-index: 9;border: 1px solid #0f5e8c;box-shadow: 0 0 20px 0px #ccc;text-align: left;padding: 10px 15px 10px 5px;min-width: 120px;min-height: 60px;text-transform: capitalize;font-family: 'Roboto-Regular';position: relative;display: inline-block;}
+.graphical_tree li ul li:only-child:after {height:0;}
+.graphical_tree span.qc-main { width:240px;}
+.graphical_tree span ~ span {margin-right:0px;border: 0;box-shadow: none;padding: 0;min-width: 120px;height: 5px;background: #dfeaf1;max-height: 5px;min-height: 5px;top:2px;z-index:1;}
+.graphical_tree span ~ span .qc-sub { top:51px;}
+.graphical_tree span:nth-child(2) { margin-left:-59px;}
+.graphical_tree span:nth-child(2) .qc-sub {left:73%;}
+.graphical_tree span .qc-sub {left:73%;}
+.graphical_tree li:not(:first-of-type):not(:last-of-type)::after {height: 100%;}
+.graphical_tree span {border: 1px solid #0f5e8c;box-shadow: 0 0 20px 0px #ccc;text-align: left;padding: 10px 15px 10px 5px;min-width: 120px;min-height: 60px;text-transform: capitalize;font-family: 'Roboto-Regular';position: relative;display: inline-block;}
+.graphical_tree .box-name {width: 90px;display: inline-block;}
+.graphical_tree img ~ .box-name {width:65px}
+.graphical_tree .box-name h6{width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:5px}
+.graphical_tree .box-name h6.company{background:#34495e;color:#fff;padding:2px 4px;border-radius:4px;font-size:11px}
+.graphical_tree li > span ul {padding-left:0; margin-bottom:0;}
+.graphical_tree li > span ul > li { display: inline-block; }
+.graphical_tree span > span {background-color: transparent; cursor: pointer; position:absolute; bottom:-8px; right:5px; border:none; box-shadow: none;min-width:auto;min-height:auto;padding:0;margin:0;}
+.graphical_tree span > label ~ h6 { position:relative; top:6px; font-size:11px; }
+.graphical_tree .qc-sub{border: 1px solid #0f5e8c;box-shadow: 0 0 20px 0px #ccc;text-align: left;padding: 10px 15px 10px 5px;min-width: 120px;min-height: 60px;text-transform: capitalize;font-family: 'Roboto-Regular';position: absolute;display: inline-block;top: 80px;left: 180px;}
+.graphical_tree .qc-sub::after {content: '';position: absolute;left: 50%;border-left: 5px solid #dfeaf1;height: 50px;top: -52px;z-index:1; }
+.graphical_tree .qc-sub::before {content: '';position: absolute;left: 8px;top: -52px;border-top: 5px solid #dfeaf1;width: 52px;z-index:1;}
+.graphical_tree span.qc-main span {background-color:transparent;cursor: pointer;position: absolute;bottom: -8px;right: 5px;border: none;box-shadow: none;min-width: auto;min-height: auto;padding: 0;margin: 0;}
+ul.calender_tree li.january span { background-color: #ff66a3; }
+ul.calender_tree li.february span { background-color: #85e085; }
+ul.calender_tree li.march span { background-color: #ff6666; }
+ul.calender_tree li.april span { background-color: #85a3e0; }
+ul.calender_tree li.may span { background-color: #99ffff; }
+ul.calender_tree li.june span { background-color: #66a3ff; }
+ul.calender_tree li.july span { background-color: #a366ff; }
+ul.calender_tree li.august span { background-color: #ffc266; }
+ul.calender_tree li.september span { background-color: #d9ff66; }
+ul.calender_tree li.october span { background-color: #6666ff; }
+ul.calender_tree li.november span { background-color: #ffb366; }
+ul.calender_tree li.december span { background-color: #ff66d9; }
+ul.qr-code-list li img { width:100px; padding:0 10px; }
+ul.qr-code-list { width:100%; text-align: center; display: inline-block; padding-left:0;margin-bottom:20px;}
+ul.qr-code-list li { color:#000; display: inline-block; text-align: center; position: relative;margin:5px;}
+ul.qr-code-list li .qr-user-delete { display: none;}
+ul.qr-code-list li:hover .qr-user-delete { position: absolute; left:0; right:0; bottom:0; top:0; margin:auto; background-color: rgba(0, 0, 0, 0.5); vertical-align: middle;display: -webkit-box; display: -moz-box;display: -ms-flexbox;display: -webkit-flex; display: flex;justify-content: center; align-items: center;}
+ul.qr-user-list li.end_user_main:hover .qr-user-delete {display:none;}
+ul.qr-user-list li.end_user_main .end_user:hover .qr-user-delete { position: absolute; left:0; right:0; bottom:0; top:0; margin:auto; background-color: rgba(0, 0, 0, 0.5); vertical-align: middle;display: -webkit-box; display: -moz-box;display: -ms-flexbox;display: -webkit-flex; display: flex;justify-content: center; align-items: center;}
+ul.qr-code-list li .qr-user-delete a { cursor: pointer; font-size: 24px;color: #ffffff;background: #29b6d8;height: 36px;width: 36px;border-radius: 50%;line-height: 36px;}
+ul.qr-code-list li .qr-user-delete a .material-icons {padding:5px 0;}
+.end-user-qr { width:100%; display:inline-block;}
+.end-user-qr img { width:100px; padding:0 10px;}
+.qr-container { display: inline-block; text-align: center; margin-top:15px; }
+.graphical_tree span .fa-database { font-size: 16px; color:#fff; }
+.graphical_tree span .file-icon.mat-button{background-color:#1e232b;color:#fff;position:absolute;right:-8px;top:-8px;max-width:20px;min-width:26px;min-height:26px;max-height:26px;border-radius:50%;line-height:1px}
+
+/* january start */
+.graphical_tree li .january { border: 1px solid #ff66a3; }
+.graphical_tree li .january label { background-color: #ff66a3; }
+/* january end */
+
+/* february start */
+.graphical_tree li .february { border: 1px solid #85e085; }
+.graphical_tree li .february label { background-color: #85e085; }
+/* february end */
+
+/* march start */
+.graphical_tree li .march { border: 1px solid #ff6666 ; }
+.graphical_tree li .march label { background-color: #ff6666 ; }
+/* march end */
+
+/* april start */
+.graphical_tree li .april { border: 1px solid #85a3e0; }
+.graphical_tree li .april label { background-color: #85a3e0; }
+/* april end */
+
+/* may start */
+.graphical_tree li .may { border: 1px solid #99ffff; }
+.graphical_tree li .may label { background-color: #99ffff; }
+/* may end */
+
+/* june start */
+.graphical_tree li .june { border: 1px solid #66a3ff; }
+.graphical_tree li .june label { background-color: #66a3ff; }
+/* june end */
+
+/* july start */
+.graphical_tree li .july { border: 1px solid #a366ff; }
+.graphical_tree li .july label { background-color: #a366ff; }
+/* july end */
+
+/* august start */
+.graphical_tree li .august { border: 1px solid #ffc266; }
+.graphical_tree li .august label { background-color: #ffc266; }
+/* august end */
+
+/* september start */
+.graphical_tree li .september{ border: 1px solid #d9ff66; }
+.graphical_tree li .september label { background-color: #d9ff66; }
+/* september end */
+
+/* october start */
+.graphical_tree li .october { border: 1px solid #6666ff; }
+.graphical_tree li .october label { background-color: #6666ff; }
+/* october end */
+
+/* november start */
+.graphical_tree li .november { border: 1px solid #ffb366; }
+.graphical_tree li .november label { background-color: #ffb366; }
+/* november end */
+
+/* december start */
+.graphical_tree li .december { border: 1px solid #ff66d9; }
+.graphical_tree li .december label { background-color: #ff66d9; }
+/* december end */
+
+
+.graphical_tree > li:first-child ul:first-child{padding-left:0}
+.graphical_tree > li:first-child ul:first-child li:only-child{padding-left:0}
+
+
+
+/* multiple workflow */
+.graphical_tree > li:first-child{padding-top:0}
+.graphical_tree.multiple_workflow li.step_classes{/*float:right*/}
+.graphical_tree.multiple_workflow li{padding-top:20px;padding-bottom:20px}
+.graphical_tree.multiple_workflow li::after{content:'';position:absolute;left:auto;right:-60px;border-right:5px solid #dfeaf1;border-left:none}
+.graphical_tree.multiple_workflow ul.firstLi li::after{left:0;right:auto}
+.graphical_tree.multiple_workflow > li > ul > li::before{left:auto;/*right:-60px*/}
+.graphical_tree.multiple_workflow ul:first-child{padding-left:0}
+.graphical_tree.multiple_workflow ul:first-child:before{left:auto;right:auto;width:0}
+
+.graphical_tree.multiple_workflow li > ul:nth-child(2) li{padding-left:0}
+.graphical_tree.multiple_workflow li > ul.firstLi:nth-child(2) li:first-child{padding-top:0;padding-bottom:0}
+.graphical_tree.multiple_workflow li > ul.firstLi:nth-child(2) li{padding-left:60px;padding-top:30px;padding-bottom:30px}
+.graphical_tree.multiple_workflow li > ul.firstLi:nth-child(2) li::before{width:240px}
+.graphical_tree.multiple_workflow ul.firstLi:after{height:50%;position: relative;content: '';position: absolute;right: -25%;top:30px;border-right: 5px solid #dfeaf1;left: auto;bottom: 0;}
+.graphical_tree.multiple_workflow > li > ul > li.child::before{right:0;display:none}
+.graphical_tree.multiple_workflow > li > ul:last-child > li::before{right:0}
+
+.graphical_tree.multiple_workflow li::before{width:100%;}
+
+/* .graphical_tree.multiple_workflow > li > ul:first-child > li:first-child:before{width:0} */
+/*  */
+
+.graphical_tree.multiple_workflow ul:first-child li::before{/*width:60px*/}
+.graphical_tree.multiple_workflow ul:first-child li:only-child:before{width:240px!important;/*left:25px*/}
+
+.graphical_tree.multiple_workflow li > ul:first-child li.firstLi{padding-left:60px}
+
+.graphical_tree.multiple_workflow ul:first-child > li.firstLi ~ li::after{left:0;right:auto}
+.graphical_tree.multiple_workflow ul:first-child li ul li.secoundLi:last-of-type::after{height:50%;top:0;left:0;right:auto}
+.graphical_tree.multiple_workflow ul:first-child li ul li.firstLi:first-of-type::after{left:0;right:auto}
+.graphical_tree.multiple_workflow li.step_classes ~ li.step_classes{padding-top:60px;padding-bottom:60px}
+.graphical_tree.multiple_workflow li.firstLi ~ li.secoundLi{padding-top:20px;padding-bottom:20px}
+.graphical_tree.multiple_workflow > li > ul:first-child li.firstLi ~ li.secoundLi{padding-top:20px;padding-bottom:20px}
+.graphical_tree.multiple_workflow li ul:first-child li:first-of-type::after{/*height:67%*/}
+.graphical_tree.multiple_workflow  ul:first-child li.firstLi li.firstLi::before{/*width:240px*/}
+
+
+.graphical_tree.multiple_workflow span .qc-sub, .graphical_tree.multiple_workflow span:nth-child(2) .qc-sub{left:90px}
+.graphical_tree.multiple_workflow > li > ul:first-child span.qc-main ~ ul li.firstLi{padding-left:120px}
+
+
+ 
+.graphical_tree span ~ ul.morethenone::before{width:60px}
+
+body ul.graphical_tree.multiple_workflow > li > ul:nth-child(2) li ul.onlyone li.firstLi:only-child:before {
+    width: 60px !important;
+}
+
+.graphical_tree.multiple_workflow ul:first-child li.step_classes:last-child li.firstLi li.firstLi.secoundLi:last-child:before{height:100%;top:-72px}
+.graphical_tree.multiple_workflow ul:first-child li.step_classes:last-child li.firstLi li.firstLi.secoundLi::before {
+    border-right: 5px solid #dfeaf1;
+    height: 70%;
+    top: -26px;
+    border-top: 0px;
+    border-bottom: 5px solid #dfeaf1;
+}
+.graphical_tree.multiple_workflow ul:first-child li.step_classes:first-child li.firstLi li.firstLi.secoundLi::before {border-right: 5px solid #dfeaf1;height: 117%;top: -75px;border-top: 0px;border-bottom: 5px solid #dfeaf1;}
+.graphical_tree.multiple_workflow > li > ul:first-child .qc-sub::before{width:176px;left:47px}
+.graphical_tree.multiple_workflow > li > ul:first-child span:nth-child(2) .qc-sub{left:40%}
+.graphical_tree.multiple_workflow > li > ul:first-child span ~ span{left:80px}
+
+.graphical_tree > li > ul:first-child span.qc-main ~ ul li.firstLi{padding-left:60px}
+/* .graphical_tree.multiple_workflow > li:first-child ul:first-child{margin-left:-60px} */
+.graphical_tree.multiple_workflow > li > ul:nth-child(2) > li > ul.onlyone li.firstLi:only-child::before{width:60px!important}
+/* .graphical_tree.multiple_workflow li ul:first-child > li.step_classes > ul > li.firstLi:only-child:before {
+    width:100%!important
+} */
+/* .graphical_tree.multiple_workflow li ul:not(li) ~ ul::before {width: 60px!important;left: 60px!important;} */
+.graphical_tree.multiple_workflow li ul:not(li) ~ ul::before {width:120px!important;left:0!important;}
+/*  */
+
+.graphical_tree.multiple_workflow span ~ ul{padding-left:60px}
+
+.graphical_tree.multiple_workflow > li:first-child ul:first-child{padding-right:60px}
+
+.graphical_tree.multiple_workflow li ul:first-child > li.step_classes span.qc-main ~ ul > li.firstLi:only-child:before{width:240px!important}
+/* .graphical_tree.multiple_workflow ul:nth-child(2){padding-left:0} */
+.graphical_tree.multiple_workflow ul:nth-child(2):before{/*left:auto;right:auto;width:0*/}
+.graphical_tree.multiple_workflow > li > ul:nth-child(2)::before{width:60px;right:0;left:60px}
+.graphical_tree.multiple_workflow li > ul:nth-child(2) li{padding-left:0}
+.graphical_tree.multiple_workflow > li > ul:nth-child(2) > li::before{right:0;left:60px;width: 120px!important}
+.graphical_tree.multiple_workflow ul:nth-child(2) li::before{width:60px}
+.graphical_tree.multiple_workflow ul:nth-child(2) li:only-child:before{/*width:240px*/}
+.graphical_tree.multiple_workflow li > ul:nth-child(2) li.firstLi{padding-left:60px}
+.graphical_tree.multiple_workflow ul:nth-child(2) > li.firstLi ~ li::after{left:0;right:auto}
+.graphical_tree.multiple_workflow ul:nth-child(2) li ul li.secoundLi:last-of-type::after{height:50%;top:0;left:0;right:auto}
+.graphical_tree.multiple_workflow ul:nth-child(2) li ul li.firstLi:first-of-type::after{left:0;right:auto}
+.graphical_tree.multiple_workflow li ul:nth-child(2) li:first-of-type::after{/*height:67%*/}
+.graphical_tree.multiple_workflow  ul:nth-child(2) li.firstLi li.firstLi::before{/*width:240px*/}/**/
+.graphical_tree.multiple_workflow ul:nth-child(2) li.step_classes:last-child li.firstLi li.firstLi.secoundLi::before { border-right: 5px solid #dfeaf1; height: 70%; top: -26px; border-top: 0px; border-bottom: 5px solid #dfeaf1;}
+.graphical_tree.multiple_workflow ul:nth-child(2) li.step_classes:first-child li.firstLi li.firstLi.secoundLi::before { border-right: 5px solid #dfeaf1; height: 117%; top: -75px; border-top: 0px; border-bottom: 5px solid #dfeaf1; }
+.graphical_tree.multiple_workflow ul:nth-child(2) span ~ ul {padding-left: 60px;}
+/* .graphical_tree.multiple_workflow > li > ul ~ ul:nth-child(2) > li:only-child:not(ul)::before {width: 120px !important;} */
+.graphical_tree.multiple_workflow > li > ul ~ ul:nth-child(2) > li:only-child::before {width: 60px !important;}
+.graphical_tree.multiple_workflow > li > ul ~ ul:nth-child(2) > li:not(li)::before {width: 60px !important;}
+.graphical_tree.multiple_workflow > li > ul ~ ul:nth-child(2) > li:not(span)::before {width: 60px !important;}
+.graphical_tree.multiple_workflow > li > ul ~ ul:nth-child(2) > li:has(span)::before {width: 60px !important;}
+/* .graphical_tree.multiple_workflow ul:first-child li.firstLi li.firstLi:only-child:before{width:auto!important} */
+.graphical_tree.multiple_workflow ul:first-child li:nth-child(n + 2):before{width:100%}
+/* .graphical_tree.multiple_workflow li ul:first-child li:first-of-type::after {bottom: 0;top: 0;}*/
+/* .graphical_tree.multiple_workflow li > ul:nth-child(2) li:only-child:after {height: 50%;top: 32%;} */
+/* .graphical_tree.multiple_workflow > li > ul ~ li ul::before{right:auto;left:0}
+.graphical_tree.multiple_workflow > li > ul > li::before{right:0;left:auto}
+.graphical_tree.multiple_workflow > li > ul > li::after{width:0;} */
+/* .graphical_tree.multiple_workflow li:not(:first-of-type):not(:last-of-type)::after{right:-60px}
+.graphical_tree.multiple_workflow li ul li:first-of-type::after{right:-60px} */
+/* .graphical_tree.multiple_workflow ul.firstLi li{padding-left:120px}
+.graphical_tree.multiple_workflow li{float:right}
+.graphical_tree.multiple_workflow span ~ ul{padding-left:0}
+.graphical_tree.multiple_workflow li > ul > li ul:last-child{padding-left:0;padding-right:60px}
+.graphical_tree.multiple_workflow li::after{right:0;left:auto}
+.graphical_tree.multiple_workflow > li > ul::before{ content: ''; position: absolute; right:0; top: 50%; border-top: 5px solid #dfeaf1; width: 120px; left:auto; }
+.graphical_tree.multiple_workflow > li > ul ~ li ul::before{right:auto;left:0}
+.graphical_tree.multiple_workflow > li > ul > li::before{right:0;left:auto}
+.graphical_tree.multiple_workflow > li > ul > li::after{width:0;}
+.graphical_tree.multiple_workflow li span ~ ul > li::before{width:0}
+.graphical_tree.multiple_workflow > li > ul, .graphical_tree.multiple_workflow > li > ol{padding-left:0;padding-right:120px}
+.graphical_tree.multiple_workflow > li > ul ~ ul > li {padding-left:0}
+.graphical_tree.multiple_workflow > li > ul ~ ul, .graphical_tree.multiple_workflow > li > ul ~ ul ul{padding-right:0!important} */
+/* .graphical_tree.multiple_workflow li span ~ ul > li:last-child:after{content: '';position: absolute;left: 0;top: 50%;border-top: 5px solid #dfeaf1;width:60px;} */
+/* .graphical_tree.multiple_workflow li span ~ ul > li{padding-left:0;padding-right:60px} */
+/* multiple workflow */
+
+.calender-main{width:100%;display:inline-block;text-align:right}
+.calender-main .calender_list{width:100%;display:inline-block;text-align:left;padding:0 20px}
+.calender-main .calender_list ul.month_list{padding-left:0;margin-bottom:0}
+.calender-main .calender_list ul.month_list li{display:inline-block;padding:5px 0}
+.calender-main .calender_list ul.month_list li span{width:30px;height:25px;display:inline-block}
+.calender-main .calender_list ul.month_list li p{display:inline-block;margin-bottom:0;padding:5px 10px;bottom:10px;position:relative;font-size:12px;font-weight:bold;color:#1e232b;text-transform:capitalize}
+.calender-main .calender_list .start-date{color:#000;z-index:99;font-size:12px;text-transform:capitalize;top: 0;right: 0;padding-right:0;display:block;width:auto;text-align:left}
+.calender-main .calender_list .end-date{color:#000;z-index:99;font-size:12px;text-transform:capitalize;top: 0;right: 0;padding-right:0;display:block;width:auto;text-align:left}
+.calender-main .calender_list ul.month_list li span.january { background-color: #ff66a3}
+.calender-main .calender_list ul.month_list li span.february { background-color: #85e085}
+.calender-main .calender_list ul.month_list li span.march { background-color: #ff6666}
+.calender-main .calender_list ul.month_list li span.april { background-color: #85a3e0}
+.calender-main .calender_list ul.month_list li span.may { background-color: #99ffff}
+.calender-main .calender_list ul.month_list li span.june { background-color: #66a3ff}
+.calender-main .calender_list ul.month_list li span.july { background-color: #a366ff}
+.calender-main .calender_list ul.month_list li span.august { background-color: #ffc266}
+.calender-main .calender_list ul.month_list li span.september { background-color: #d9ff66}
+.calender-main .calender_list ul.month_list li span.october { background-color: #6666ff}
+.calender-main .calender_list ul.month_list li span.november { background-color: #ffb366}
+.calender-main .calender_list ul.month_list li span.december { background-color: #ff66d9}
+
+
+.product_details_title{width:100%;text-align:center;display:inline-block}
+.product_details_title h4{font-size:16px;font-weight:bold;text-transform:capitalize;color:#000}
+.product_details{width:100%;}
+.product_details ul.product_list{padding-left:0;margin-bottom:0;padding:10px 0}
+.product_details ul.product_list li{display:inline-block;vertical-align:top}
+.product_details ul.product_list li:first-child{width:25%;text-align:center;padding-right:5px}
+.product_details ul.product_list li:last-child{width:75%}
+.product_details ul.product_list li img{max-width: 100%;max-height:90px;height:auto;min-height:auto;object-fit:contain;padding:5px}
+.product_details ul.product_list li p{font-size:14px;font-weight:bold}
+.product_details ul.product_list li p ~ p{font-weight:12px;font-weight:normal}
+
+.end_user{position:relative;width:auto;display:block}
+a.click_here{font-weight:600;color:#000000;text-shadow:none;display:block;margin:10px 0}
+a.click_here:hover{text-decoration:underline;}
+
+@media(max-width:1350px)
+{
+:host /deep/ #chartDiv div{overflow-x:scroll}
+}
+
+@media(max-width:991px)
+{
+    .product_details ul.product_list li{display:inline-block;text-align:center}
+    .product_details ul.product_list li:first-child{width:100%}
+    .product_details ul.product_list li:last-child{width:100%}
+}
+
+@media (max-width:767px)
+{
+.qr-container { display: block; }
+}
+
+@media (max-width:480px) {
+.product-detail-list.activity-one .product_field {height: auto;}
+}
+
+/*.graphical_tree li li.firstLi:only-child:after {content: '';height: 0 !important;}*/
+/*.graphical_tree li.secoundLi ~ li.secoundLi ul li.firstLi:last-of-type::after { height:0}
+.graphical_tree li.secoundLi ~ li.secoundLi ul li.firstLi.secoundLi:last-of-type::after { height:50%;}*/
+/* .graphical_tree[_ngcontent-c6] li.secoundLi ~ li.secoundLi[_ngcontent-c6] ul[_ngcontent-c6] li.firstLi[_ngcontent-c6]:first-of-type::after */
+/* .graphical_tree li ul li.firstLi:last-of-type::after { height:0;} */
+/* .graphical_tree li.firstLi::after {height: 0% !important;} */
+/* .graphical_tree li.firstLi ~ li::after {height: 100% !important;top:-33px!important;} */
+/* .graphical_tree li:first-child ul:first-of-type > li.firstLi:first-child::after { height:0px; } */
+/* .graphical_tree li:first-child ul:first-of-type > li.firstLi:first-child ul li.firstLi:first-child::after { height:50%; } */
+.graphical_tree ul, .graphical_tree ol {/*padding-left: 60px;position: relative;*/}
+/* .graphical_tree ul::before, .graphical_tree ol::before {content: '';position: absolute;left: 0;top: 50%;border-top: 5px solid #dfeaf1;width: 60px;} */
+
+/* .graphical_tree li:first-child ul:first-of-type > li.firstLi:last-of-type::after { height:0px;} */
+/* .graphical_tree li:first-child ul:first-of-type > li:first-child::after { height:0px;} */
+/* .graphical_tree li:first-child ul:first-of-type li:nth-last-of-type(1n)::after { height:0px;} */
+/* .graphical_tree li:first-child>ul>li:nth-last-of-type(1n)::after {height: 0%;top: auto;bottom: auto;}
+.graphical_tree li:first-child>ul>li:nth-last-of-type(1n)::after {height: 0%;top: auto;bottom: auto;} */
+/* .graphical_tree li>ul>li:nth-last-of-type(1n)::after {height: 0px;} */
+/* .graphical_tree li:first-of-type::after {height: 0px;} */
+/* .graphical_tree li:nth-last-of-type(1n)::after { height:0px; top:auto;bottom:auto;} */
+/* .graphical_tree li:first-child ul:first-of-type > li.firstLi:first-child::after { height:0px; } */
+/* .graphical_tree li:first-child ul:first-of-type > li.firstLi:first-child > ul > li.firstLi:first-child::after { height:50%; } */
+/* .graphical_tree li:first-child ul:first-of-type > li:first-child::after { height:50%;} */
+
+/* .graphical_tree li:first-of-type::after li:nth-child(1n){} */
+/* .graphical_tree > li ul:first-child > li { } */
+/* .graphical_tree > li ul li:nth-child(2) li { padding-left: 120px; }
+.graphical_tree > li ul li:nth-child(2) li::before { width: 120px;} */
+/* .graphical_tree > li > ul > li:nth-child(even) { padding-left:120px; }
+.graphical_tree > li > ul > li:nth-child(even)::before { width:120px; } */
+
+/* .graphical_tree span label {
+width: 30px;
+height: 30px;
+position: absolute;
+background-color: #000;} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* one start */
+/* .graphical_tree > li:first-child > span { border: 1px solid #d155f0; }
+.graphical_tree > li:first-child > span label { background-color: #d155f0; } */
+/* one end */
+
+/* two start */
+/* .graphical_tree > li > span ~ ul > li span { border: 1px solid #32d3ce ; }
+.graphical_tree > li > span ~ ul > li span label { background-color: #32d3ce ; } */
+/* two end */
+
+/* three start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span { border: 1px solid #6e38c4; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span label { background-color: #6e38c4; } */
+/* three end */
+
+/* four start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #e23a59; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #e23a59; } */
+/* four end */
+
+/* five start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #e45f0e; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #e45f0e; } */
+/* five end */
+
+/* six start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #0066cc; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #0066cc; } */
+/* six end */
+
+/* seven start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #e40e0e; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #e40e0e; } */
+/* seven end */
+
+/* eight start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span{ border: 1px solid #0e3ce4; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #0e3ce4; } */
+/* eight end */
+
+/* nine start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #e4aa0e; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #e4aa0e; } */
+/* nine end */
+
+/* ten start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #96e40e; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #96e40e; } */
+/* ten end */
+
+/* eleven start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #854f32; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #854f32; } */
+/* eleven end */
+
+/* twelve start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #e23a59; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #e23a59; } */
+/* twelve end */

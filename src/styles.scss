@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~ngx-smart-modal/ngx-smart-modal.css";
+@import '~@ngx-share/button/styles/share-buttons.css';
+/* @import '~@ngx-share/button/styles/share-buttons'; */
+@import '~@ngx-share/button/styles/themes/default/default-theme.css';
+@import '~@ngx-share/button/styles/themes/circles/circles-dark-theme.css';
+@import '~quill/dist/quill.snow.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+// @import "~bootstrap/.../bootstrap.min.css";
+@import '~swagger-ui/dist/swagger-ui.css';
+@import '~frappe-gantt/dist/frappe-gantt.css';
+textarea {
+  resize: vertical;
+}
+
+.swagger-container {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}

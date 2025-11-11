@@ -1,0 +1,235 @@
+.product-title { width:100%; text-align:center;padding:5px; margin-bottom:10px;border-bottom:1px solid #dfe2e5;padding-bottom:10px; background-color: #fff;}
+.product-title h3 { color:#354052;font-weight: 600; text-transform: capitalize; }
+.product_field { width:100%; display: inline-block; border-bottom:1px solid #dfe2e5; }
+.product_field h4 { margin-bottom:0px; font-size:15px; color:#354052;font-weight: 600; text-transform: capitalize;}
+.product_field a { margin-bottom: 8px; font-size: 15px;position: relative;display: inline-block; width: 100%;word-wrap: break-word;color: #3381bf;font-weight: bold;}
+.product-title .subtitle { text-align: left;}
+:host /deep/ .nsm-dialog-btn-close { right:15px; top:15px;}
+.product-detail-list { width:100%;display: inline-block; position: relative; padding:10px; border:1px solid #dfe2e5; background-color: #fff;}
+.graphical-container {display: inline-block;height: 360px;white-space:nowrap;padding:0 10px;}
+.mat-button.blue-btn {background-color: #29b6d8;color:#fff;margin:8px;border-color: #29b6d8;font-size: 14px;padding: 0px 15px;}
+.calender-container::after {content: '';position:absolute;height:100%;border:3px solid #000;z-index: 9;right: 120px;top: 0;}
+.calender-container::before {content: '';position:absolute;height:100%;border:3px solid #000;z-index: 9;}
+.calender-container { width:100%; display: inline-block;height:38px;position: relative;}
+ul.calender_tree {padding-left:0;margin-bottom:0;width:100%;position: relative;height:38px;background-color:#fff;}
+ul.calender_tree li {color:#000;display: inline-block;vertical-align: middle;height: 100%;}
+ul.calender_tree li span { text-transform: capitalize; padding: 10px;height: 100%;color: #000;font-size: 10px;margin: auto;display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;justify-content: center;align-items: center;}
+.start-date { position: absolute; top:30%; left:20px; color:#000; z-index:99; font-size: 10px; text-transform: capitalize;}
+.end-date { position: absolute; top:30%; right:135px; color:#000; z-index:99; font-size: 10px; text-transform: capitalize; }
+.graphical_tree .bar-img {width: 28px; height: 28px;float: left;margin-right: 5px !important; position: relative;top: 6px;}
+.graphical_tree {list-style: none;}
+.graphical_tree, .graphical_tree * {margin: 0;padding: 0;}
+.graphical_tree > li {padding-left: 0;}
+.graphical_tree > li::before, .graphical_tree > li::after {display: none;}
+li span::before { font-family: 'Roboto-Regular';}
+.graphical_tree .empty_tree ~ ul::before { width:240px; }
+.graphical_tree .empty_tree ~ ul { padding-left:240px; }
+.graphical_tree p { display: table; margin-right:40px;}
+.graphical_tree > li:first-child {padding-left:0;}
+.graphical_tree li {display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;flex-direction: row;align-items: center; padding-top: .5vh;padding-bottom: .5vh;position: relative; padding-left: 60px;}
+.graphical_tree li::before {content: '';position: absolute;left: 0;top: 50%;border-top: 5px solid #dfeaf1;width: 60px;}
+.graphical_tree li::after {content: '';position: absolute;left: 0;border-left: 5px solid #dfeaf1;}
+.graphical_tree li:last-of-type::after {height: 50%;top: 0;}
+.graphical_tree li:first-of-type::after {height: 50%;bottom: 0;}
+.graphical_tree span label { height: 24px; width: 12px;border-bottom-left-radius: 90px; border-top-left-radius: 90px;background-color: #0f5e8c;position: absolute;right: 0;top: 25px;}
+.graphical_tree li ul li:last-of-type::after {height: 50%;top: 0;}
+.graphical_tree li ul li:first-of-type::after {height: 50%;bottom: 0;}
+.graphical_tree li.firstLi::after {height: 0% !important;}
+.graphical_tree li.firstLi ~ li::after {height: 100% !important;top:-33px!important;}
+.graphical_tree li:first-child ul:first-of-type > li.firstLi:first-child::after { height:0px; }
+.graphical_tree li:first-child ul:first-of-type > li.firstLi:first-child ul li.firstLi:first-child::after { height:50%; }
+.graphical_tree li:not(:first-of-type):not(:last-of-type)::after {height: 100%;}
+.graphical_tree ul, .graphical_tree ol {padding-left: 60px;position: relative;}
+.graphical_tree ul::before, .graphical_tree ol::before {content: '';position: absolute;left: 0;top: 50%;border-top: 5px solid #dfeaf1;width: 60px;}
+.graphical_tree span {border: 1px solid #0f5e8c;box-shadow: 0 0 20px 0px #ccc;text-align: left;padding: 10px 15px 10px 5px;min-width: 120px;min-height: 60px;text-transform: capitalize;font-family: 'Roboto-Regular';position: relative;display: inline-block;}
+.graphical_tree .box-name {width: 65px;display: inline-block;}
+.graphical_tree .box-name h6 { width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;margin-bottom:5px;}
+.graphical_tree li > span ul {padding-left:0; margin-bottom:0;}
+.graphical_tree li > span ul > li { display: inline-block; }
+.graphical_tree span > span { cursor: pointer; position:absolute; bottom:-8px; right:5px; border:none; box-shadow: none;min-width:auto;min-height:auto;padding:0;margin:0;}
+.graphical_tree span > label ~ h6 { position:relative; top:6px; font-size:11px; }
+
+ul.calender_tree li.january span { background-color: #ff66a3; }
+ul.calender_tree li.february span { background-color: #85e085; }
+ul.calender_tree li.march span { background-color: #ff6666; }
+ul.calender_tree li.april span { background-color: #85a3e0; }
+ul.calender_tree li.may span { background-color: #99ffff; }
+ul.calender_tree li.june span { background-color: #66a3ff; }
+ul.calender_tree li.july span { background-color: #a366ff; }
+ul.calender_tree li.august span { background-color: #ffc266; }
+ul.calender_tree li.september span { background-color: #d9ff66; }
+ul.calender_tree li.october span { background-color: #6666ff; }
+ul.calender_tree li.november span { background-color: #ffb366; }
+ul.calender_tree li.december span { background-color: #ff66d9; }
+
+/* january start */
+.graphical_tree li span.january { border: 1px solid #ff66a3; }
+.graphical_tree li span.january label { background-color: #ff66a3; }
+/* january end */
+
+/* february start */
+.graphical_tree li span.february { border: 1px solid #85e085; }
+.graphical_tree li span.february label { background-color: #85e085; }
+/* february end */
+
+/* march start */
+.graphical_tree li span.march { border: 1px solid #ff6666 ; }
+.graphical_tree li span.march label { background-color: #ff6666 ; }
+/* march end */
+
+/* april start */
+.graphical_tree li span.april { border: 1px solid #85a3e0; }
+.graphical_tree li span.april label { background-color: #85a3e0; }
+/* april end */
+
+/* may start */
+.graphical_tree li span.may { border: 1px solid #99ffff; }
+.graphical_tree li span.may label { background-color: #99ffff; }
+/* may end */
+
+/* june start */
+.graphical_tree li span.june { border: 1px solid #66a3ff; }
+.graphical_tree li span.june label { background-color: #66a3ff; }
+/* june end */
+
+/* july start */
+.graphical_tree li span.july { border: 1px solid #a366ff; }
+.graphical_tree li span.july label { background-color: #a366ff; }
+/* july end */
+
+/* august start */
+.graphical_tree li span.august { border: 1px solid #ffc266; }
+.graphical_tree li span.august label { background-color: #ffc266; }
+/* august end */
+
+/* september start */
+.graphical_tree li span.september{ border: 1px solid #d9ff66; }
+.graphical_tree li span.september label { background-color: #d9ff66; }
+/* september end */
+
+/* october start */
+.graphical_tree li span.october { border: 1px solid #6666ff; }
+.graphical_tree li span.october label { background-color: #6666ff; }
+/* october end */
+
+/* november start */
+.graphical_tree li span.november { border: 1px solid #ffb366; }
+.graphical_tree li span.november label { background-color: #ffb366; }
+/* november end */
+
+/* december start */
+.graphical_tree li span.december { border: 1px solid #ff66d9; }
+.graphical_tree li span.december label { background-color: #ff66d9; }
+/* december end */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .graphical_tree li:first-child ul:first-of-type > li.firstLi:last-of-type::after { height:0px;} */
+/* .graphical_tree li:first-child ul:first-of-type > li:first-child::after { height:0px;} */
+/* .graphical_tree li:first-child ul:first-of-type li:nth-last-of-type(1n)::after { height:0px;} */
+/* .graphical_tree li:first-child>ul>li:nth-last-of-type(1n)::after {height: 0%;top: auto;bottom: auto;}
+.graphical_tree li:first-child>ul>li:nth-last-of-type(1n)::after {height: 0%;top: auto;bottom: auto;} */
+/* .graphical_tree li>ul>li:nth-last-of-type(1n)::after {height: 0px;} */
+/* .graphical_tree li:first-of-type::after {height: 0px;} */
+/* .graphical_tree li:nth-last-of-type(1n)::after { height:0px; top:auto;bottom:auto;} */
+/* .graphical_tree li:first-child ul:first-of-type > li.firstLi:first-child::after { height:0px; } */
+/* .graphical_tree li:first-child ul:first-of-type > li.firstLi:first-child > ul > li.firstLi:first-child::after { height:50%; } */
+/* .graphical_tree li:first-child ul:first-of-type > li:first-child::after { height:50%;} */
+
+/* .graphical_tree li:first-of-type::after li:nth-child(1n){} */
+/* .graphical_tree > li ul:first-child > li { } */
+/* .graphical_tree > li ul li:nth-child(2) li { padding-left: 120px; }
+.graphical_tree > li ul li:nth-child(2) li::before { width: 120px;} */
+/* .graphical_tree > li > ul > li:nth-child(even) { padding-left:120px; }
+.graphical_tree > li > ul > li:nth-child(even)::before { width:120px; } */
+
+/* .graphical_tree span label {
+width: 30px;
+height: 30px;
+position: absolute;
+background-color: #000;} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* one start */
+/* .graphical_tree > li:first-child > span { border: 1px solid #d155f0; }
+.graphical_tree > li:first-child > span label { background-color: #d155f0; } */
+/* one end */
+
+/* two start */
+/* .graphical_tree > li > span ~ ul > li span { border: 1px solid #32d3ce ; }
+.graphical_tree > li > span ~ ul > li span label { background-color: #32d3ce ; } */
+/* two end */
+
+/* three start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span { border: 1px solid #6e38c4; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span label { background-color: #6e38c4; } */
+/* three end */
+
+/* four start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #e23a59; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #e23a59; } */
+/* four end */
+
+/* five start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #e45f0e; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #e45f0e; } */
+/* five end */
+
+/* six start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #0066cc; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #0066cc; } */
+/* six end */
+
+/* seven start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #e40e0e; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #e40e0e; } */
+/* seven end */
+
+/* eight start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span{ border: 1px solid #0e3ce4; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #0e3ce4; } */
+/* eight end */
+
+/* nine start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #e4aa0e; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #e4aa0e; } */
+/* nine end */
+
+/* ten start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #96e40e; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #96e40e; } */
+/* ten end */
+
+/* eleven start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #854f32; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #854f32; } */
+/* eleven end */
+
+/* twelve start */
+/* .graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span { border: 1px solid #e23a59; }
+.graphical_tree > li > span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span ~ ul > li span label { background-color: #e23a59; } */
+/* twelve end */

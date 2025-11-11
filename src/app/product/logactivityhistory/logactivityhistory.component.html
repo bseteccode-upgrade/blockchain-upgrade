@@ -1,0 +1,71 @@
+<h1 mat-dialog-title>{{'current_activity_data' | translate}}</h1>
+<mat-dialog-content>
+  <div>
+    <div class="table-responsive protest">
+      <div class="col-md-12 col-sm-12 dynamic-details-sub-new">
+        <ul class="col-md-12 col-sm-12">
+          <li>{{'transaction_id' | translate}}: <span>{{data.certData.parent_transaction}} </span> </li>
+          <li *ngIf="data.certData.parent_evidence && data.certData.parent_evidence != 'None'">{{'evidence' | translate}}:
+            <span><a target="_blank" href="{{data.certData.parent_evidence}}">{{'click_here' | translate}}</a></span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-12 col-sm-12 no-padding">
+        <div class="table-responsive popup-table">
+      <table class="table">
+        <tr class="col-md-6 col-sm-12 col-xs-12"  *ngFor="let details of data.certData.parent_field_set">
+          <td>
+            <h2>{{details.label}}:</h2>
+          </td>
+          <td
+            *ngIf="details.type !== 'document' && details.type !== 'productimage'">
+            <h2>{{details.value}}</h2>
+          </td>
+          <td *ngIf="details.type === 'document' || details.type === 'productimage'">
+            <a *ngIf="details.value && details.value != null && details.value !== ''" target="_blank"
+              href="{{details.value}}">{{'click_here' | translate}}</a>
+          </td>
+        </tr>
+      </table>
+      </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<h1 mat-dialog-title>{{'history_of_activity_data' | translate}}</h1>
+<mat-dialog-content>
+  <div>
+    <div class="table-responsive protest">
+        <div class="col-md-12 col-sm-12 dynamic-details-sub-new">
+            <ul class="col-md-12 col-sm-12">
+              <li>{{'transaction_id' | translate}}: <span>{{data.certData.child_transaction}} </span> </li>
+              <li *ngIf="data.certData.child_evidence && data.certData.child_evidence != 'None'">{{'evidence' | translate}}:
+                <span><a target="_blank" href="{{data.certData.child_evidence}}">{{'click_here' | translate}}</a></span>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-12 col-sm-12 no-padding">
+            <div class="table-responsive popup-table">
+      <table class="table">
+        <tr class="col-md-6 col-sm-12 col-xs-12" *ngFor="let details of data.certData.child_field_set">
+          <td>
+            <h2>{{details.label}}:</h2>
+          </td>
+          <td
+            *ngIf="details.type !== 'document' && details.type !== 'productimage'">
+            <h2>{{details.value}}</h2>
+          </td>
+          <td *ngIf="details.type === 'document' || details.type === 'productimage'">
+            <a *ngIf="details.value && details.value != null && details.value !== ''" target="_blank"
+              href="{{details.value}}">{{'click_here' | translate}}</a>
+          </td>
+        </tr>
+      </table>
+      </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button class="close-btn" [mat-dialog-close]="false">{{'close' | translate}}</button>
+</mat-dialog-actions>

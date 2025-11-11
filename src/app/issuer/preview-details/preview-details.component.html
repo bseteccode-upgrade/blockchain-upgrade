@@ -1,0 +1,180 @@
+<div style="text-align: center">
+  <div class="">
+    <div class="">
+      <div class="badge-details-modelpopup">
+        <div class="">
+          <div class="col-md-12 col-sm-12 issuer-section">
+            <div class="panel-heading">
+              <div class="pull-right close-icons"></div>
+            </div>
+
+            <div class="panel-body">
+              <div class="col-md-12 col-sm-12 badge-details-block">
+                <div class="col-md-4 col-sm-12">
+                  <div class="badge-block">
+                    <img [src]="details.logo" class="img-responsive">
+                  </div>
+                </div>
+
+                <div class="col-md-4 col-sm-12">
+                  <div class="badge-certificate-title">
+                    <h3>{{details.title}}</h3>
+                    <span class="certificate-unline"></span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 col-sm-12">
+                  <div class="issuer-details">
+                    <a href="javascript" target="_blank">
+                      <img [src]="orgImage" class="img-responsive">
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-6 col-sm-12">
+                    <div class="main-block description-blog">
+                      <div class="content-block">
+                        <h4>{{'issue_date' | translate}} : yyyy-mm-dd</h4>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <div class="main-block description-blog">
+                      <div class="content-block">
+                        <h4>{{'expire_date' | translate}} : yyyy-mm-dd</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <div class="col-md-6 col-sm-12">
+                    <div class="main-block description-blog">
+                      <div class="content-block">
+                        <h4>{{'start_date' | translate}} : yyyy-mm-dd</h4>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <div class="main-block description-blog">
+                      <div class="content-block">
+                        <h4>{{'end_date' | translate}} : yyyy-mm-dd</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12" >
+                <div class="content-block badge-link">
+                  <a (click)="ngxSmartModalService.getModal('evidenceSample').open();">{{'view_evidence' | translate}}
+                    <i class="fa fa-angle-double-right" style="font-size: 22px;float: right;"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div *ngIf="details.is_certificate" class="col-md-6 col-sm-12">
+                <div class="content-block badge-link">
+                  <a (click)="ngxSmartModalService.setModalData( details.logo , 'viewCertBig');ngxSmartModalService.getModal('viewCertBig').open();">
+                    {{'view_certificate' | translate}}
+                    <i class="fa fa-angle-double-right" style="font-size: 22px;float: right;"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div *ngIf="!details.is_certificate" class="col-md-6 col-sm-12">
+                <div class="content-block badge-link">
+                  <a>
+                    {{'view_course' | translate}}
+                    <i class="fa fa-angle-double-right" style="font-size: 22px;float: right;"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12" *ngIf="details.skills.length > 0">
+                <div class="main-block description-blog skills_container">
+                  <div class="head-block">
+                    <h3>{{'skills' | translate}}</h3>
+                  </div>
+
+                  <div class="content-block">
+                    <span *ngFor="let skill of details.skills">{{skill | translate}}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12" *ngIf="details.description">
+                <div class="main-block description-blog">
+                  <div class="head-block">
+                    <h3>{{'description' | translate}}</h3>
+                  </div>
+
+                  <div class="content-block">
+                    <p [innerHtml]="convertStyle(details.description)"></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12" *ngIf="details.criteria">
+                <div class="main-block description-blog">
+                  <div class="head-block">
+                    <h3>{{'criteria' | translate}}</h3>
+                  </div>
+
+                  <div class="content-block">
+                    <p [innerHtml]="convertStyle(details.criteria)"></p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="col-md-12 col-sm-12">
+                <div class="main-block description-blog">
+                  <div class="head-block">
+                    <h3>{{'testimonial' | translate}}</h3>
+                  </div>
+
+                  <div class="content-block">
+                    <p></p>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="acheivement-popup certificate-view-model">
+  <ngx-smart-modal #viewCertBig identifier="viewCertBig" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('viewCertBig')">
+    <div class="certificate-image-view" *ngIf="viewCertBig.hasData()">
+      <div class="center-image">
+        <img style="width:100%" src="{{viewCertBig.getData()}}">      
+      </div>
+      <br>
+    </div>
+  </ngx-smart-modal>
+</div>
+
+<div>
+  <ngx-smart-modal #evidenceSample identifier="evidenceSample" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('evidenceSample')">
+    <div style="text-align: center">
+      <div class="view-evidence-title">
+        <h4> {{'view_evidence_list' | translate}} </h4>
+      </div>
+      <div class="model-view-evidence">
+        <a
+          href="javascript:;" class="view-evidence-btn"
+          mat-button>
+          <span><i class="fa fa-eye"></i> {{'view_blockchain' | translate}}</span>
+        </a>
+      </div>
+    </div>
+  </ngx-smart-modal>
+</div>

@@ -1,0 +1,81 @@
+mat-select { border: none;}
+.panel-body .table-responsive table { width:100%; padding:15px; }
+.msg-modal { width: 75% !important; border-radius: 10px !important; ; padding: 12px 0 0 0 ; }
+:host /deep/ .eng_group:hover .blockchain-submain { bottom:0px;}
+:host /deep/ .block-left { width:60%; }
+:host /deep/ .block-left.block-course-title { width:100%;}
+.block-right { width:33%; display: inline-block;  }
+:host /deep/ .block-left.block-course-title h4 { padding-top:5px;  width:100%;  height: 22px; overflow: hidden; display: inline-block; font-size: 14px; color: #2ab6d7; margin-top: 0px; margin-bottom: 0px; font-family: 'Roboto-Regular'; font-weight: normal; white-space: nowrap; word-break: break-all; overflow: hidden; text-overflow: ellipsis;}
+:host /deep/ .blockchain-details { padding:22px 10px 15px; }
+:host /deep/ .expired  { position: absolute; left:23%; top:3px; color: #f20; }
+:host /deep/ .eng_group .blockchain-submain a { top:15px; }
+:host /deep/ .eng_group .blockchain-main a img { padding:0px 10px;}
+:host /deep/ .certify_name { width:85px;}
+:host /deep/ .badge-delete.mat-button { margin:10px 0px;}
+:host /deep/ .delete-input .mat-form-field-appearance-outline .mat-form-field-infix { padding:3px 0px;}
+:host /deep/ .achievement-btn { margin-bottom:20px; }
+:host /deep/ .user-btn-block { margin-bottom:20px; }
+.scheduler-border .achievement-btn .filter-btn.mat-button { margin:5px; }
+.delete-input .text-danger.text-left.small { position: absolute; bottom: 2px; }
+.main-block { width:100%; margin:20px 0px; }
+.head-block { width:100%; background-color: #3381bf; padding:10px; text-align: left; }
+.head-block h3 { color:#fff; font-family: Roboto-Regular; }
+.head-block h4 { color:#fff; font-family: Roboto-Regular; }
+.content-block { background-color: #e8e8e8; padding:10px 20px; width:100%; height:auto; text-align: left;word-break:break-word;word-wrap:break-word;}
+.content-block div{word-break:break-word;word-wrap:break-word;}
+.content-block p{white-space:pre-wrap;word-break:break-word;word-wrap:break-word;}
+.badge-block.right-side.issue_dateblock { text-align:center;display: inline-block; border: 4px solid #d8d8d8; padding: 10px; min-width: 210px; max-width:435px;margin:0px;position: relative;}
+.badge-block.right-side.issue_dateblock h4 { font-weight: 600;color:#000;margin-top: 0;overflow-wrap: break-word;}
+.badge-details-block .badge-block p{overflow-wrap: break-word;}.badge-block.right-side.issue_dateblock h6 { font-weight: 600;color:#000;}
+.spacing { margin:10px 0px;position: relative;display: inline-block;padding:5px;width: 100%;}
+.panel-body.badge-details-block { width: 100%;height: auto;position: relative;display: inline-block;margin-top: 0px;margin-bottom: 10px;background-color: #fff;border: 2px solid #d8d8d8;padding: 15px;}
+.badge-details-modelpopup.student-detail-popup { margin-top:20px; bottom:0px;}
+.student-block { width:100%; position: relative; padding-bottom:10px; display: inline-block; }
+.student-detail-popup h4 { font-size: 16px; color:#29b6d8; }
+.student-detail-popup h4 { font-size: 14px; }
+.student-header { width:100%; position: relative; text-align: center; display: inline-block; }
+.student-header img { width:100px; height:100px; object-fit: contain; display: inline-block; }
+ul.student-list { padding-left:0px; margin-bottom:0px; width:100%; }
+ul.student-list li { display: inline-block; width:48.9%; padding:0px 0px;}
+ul.student-list li p { color:#006cb5; font-size: 14px; }
+ul.student-list li span { color:#262d37;font-size: 14px;}
+.student-btn { width:100%; text-align: center; display: inline-block; padding:10px 0px;}
+.mat-button.btn-info { background-color: #ea6557; border-color: #ea6557; color: #fff;}
+.delete_select { height:60px; position: relative;line-height:60px;}
+
+@media (min-width:991px) and (max-width: 1200px)
+{
+:host /deep/ .blockchain-details { min-height:120px; height:100%;}
+}
+
+@media (min-width: 991px) and (max-width: 1150px)
+{
+:host /deep/ .block-left { padding: 0px 0px;}
+:host /deep/ .expired  { position: absolute; left:2%; top:3px; color: #f20; }
+}
+
+@media (min-width: 980px) and (max-width:1280px)
+{
+:host /deep/ .block-left { width:100%;padding: 0px 5px;}
+:host /deep/ .block-right { width:100%;}
+.expired { left:4%;}
+.certify_name { width:100%; }
+}
+
+@media (max-width:853px)
+{
+.scheduler-border .achievement-btn .filter-btn.mat-button { width:100%;}
+}
+
+@media (max-width: 640px)
+{
+.badge-details-modelpopup > div,.panel-body.badge-details-block,
+.panel-body.badge-details-block > div{padding:10px 0;}
+}
+    
+@media (max-width: 480px)
+{
+.badge-block.right-side.issue_dateblock{width: 182px;max-width:100%;min-width:100%;}
+.badge-block.right-side.issue_dateblock h4{font-size: 20px;}
+.scheduler-border .achievement-btn .filter-btn.mat-button  { width:100%; }
+}

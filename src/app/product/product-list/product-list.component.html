@@ -1,0 +1,182 @@
+<section class="start_wrapper issue-certificate-list">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'product_list' | translate}}</h3>
+      </div>
+      <div class="pull-right"
+        *ngIf="apiService.userType === '3' || ((apiService.userType === '5'|| apiService.userType === '0') && apiService.pages.add_product === true)">
+        <button mat-button routerLink="/product">
+          <i class="fa fa-plus-circle"></i> {{'add_new_product' | translate}}
+        </button>
+      </div>
+    </div>
+
+    <div class="panel-heading clearfix filter-search-box">
+      <fieldset class="scheduler-border" *ngIf="!advanceSearch">
+        <form [formGroup]="searchForm" (ngSubmit)="submitSearchForm(searchForm.value)">
+          <div class="col-md-6 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'search' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="search" name="search">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <div class="user-btn-block">
+              <button type="submit" class="filter-btn search" mat-button [disabled]="progress">{{'search' |
+                translate}}</button>
+              <button class="filter-btn reset" mat-button
+                (click)="advanceSearch = true; advanceResetForm()">{{'advanced_search' | translate}}</button>
+              <button type="reset" [disabled]="progress" class="filter-btn reset" mat-button
+                (click)="advanceResetForm()">{{'reset' | translate}}</button>
+            </div>
+          </div>
+        </form>
+      </fieldset>
+
+      <fieldset class="scheduler-border" *ngIf="advanceSearch">
+        <form [formGroup]="searchForm" (ngSubmit)="submitSearchForm(searchForm.value)">
+          <div class="col-md-6 col-sm-12">
+            <mat-form-field class="angular-datepicker field-datepicker">
+              <input matInput placeholder="{{'start_date' | translate}}" [readonly]="true"
+                (dateChange)="changeDateEvent($event, 'start_date')" [matDatepicker]="fromdate"
+                formControlName="start_date" id="start_date" (click)="fromdate.open()">
+              <mat-datepicker-toggle matSuffix [for]="fromdate"></mat-datepicker-toggle>
+              <mat-datepicker #fromdate></mat-datepicker>
+            </mat-form-field>
+            <div class="refresh-icon" (click)="refreshFromDate()">
+              <mat-icon>refresh</mat-icon>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <mat-form-field class="angular-datepicker field-datepicker">
+              <input matInput placeholder="{{'to_date' | translate}}" [matDatepicker]="todate" [readonly]="true"
+                (dateChange)="changeDateEvent($event, 'end_date')" formControlName="end_date" min={{minendDate}}
+                id="end_date" (click)="todate.open()">
+              <mat-datepicker-toggle matSuffix [for]="todate"></mat-datepicker-toggle>
+              <mat-datepicker #todate></mat-datepicker>
+            </mat-form-field>
+            <div class="refresh-icon" (click)="refreshToDate()">
+              <mat-icon>refresh</mat-icon>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'product_name' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="title">
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <div class="user-btn-block">
+              <button type="submit" class="filter-btn search" mat-button [disabled]="progress">{{'search' |
+                translate}}</button>
+              <button type="reset" [disabled]="progress" class="filter-btn reset" mat-button
+                (click)="resetProductList([])">{{'reset' | translate}}</button>
+              <button class="filter-btn reset" mat-button (click)="advanceSearch = false">{{'close' |
+                translate}}</button>
+            </div>
+          </div>
+        </form>
+      </fieldset>
+    </div>
+
+
+
+    <div class="panel-body standter">
+
+      <div class="box-container">
+        <div *ngIf="progress" class="progress_animation">
+          <mat-spinner></mat-spinner>
+        </div>
+        <div class="col-sm-12">
+          <div class="alert alert-info no-records" *ngIf="productList.length === 0 && !progress">
+            {{'no_records_found' | translate}}
+          </div>
+        </div>
+        <div *ngIf="productList.length != 0 && !progress">
+          <div class="search-results-stud scroll-window" slimScroll
+            (scrollChanged)="scrollChanged($event, searchForm.value)" [options]="options" infiniteScroll
+            [infiniteScrollDistance]="product_scrollDistance" [infiniteScrollThrottle]="product_throttle"
+            [scrollWindow]="false" (scrolled)="onScrollDownProduct(searchForm.value)">
+
+
+            <div class="col-md-12 col-sm-12 content-height">
+
+              <div class="col-md-3 col-sm-6 col-xs-12 box-block" *ngFor="let product of productList">
+                <div class="sub-box">
+                  <div class="side-btn">
+                    <button mat-button class="menu-icon" [matMenuTriggerFor]="menu">
+                      <i class="material-icons">more_horiz</i>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button *ngIf="product.has_permission" mat-button routerLink="/product/{{product.id}}"
+                        class="side-btn">
+                        <i class="fa fa-pencil-square-o" style="font-size:18px;"></i> {{'edit' | translate}}
+                      </button>
+                      <button *ngIf="!product.has_permission" mat-button routerLink="/product/{{product.id}}"
+                        [queryParams]="{mode: 'view'}" class="side-btn">
+                        <i class="fa fa-eye" style="font-size:18px;"></i> {{'view' | translate}}
+                      </button>
+                      <button *ngIf="product.has_permission && !product.has_activity" mat-button class="side-btn"
+                        (click)="ngxSmartModalService.setModalData(product.id, 'myModal', true);ngxSmartModalService.getModal('myModal').open();">
+                        <i class="fa fa-trash-o" style="font-size:18px;"></i> {{'delete' | translate}}
+                      </button>
+                      <a target="_blank" *ngIf="product.barcodeimage" href="{{product.barcodeimage}}">
+                        <button mat-button class="side-btn">
+                          <i class="fa fa-qrcode" aria-hidden="true" style="font-size:18px;"></i>{{'download_qr_code' |
+                          translate}}
+                        </button>
+                      </a>
+                      <a target="_blank" *ngIf="product.eps_qr_files" href="{{product.eps_qr_files}}">
+                        <button mat-button class="side-btn">
+                          <i class="fa fa-qrcode" aria-hidden="true" style="font-size:18px;"></i>{{'download_eps_code' |
+                          translate}}
+                        </button>
+                      </a>
+                      <a target="_blank" *ngIf="product.svg_qr_files" href="{{product.svg_qr_files}}">
+                        <button mat-button class="side-btn">
+                          <i class="fa fa-qrcode" aria-hidden="true" style="font-size:18px;"></i>{{'download_svg_code' |
+                          translate}}
+                        </button>
+                      </a>
+                      <button *ngIf="product.has_activity" mat-button class="side-btn"
+                        (click)="onRedirectToActivity(product.id)">
+                        <i class="fa fa-eye" style="font-size:18px;"></i> {{'view_product' | translate}}
+                      </button>
+                    </mat-menu>
+                  </div>
+                  <div class="box-details">
+                    <img [src]="(product.image)? product.image : 'assets/images/no-image.png'" />
+                    <h3>{{product.title}}</h3>
+                    <h4>{{product.barcode}}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-smart-modal #myModal identifier="myModal" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+    <div *ngIf="myModal.hasData()">
+      <fieldset>
+        <legend>{{'confirm_delete' | translate}}</legend>
+        <div class="password-enter">
+          <h5>{{'are_you_sure' | translate}} {{'product' | translate}}? </h5>
+          <br>
+
+        </div>
+      </fieldset>
+      <div class="form-group" style="float: right">
+        <button mat-button class="password-submit" style="margin-right:10px" (click)="delete(myModal.getData())">{{'yes'
+          | translate}}</button>
+        <button mat-button class="password-submit" (click)="myModal.close()">{{'no' | translate}}</button>
+      </div>
+    </div>
+  </ngx-smart-modal>
+</section>

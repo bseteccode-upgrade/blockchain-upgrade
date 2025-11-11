@@ -1,0 +1,4 @@
+button.post_btn.mat-button{background-color:#29b6d8;color:#fff;display:inline-block;margin:auto 10px;text-transform:capitalize}
+h1.mat-dialog-title{text-transform:capitalize;border-bottom:1px solid #ddd;padding-bottom:10px}
+mat-dialog-content h4{text-align:center}
+.mat-dialog-actions{display:inline-block;text-align:center;width:100%}

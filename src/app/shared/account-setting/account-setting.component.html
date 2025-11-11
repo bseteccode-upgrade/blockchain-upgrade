@@ -1,0 +1,1509 @@
+<section class="start_wrapper account-setting">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'account_settings' | translate}} <span matTooltip="{{'phi_account_settings' | translate}}"
+            class="headTooltip"><i class="material-icons"> help_outline</i></span></h3>
+      </div>
+
+      <div *ngIf="apiService.userType === '2'" class="pull-right">
+        <div *ngIf="!checkThreeVar" class="onload-message organization-message">
+          <h5>{{'organization_info_required' | translate}}</h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <mat-tab-group [selectedIndex]="tabselection">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">person</mat-icon>
+            {{ 'profile_setting' | translate }}
+          </ng-template>
+          <div class="add-student-form">
+            <div class="row">
+              <h4 *ngIf="apiService.userType === '2' || apiService.userType === '4'">{{ 'profile_info' | translate }}
+              </h4>
+              <h4 *ngIf="apiService.userType === '1'">{{'profile_info' | translate}}</h4>
+              <form class="form-horizontal" (ngSubmit)="updateUser(userForm.value)" [formGroup]="userForm">
+
+                <div class="col-md-12 col-sm-12">
+                  <div class="col-md-4 col-sm-12">
+                    <div class="avatar-image avatar-image-new">
+                      <img style="height: 100%;"
+                        [src]="(user.profile_details.avatar)? user.profile_details.avatar : 'assets/images/avatar.jpeg'">
+                      <span
+                        *ngIf="userForm.controls['avatar'].value && userForm.controls['avatar'].value != '' && userForm.controls['avatar'].value != null"
+                        (click)="deleteProfileImage()" class="delete_icons"><i class="fa fa-refresh"
+                          style="font-size:18px;"></i></span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-8 col-sm-12">
+                    <div class="select-file">
+                      <label class="btn btn-primary">{{'select_file' | translate}}
+                        <input #fileInputOrgDoc type="file" name="file" accept=".jpg, .jpeg, .png" style="display: none"
+                          (click)="fileInputOrgDoc.value = null" value="" (change)="uploadFile($event)">
+                      </label>
+
+                      <div class="text-info text-left"> {{'image_quality_size' | translate}}: (200x200) <br>
+                        ({{'support_only' | translate}} jpeg, jpg, & png) </div>
+                      <span class="text-danger text-left small" style="position: relative;">{{errorMsgArr['avatar']
+                        | translate}} </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label" for="username">{{'first_name' | translate}} <span
+                        class="mandatory">*</span></label>
+                    <input type="text" class="form-control" formControlName="first_name"
+                      placeholder="{{'first_name' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorMsgUser">{{geterrorMsgUser('first_name') ||
+                      errorMsgArr['first_name'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label" for="fullname">{{'last_name' | translate}} <span
+                        class="mandatory">*</span></label>
+                    <input type="text" class="form-control" formControlName="last_name"
+                      placeholder="{{'last_name' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorMsgUser">{{geterrorMsgUser('last_name') ||
+                      errorMsgArr['last_name'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label" for="email">{{'email_address' | translate}}</label>
+                    <input type="text" class="form-control" id="email" formControlName="email"
+                      placeholder="{{'email_address' | translate}}" readonly>
+                    <div class="text-danger text-left small" *ngIf="errorMsgUser">{{geterrorMsgUser('email') ||
+                      errorMsgArr['email'] | translate}}</div>
+                  </div>
+
+                  <div class="form-group" *ngIf="apiService.userType === '1'">
+                    <button class="btn btn-primary" mat-button routerLink="/multipleemail">{{'change_mail_address'
+                      | translate}}</button>
+                  </div>
+
+                </div>
+
+                <div class="col-sm-6 col-sm-12" *ngIf="apiService.userType === '1'">
+                  <div class="form-group">
+                    <label class="control-label" for="stdId">{{'student_id' | translate}}</label>
+                    <input type="text" class="form-control" id="stdId" formControlName="student_id"
+                      placeholder="{{'student_id' | translate}}" readonly>
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsgUser('student_id') ||
+                      errorMsgArr['student_id'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label" for="phone">{{'phone_number' | translate}}</label>
+                    <input type="text" class="form-control" id="phone" formControlName="phone_no"
+                      placeholder="{{'phone_number' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorMsgUser">{{geterrorMsgUser('phone_no') ||
+                      errorMsgArr['phone_no'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label" for="dob">{{'date_of_birth' | translate}}</label>
+
+                    <div>
+                      <mat-form-field class="angular-datepicker">
+                        <input matInput [matDatepicker]="dobpicker" (click)="dobpicker.open()" [readonly]="true"
+                          placeholder="mm/dd/yyyy" formControlName="dob" (dateChange)="changeDateEvent($event)">
+                        <mat-datepicker-toggle matSuffix [for]="dobpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #dobpicker></mat-datepicker>
+                      </mat-form-field>
+                      <div class="refresh-icon" (click)="refreshDobDate()">
+                        <mat-icon>refresh</mat-icon>
+                      </div>
+                      <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsgUser('dob') ||
+                        errorMsgArr['dob'] | translate}}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label">{{'gender' | translate}}</label>
+                    <select class="form-control" formControlName="gender">
+                      <option [disabled]="true" [selected]="true" [value]="null" class="register-type">{{'select' |
+                        translate}} {{'gender' | translate}}</option>
+                      <option value="M" [selected]="profile.gender === 'M'"> {{'male' | translate}} </option>
+                      <option value="F" [selected]="profile.gender === 'F'"> {{'female' | translate}} </option>
+                    </select>
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsgUser('gender') | translate}}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12" *ngIf="apiService.userType === '1'">
+                  <div class="form-group textarea">
+                    <label class="control-label" for="city">{{'description' | translate}}</label>
+                    <angular-editor [config]="editorConfig" [placeholder]="'Insert html here...'"
+                      formControlName="bio_description" [(ngModel)]="user.profile_details.bio_description">
+                    </angular-editor>
+                  </div>
+                </div>
+
+                <!-- <div class="col-md-6 col-sm-12" *ngIf="apiService.userType === '1'">
+                  <div class="form-group textarea">
+                    <div class="delete_select">
+                      <mat-checkbox formControlName="share_my_credential_to_the_repository">
+                        <span> {{'share_my_credential_to_repository' | translate}} </span>
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                </div> -->
+
+
+
+                <div class="col-md-12 col-sm-12" *ngIf="apiService.userType === '1'">
+                  <div class="form-group textarea">
+                    <label class="control-label">{{'education_experience' | translate}}</label>
+                    <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                      matTooltip="{{'info_about_education_experience' | translate}}"
+                      [matTooltipPosition]="position.value">
+                      <i class="fa fa-info-circle"></i>
+                    </span>
+
+                    <button type="button" mat-mini-fab class="certificate-btn" color="warn" (click)="addEduExp('add')">
+                      <i class="material-icons">add</i>
+                    </button>
+
+
+                  </div>
+                  <div class="table-responsive">
+                    <table class="data_lists">
+                      <tr *ngFor="let eduData of eduDataList;">
+                        <td>
+                          <img [src]="(eduData.external_certificate)? eduData.badge_image : eduData.certificate_image">
+                        </td>
+                        <td>
+                          <p>{{eduData.experience_title}}</p>
+                          <p>{{eduData.organization}}</p>
+                          <p *ngIf="eduData?.from_year">{{monthString(eduData.from_month)}} {{eduData.from_year}}
+                            <span *ngIf="eduData?.to_year"> - {{monthString(eduData.to_month)}} {{eduData.to_year}} </span>
+                            <span *ngIf="eduData?.to_year == '' || eduData?.to_year == null"> - {{'today' | translate}} </span>
+                          </p>
+                        </td>
+
+                        <td>
+                          <button type="button" mat-mini-fab class="certificate-btn" color="warn"
+                            (click)="addEduExp('edit', eduData.id)">
+                            <i class="material-icons">edit</i>
+                          </button>
+                          <button type="button" mat-mini-fab class="certificate-btn" color="warn"
+                            (click)="deleteEdu(eduData.id)">
+                            <i class="material-icons">delete</i>
+                          </button>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+
+
+
+
+                <div class="col-md-6 col-sm-12" *ngIf="apiService.userType !== '1'">
+                  <div class="form-group">
+                    <label class="control-label" for="city">{{'city' | translate}}</label>
+                    <input type="text" class="form-control" id="city" formControlName="city"
+                      placeholder="{{'city' | translate}}">
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12" *ngIf="apiService.userType !== '1'">
+                  <div class="form-group">
+                    <label class="control-label" for="state">{{'state' | translate}}</label>
+                    <input type="text" class="form-control" id="state" formControlName="state"
+                      placeholder="{{'state' | translate}}">
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12" *ngIf="apiService.userType !== '1'">
+                  <div class="form-group textarea">
+                    <label class="control-label" for="address">{{'address' | translate}}</label>
+                    <textarea type="text" class="form-control" id="address" formControlName="address"
+                      placeholder="{{'address' | translate}}"></textarea>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12" *ngIf="apiService.userType !== '1'">
+                  <div class="form-group">
+                    <label class="control-label" for="country">{{'country' | translate}}</label>
+                    <input type="text" class="form-control" id="country" formControlName="country"
+                      placeholder="{{'country' | translate}}">
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12" *ngIf="apiService.userType !== '1'">
+                  <div class="form-group">
+                    <label class="control-label" for="zipcode">{{'zipcode' | translate}}</label>
+                    <input type="text" class="form-control" id="zipcode" formControlName="zipcode"
+                      placeholder="{{'zipcode' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorMsgUser">{{geterrorMsgUser('zipcode') ||
+                      errorMsgArr['zipcode'] | translate}}</div>
+                  </div>
+                  <br>
+                </div>
+
+                <div class="col-md-12 col-sm-12">
+                  <div class="alert alert-danger" *ngIf="errorMsgUser">
+                    {{errorMsgUser | translate}}
+                  </div>
+                </div>
+
+                <div class="col-md-10 col-sm-12">
+                  <div class="form-group">
+                    <button *ngIf="processUserInfo" class="btn btn-primary">{{'processing' | translate}}...</button>
+                    <button *ngIf="!processUserInfo" mat-button type="submit" class="btn btn-form-save">{{'save_button'
+                      | translate}}</button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+
+          </div>
+        </mat-tab>
+
+        <!-- University Info -->
+        <mat-tab *ngIf="apiService.userType !== '1'">
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">verified_user</mat-icon>
+            {{'univ_setting' | translate}}
+          </ng-template>
+
+          <div class="add-student-form">
+            <div class="row">
+
+              <div
+                *ngIf="apiService.userType === '2' || apiService.userType === '3' || apiService.userType === '0' || apiService.userType === '4' || apiService.userType === '5'">
+                <div *ngIf="apiService.userType === '2' || apiService.userType === '4'" class="col-sm-12"
+                  style="padding: 0px">
+                  <h4>{{'university_info' | translate}}</h4>
+                </div>
+                <div *ngIf="apiService.userType === '3' || apiService.userType === '0' || apiService.userType === '5'"
+                  class="col-sm-12" style="padding: 0px">
+                  <h4>{{'company_info' | translate}}</h4>
+                </div>
+              </div>
+
+              <form class="form-horizontal" (ngSubmit)="editProfile(profileForm.value)" [formGroup]="profileForm">
+                <div class="col-md-12 col-sm-12">
+                  <div class="col-md-4 col-sm-12">
+                    <div class="avatar-image avatar-image-new">
+                      <img style="height: 100%;"
+                        [src]="(profile.university_avatar_comp)? profile.university_avatar_comp : 'assets/images/university-logo.png'">
+                      <span *ngIf="profile.university_avatar_comp && profile.university_avatar_comp != ''"
+                        (click)="deleteOrgImage()" class="delete_icons"><i class="fa fa-refresh"
+                          style="font-size:18px;"></i></span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-8 col-sm-12">
+                    <div class="select-file">
+                      <div class="control-label" for="organization">{{'organization' | translate}} {{'logo' |
+                        translate}} <span *ngIf="apiService.userType == '2' || apiService.userType == '8'"
+                          class="mandatory">*</span></div>
+                      <label class="btn btn-primary">{{'select_file' | translate}}
+                        <input type="file" name="file" accept=".jpg, .jpeg, .png" style="display: none"
+                          (change)="uploadUniversityLogo($event)">
+                      </label>
+
+                      <div class="text-info text-left"> {{'image_quality_size' | translate}}: (200x200) <br>
+                        ({{'support_only' | translate}} jpeg, jpg, & png) </div>
+                      <div class="text-danger text-left small" style="position: relative;"
+                        *ngIf="errorMsg || errorMsgArr['university_avatar']">
+                        {{errorMsgArr['university_avatar'] || geterrorMsg('university_avatar') | translate}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label" for="organization">{{'phone_number' | translate}}</label>
+                    <input type="text" class="form-control" id="" formControlName="university_phone"
+                      placeholder="{{'phone_number' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('university_phone') ||
+                      errorMsgArr['university_phone'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label *ngIf="apiService.userType === '2' || apiService.userType === '4'" class="control-label"
+                      for="organization">{{'organization'
+                      | translate}} <span class="mandatory">*</span></label>
+                    <label
+                      *ngIf="apiService.userType === '3' || apiService.userType === '0' || apiService.userType === '9' || apiService.userType === '5' || apiService.userType === '8'"
+                      class="control-label" for="organization">{{'company_name'
+                      | translate}} <span class="mandatory">*</span></label>
+                    <input *ngIf="apiService.userType === '2' || apiService.userType === '4'" type="text"
+                      class="form-control" id="organization" formControlName="organization"
+                      placeholder="{{'organization' | translate}}">
+                    <input
+                      *ngIf="apiService.userType === '3' || apiService.userType === '0' || apiService.userType === '9' || apiService.userType === '5' || apiService.userType === '8'"
+                      type="text" class="form-control" id="organization" formControlName="organization"
+                      placeholder="{{'company_name' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('organization') ||
+                      errorMsgArr['organization'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label" for="website">{{'website' | translate}} <span
+                        class="mandatory">*</span></label>
+                    <input type="text" class="form-control" id="website" formControlName="website"
+                      placeholder="{{'website' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('website') ||
+                      errorMsgArr['website'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12" *ngIf="apiService.userType === '5' || apiService.userType === '4'">
+                  <div class="form-group">
+                    <label class="control-label" for="role">{{'role' | translate}}</label>
+                    <input type="text" class="form-control" id="website" formControlName="custom_template"
+                      placeholder="{{'role' | translate}}">
+                  </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12">
+                  <div class="form-group textarea-university">
+                    <label class="control-label" for="address">{{'address' | translate}}</label>
+                    <textarea type="text" class="form-control" id="address" formControlName="university_address"
+                      placeholder="{{'address' | translate}}"></textarea>
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('university_address') ||
+                      errorMsgArr['university_address'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label" for="city">{{'city' | translate}}</label>
+                    <input type="text" class="form-control" id="city" formControlName="university_city"
+                      placeholder="{{'city' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('university_city') ||
+                      errorMsgArr['university_city'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label" for="state">{{'state' | translate}}</label>
+                    <input type="text" class="form-control" id="state" formControlName="university_state"
+                      placeholder="{{'state' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('university_state') ||
+                      errorMsgArr['university_state'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label" for="country">{{'country' | translate}}</label>
+                    <input type="text" class="form-control" id="country" formControlName="university_country"
+                      placeholder="{{'country' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('university_country') ||
+                      errorMsgArr['university_country'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label" for="zipcode">{{'zipcode' | translate}}</label>
+                    <input type="text" class="form-control" id="zipcode" formControlName="university_zipcode"
+                      placeholder="{{'zipcode' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('university_zipcode') ||
+                      errorMsgArr['university_zipcode'] | translate}}</div>
+                  </div>
+                </div>
+
+                <div
+                  *ngIf="apiService.userType === '2' || apiService.userType === '3' || apiService.userType === '0' || apiService.userType === '4' || apiService.userType === '5'">
+                  <div class="col-md-12 col-sm-6" *ngIf="apiService.userType === '2'">
+                    <div class="form-group">
+                      <label class="control-label" for="regNumber">{{'registration_number' | translate}}</label>
+                      <input type="text" class="form-control" id="regNumber" formControlName="registration_number"
+                        placeholder="{{'registration_number' | translate}}">
+                      <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('registration_number') ||
+                        errorMsgArr['registration_number'] | translate}}</div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 col-sm-6" *ngIf="apiService.userType === '2'">
+                    <div class="form-group">
+                      <label class="control-label" for="tinNumber">{{'tin_number' | translate}}</label>
+                      <input type="text" class="form-control" id="tinNumber" formControlName="tin_number"
+                        placeholder="{{'tin_number' | translate}}">
+                      <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('tin_number') ||
+                        errorMsgArr['tin_number'] | translate}}</div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-md-12 col-sm-12">
+                  <div class="alert alert-danger" *ngIf="errorMsg">
+                    {{errorMsg | translate}}
+                  </div>
+                  <br>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                  <div class="form-group">
+                    <button *ngIf="process" class="btn btn-primary">{{'processing' | translate}}...</button>
+                    <button *ngIf="!process" mat-button type="submit" class="btn btn-form-save">{{'save_button' |
+                      translate}}</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <fieldset *ngIf="apiService.userType === '2'" class="scheduler-border">
+            <legend class="scheduler-border">{{'organization_document' | translate}}
+              <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                matTooltip="{{'info_organization_document' | translate}}" [matTooltipPosition]="position.value">
+                <i class="fa fa-info-circle"></i>
+              </span>
+            </legend>
+            <form class="form-horizontal" [formGroup]="orgDocForm">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="general-tab sandbox organization_tabs">
+                  <ul class="general-list org_doc">
+                    <li>
+                      <p>{{'upload_org_files' | translate}}</p>
+
+                      <label class="btn btn-primary select-file">{{'select_file' | translate}}
+                        <input #fileOrgInp type="file" name="file"
+                          accept=".doc, .docx, .xls, .csv, .xlsx, .pdf, .jpg, .jpeg, .png" style="display: none"
+                          (click)="fileOrgInp.value=null" (change)="uploadOrgDoc($event)" multiple>
+                      </label>
+
+                      <div class="text-info text-left">
+                        *{{'file_size_more_10mb' | translate}}<br>
+                        *{{'support_only' | translate}} PDF, DOC, JPEG, JPG, PNG, CSV, XLS & XLSX <br />
+                      </div>
+                      <div class="text-danger text-left small" style="position: relative;" *ngIf="errorMsg">{{geterrorMsg('orgfiles')
+                        || errorMsgArr['orgfiles'] | translate}}</div>
+
+                      <div class="select_table" *ngIf="selectedFilesOrgDoc && selectedFilesOrgDoc.length > 0">
+                        <p>{{'selected_files' | translate}}</p>
+
+                        <table style="width:100%" *ngFor="let selectedFilesOrg of selectedFilesOrgDoc;">
+                          <tr>
+
+                            <td>{{selectedFilesOrg}}</td>
+                            <td><button mat-mini-fab color="warn" (click)="deleteOrgDocSelect(selectedFilesOrg)"><i
+                                  class="material-icons">delete</i></button></td>
+                          </tr>
+                        </table>
+
+                      </div>
+
+                      <div class="select_table" *ngIf="orgDocLists && orgDocLists.length > 0">
+                        <p>{{'uploaded_files' | translate}}</p>
+                        <table style="width:100%" *ngFor="let orgDoc of orgDocLists;let i = index">
+                          <tr>
+                            <td>{{orgDoc.name}}</td>
+                            <td><button mat-mini-fab color="warn" (click)="deleteOrgDoc(orgDoc.id, i)"><i
+                                  class="material-icons">delete</i></button></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </li>
+
+
+                    <li>
+                      <div class="sandbox-btn">
+                        <button type="button" mat-button class="red"
+                          (click)="submitOrgDoc()">{{'save_key' | translate}}</button>
+                      </div>
+                    </li>
+                  </ul>
+
+                </div>
+              </div>
+            </form>
+          </fieldset>
+
+        </mat-tab>
+
+
+        <mat-tab *ngIf="apiService.userType !== '5' && apiService.userType !== '9' && apiService.pages.admin_prv">
+          <ng-template mat-tab-label>
+            <i class="material-icons"> settings </i>
+            {{'general_setting' | translate}}
+          </ng-template>
+          <div class="add-student-form">
+            <div class="row">
+              <h4>{{'general_setting' | translate}}</h4>
+            </div>
+          </div>
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">{{'general' | translate}}
+              <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                matTooltip="{{'info_general_setting' | translate}}" [matTooltipPosition]="position.value">
+                <i class="fa fa-info-circle"></i>
+              </span>
+            </legend>
+            <div class="add-student-form">
+              <div class="row">
+                <form class="form-horizontal" [formGroup]="genForm" (ngSubmit)="genFormSubmit(genForm.value)">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                      <div
+                        *ngIf="apiService.userType === '2' || apiService.userType === '3' || apiService.userType === '0' || (apiService.userType === '4' && apiService.pages.admin_prv)">
+
+                        <div class="col-lg-6 col-md-12 col-sm-12">
+                          <div class="form-group">
+                            <div class="account-lang general-tab">
+                              <div class="dropdown">
+                                <ul class="general-list lang_list">
+                                  <li>
+                                    <p>{{'default_lang' | translate}}</p>
+                                  </li>
+                                  <li>
+                                    <select class="form-control" formControlName="uni_language">
+                                      <option [value]="null" [selected]="true" [disabled]="true" class="register-type">
+                                        {{'select' | translate}} {{'default_lang' | translate}}</option>
+                                      <option value="{{lang.id}}" *ngFor="let lang of languages">
+                                        {{lang.language_code}} </option>
+                                    </select>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="apiService.userType === '2'">
+                          <div class="form-group border">
+                            <label class="control-label" for="share">{{'select_blockchain' | translate}}</label>
+                            <div class="form-group share-radio">
+                              <select formControlName="user_blockchain_value" class="form-control">
+                                <option [disabled]="true" [value]="null">{{'select_blockchain' | translate}}</option>
+                                <option *ngFor="let opt of blockchainList" [value]="opt?.key_number"
+                                  [selected]="opt?.key_number == defaultBlockchainVal?.key_number">
+                                  {{opt.key | translate}}</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-12 col-sm-12"
+                          *ngIf="apiService.userType === '3' && apiService.pages.admin_prv">
+                          <div class="form-group">
+                            <div class="general-tab error-activity">
+                              <ul class="general-list">
+                                <li>
+                                  <p>{{'allow_correction_of_error_activity' | translate}}</p>
+                                </li>
+                                <li>
+                                  <mat-slide-toggle formControlName="allow_modify_activity"
+                                    matTooltip="{{'info_allow_modify_activity' | translate}}"
+                                    [checked]="profile.allow_modify_activity">
+                                  </mat-slide-toggle>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="apiService.userType === '3'">
+                          <div class="form-group">
+                            <div class="general-tab error-activity">
+                              <ul class="general-list">
+                                <li>
+                                  <p>{{'allow_group_color_workflow' | translate}}</p>
+                                </li>
+                                <li>
+                                  <mat-slide-toggle formControlName="allow_trace_group_color"
+                                    matTooltip="{{'info_allow_group_color_workflow' | translate}}"
+                                    [checked]="profile.allow_trace_group_color">
+                                  </mat-slide-toggle>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 col-sm-12" *ngIf="apiService.userType === '3'">
+                          <div class="form-group">
+                            <div class="general-tab error-activity">
+                              <ul class="general-list">
+                                <li>
+                                  <p>{{'allow_nested_workflow' | translate}}</p>
+                                </li>
+                                <li>
+                                  <mat-slide-toggle formControlName="allow_nested_workflow"
+                                    matTooltip="{{'info_allow_nested_workflow' | translate}}"
+                                    [checked]="profile.allow_nested_workflow">
+                                  </mat-slide-toggle>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- <div class="col-lg-4 col-md-12 col-sm-12" *ngIf="apiService.userType === '3'">
+                          <div class="general-tab error-activity">
+                            <ul class="general-list">
+                              <li>
+                                <p>{{'report_searchform_content' | translate}}</p>
+                              </li>
+                              <li>
+                                <angular-editor [config]="editorConfig"
+                                  [placeholder]="'Insert html here...'" formControlName="rep_searchform_content" [(ngModel)]="profile.rep_searchform_content">
+                                </angular-editor>
+                              </li>
+                            </ul>
+                          </div>
+                        </div> -->
+                        <!-- <div class="col-lg-4 col-md-12 col-sm-12"
+                          *ngIf="apiService.userType === '3' && apiService.pages.admin_prv">
+                          <div class="general-tab error-activity">
+                            <ul class="general-list">
+                              <li>
+                                <p>{{'allow_test_mode_activity' | translate}}</p>
+                              </li>
+                              <li>
+                                <mat-slide-toggle formControlName="allow_test_activity"
+                                  matTooltip="{{'info_allow_test_activity' | translate}}"
+                                  [checked]="profile.allow_test_activity">
+                                </mat-slide-toggle>
+                              </li>
+                            </ul>
+                          </div>
+                        </div> -->
+                      </div>
+
+                      <div
+                        *ngIf="apiService.userType === '8' || (apiService.userType === '4' && apiService.pages.admin_prv)"
+                        class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group ml">
+                          <p class="control-label">{{'x_api_key' | translate}}</p>
+                          <input type="text" class="form-control" id="email" value={{user.profile_details?.auth_key}}
+                            readonly>
+                        </div>
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                          <div *ngIf="apiService.userType === '8' && user.profile_details?.aloted_blockchin?.length > 0"
+                            class="col-lg-4 col-md-12 col-sm-12">
+
+                            <p class="control-label">{{'allocated_blockchains' | translate}}</p>
+
+                            <table class="blockchain-table">
+                              <tr>
+                                <th>{{'blockchain_id' | translate}}</th>
+                                <th>{{'name' | translate}}</th>
+                              </tr>
+
+                              <tr *ngFor="let blockchainname of user.profile_details?.aloted_blockchin">
+                                <td>{{blockchainname.code_number}}</td>
+                                <td class="text-capitalize">{{blockchainname.blockchain_name}}</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div *ngIf="apiService.userType === '2'" class="col-lg-8 col-md-12 col-sm-12">
+                        <div class="form-group">
+                          <p class="control-label">{{'unique_key' | translate}}</p>
+                          <input type="text" class="form-control" id="email" value={{user.unique_key}} readonly>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-6 col-md-4 col-sm-12" *ngIf="apiService.userType === '2'">
+                      <div class="form-group">
+                        <div class="general-tab">
+                          <ul class="general-list">
+                            <li>
+                              <p>{{'student_delete' | translate}}</p>
+                            </li>
+                            <li>
+                              <mat-slide-toggle formControlName="student_delete"
+                                matTooltip="{{'student_delete' | translate}}" [checked]="apiService.studentDisplay">
+                              </mat-slide-toggle>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-4 col-sm-12"
+                      *ngIf="apiService.userType === '1' || apiService.userType === '2'">
+                      <div class="form-group">
+                        <div class="general-tab">
+                          <ul class="general-list">
+                            <li>
+                              <p>{{'student_search' | translate}}</p>
+                            </li>
+                            <li>
+                              <mat-slide-toggle formControlName="is_student_search"
+                                matTooltip="{{'student_search' | translate}}"
+                                [checked]="apiService.studentSearchDisplay"
+                                (change)="apiService.studentSearchEnable($event.checked)"></mat-slide-toggle>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-4 col-sm-12" *ngIf="apiService.userType === '1'">
+                      <div class="form-group">
+                        <div class="general-tab">
+                          <ul class="general-list">
+                            <li>
+                              <p>{{'share_my_credential_to_repository' | translate}}</p> {{apiService.user.profile_details.share_my_credential_to_repository | json}}
+                            </li>
+                            <li>
+                              <mat-slide-toggle formControlName="share_my_credential_to_the_repository"
+                                matTooltip="{{'info_about_share_my_credential_to_repository' | translate}}"
+                                [checked]="apiService.user.profile_details.share_my_credential_to_repository"></mat-slide-toggle>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-4 col-sm-12"
+                      *ngIf="apiService.userType === '2' && apiService.user.profile_details.has_subscription">
+                      <div class="form-group">
+                        <div class="general-tab">
+                          <ul class="general-list">
+                            <li>
+                              <p>{{'payment_renewal' | translate}}</p>
+                            </li>
+                            <li>
+                              <mat-slide-toggle formControlName="revive" matTooltip="{{'payment_renewal' | translate}}"
+                                [checked]="apiService.is_payment_renewal"
+                                (change)="apiService.renewalOptionEnable($event.checked)"></mat-slide-toggle>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-lg-6 col-md-4 col-sm-12" *ngIf="apiService.userType === '2'">
+                      <div class="form-group">
+                        <div class="general-tab">
+                          <ul class="general-list">
+                            <li>
+                              <p>{{'gdpr_and_privacy' | translate}}</p>
+                            </li>
+                            <li>
+                              <mat-slide-toggle formControlName="gdpr"
+                                matTooltip="{{'info_gdpr_and_privacy' | translate}}" [checked]="apiService.is_gdpr">
+                              </mat-slide-toggle>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="apiService.userType !== '8' && apiService.userType !== '4'"
+                    class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="">
+                      <button type="submit" mat-button class="red">{{'save_key' | translate}}</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+
+            </div>
+          </fieldset>
+
+          <fieldset *ngIf="apiService.userType === '2' || apiService.userType === '3'" class="scheduler-border">
+            <legend class="scheduler-border">{{'x_api_key' | translate}}
+              <span *ngIf="apiService.userType === '2'; else elseBlock" class="tooltip-view" #tooltip="matTooltip"
+                matTooltipClass="example-tooltip-red" matTooltip="{{'info_x_api_key_pub' | translate}}"
+                [matTooltipPosition]="position.value">
+                <i class="fa fa-info-circle"></i>
+              </span>
+              <ng-template #elseBlock>
+                <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                  matTooltip="{{'info_x_api_key' | translate}}" [matTooltipPosition]="position.value">
+                  <i class="fa fa-info-circle"></i>
+                </span>
+              </ng-template>
+
+            </legend>
+            <input type="text" class="form-control" id="email" value={{user.profile_details?.auth_key}} readonly>
+          </fieldset>
+
+          <fieldset
+            *ngIf="apiService.userType === '2' || apiService.userType === '3' || (apiService.userType === '4' && apiService.pages.admin_prv)"
+            class="scheduler-border">
+            <legend class="scheduler-border">{{'smtp_mail_setting' | translate}}
+              <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                matTooltip="{{'info_smtp_setting' | translate}}" [matTooltipPosition]="position.value">
+                <i class="fa fa-info-circle"></i>
+              </span>
+            </legend>
+            <form class="form-horizontal" [formGroup]="smtpmailForm" (ngSubmit)="submitSmtpMail(smtpmailForm.value)">
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="general-tab">
+                  <ul class="general-list">
+                    <li>
+                      <p>{{'had_email_setup' | translate}}</p>
+                    </li>
+                    <li>
+                      <mat-slide-toggle formControlName="had_email_setup" matTooltip="{{'had_email_setup' | translate}}"
+                        [checked]="profile.had_email_setup" (change)="enableSmtpField($event.checked)">
+                      </mat-slide-toggle>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div *ngIf="viewSmtpField">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="smtp_fields">
+                    <ul class="general-list">
+                      <li><label class="control-label" for="emailPort">{{'email_use_tls' | translate}} &nbsp; </label>
+                      </li>
+                      <li>
+                        <mat-slide-toggle formControlName="email_use_tls" matTooltip="{{'email_use_tls' | translate}}"
+                          [checked]="profile.email_use_tls"></mat-slide-toggle>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="smtp_fields">
+                    <label class="control-label" for="emailHost">{{'email_host' | translate}} <span
+                        class="mandatory">*</span></label>
+                    <input type="text" formControlName="email_host" class="form-control"
+                      placeholder="{{'email_host' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorSmtpMsg">{{getErrorSmtpMessage('email_host') |
+                      translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="smtp_fields">
+                    <label class="control-label" for="emailPort">{{'email_port' | translate}} <span
+                        class="mandatory">*</span></label>
+                    <input type="text" formControlName="email_port" class="form-control"
+                      placeholder="{{'email_port' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorSmtpMsg">{{getErrorSmtpMessage('email_port') |
+                      translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="smtp_fields">
+                    <label class="control-label" for="emailHostUser">{{'email_host_user' | translate}} <span
+                        class="mandatory">*</span></label>
+                    <input type="text" formControlName="email_host_user" class="form-control"
+                      placeholder="{{'email_host_user' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorSmtpMsg">{{getErrorSmtpMessage('email_host_user')
+                      | translate}}</div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="smtp_fields">
+                    <label class="control-label" for="emailHostPassword">{{'email_host_password' | translate}} <span
+                        class="mandatory">*</span></label>
+                    <input type="text" formControlName="email_host_password" class="form-control"
+                      placeholder="{{'email_host_password' | translate}}">
+                    <div class="text-danger text-left small" *ngIf="errorSmtpMsg">{{getErrorSmtpMessage('email_host_password')
+                      | translate}}</div>
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div
+                *ngIf="apiService.userType === '8' || apiService.userType === '3' || apiService.userType === '2' || (apiService.userType === '4' && apiService.pages.admin_prv)"
+                class="col-lg-6 col-md-6 col-sm-12">
+                <button mat-button class="red">{{'save_key' | translate}}</button>
+              </div>
+            </form>
+          </fieldset>
+
+          <!-- text mode start -->
+          <fieldset *ngIf="apiService.userType === '2'" class="scheduler-border">
+            <legend class="scheduler-border">{{'test_mode' | translate}}
+              <span *ngIf="apiService.userType === '2' || apiService.userType === '4'; else elseBlock"
+                class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                matTooltip="{{'info_text_mode' | translate}}" [matTooltipPosition]="position.value">
+                <i class="fa fa-info-circle"></i>
+              </span>
+              <ng-template #elseBlock><span class="tooltip-view" #tooltip="matTooltip"
+                  matTooltipClass="example-tooltip-red" matTooltip="{{'info_sand_box_supply_chain' | translate}}"
+                  [matTooltipPosition]="position.value">
+                  <i class="fa fa-info-circle"></i>
+                </span>
+              </ng-template>
+            </legend>
+            <form class="form-horizontal" [formGroup]="achTestModeForm"
+              (ngSubmit)="submitAchTestMode(achTestModeForm.value)">
+              <div class="col-lg-4 col-md-4 col-sm-12 col-set-height">
+                <div class="general-tab sandbox">
+                  <ul class="general-list">
+                    <li>
+                      <p>{{'hide_test_acheivements' | translate}}</p>
+                    </li>
+                    <li>
+                      <mat-slide-toggle formControlName="achievement_test_mode"
+                        matTooltip="{{'info_hide_test_acheivements' | translate}}"
+                        [checked]="profile.achievement_test_mode"></mat-slide-toggle>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-12 col-set-height">
+                <div class="general-tab sandbox">
+                  <ul class="general-list">
+                    <li>
+                      <p>{{'test_mode' | translate}}</p>
+                    </li>
+                    <li>
+                      <mat-slide-toggle formControlName="test_mode" matTooltip="{{'info_test_mode' | translate}}"
+                        [checked]="profile.test_mode"></mat-slide-toggle>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-12 col-set-height">
+                <div class="sandbox-btn">
+                  <button mat-button class="red">{{'save_key' | translate}}</button>
+                </div>
+              </div>
+            </form>
+          </fieldset>
+          <!-- text mode end -->
+
+
+          <fieldset
+            *ngIf="apiService.userType === '2' || apiService.userType === '3' || (apiService.userType === '4' && apiService.pages.admin_prv)"
+            class="scheduler-border">
+            <legend class="scheduler-border">{{'sand_box_mail' | translate}}
+              <span *ngIf="apiService.userType === '2' || apiService.userType === '4'; else elseBlock"
+                class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                matTooltip="{{'info_sand_box' | translate}}" [matTooltipPosition]="position.value">
+                <i class="fa fa-info-circle"></i>
+              </span>
+              <ng-template #elseBlock><span class="tooltip-view" #tooltip="matTooltip"
+                  matTooltipClass="example-tooltip-red" matTooltip="{{'info_sand_box_supply_chain' | translate}}"
+                  [matTooltipPosition]="position.value">
+                  <i class="fa fa-info-circle"></i>
+                </span>
+              </ng-template>
+            </legend>
+            <form class="form-horizontal" [formGroup]="sendboxForm" (ngSubmit)="submitSendbox(sendboxForm.value)">
+              <div class="col-lg-4 col-md-4 col-sm-12 col-set-height">
+                <div class="general-tab sandbox">
+                  <ul class="general-list">
+                    <li>
+                      <p>{{'sand_box' | translate}}</p>
+                    </li>
+                    <li>
+                      <mat-slide-toggle formControlName="sandbox" matTooltip="{{'sand_box' | translate}}"
+                        [checked]="profile.sandbox" (change)="sandBoxFieldEnable($event.checked, true)">
+                      </mat-slide-toggle>
+                      <div class="text-danger text-left small" *ngIf="errorsendBoxMsg">{{getErrorSandboxMessage('sandbox')
+                        || errorMsgArrSendBox['sandbox'] | translate}}</div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div *ngIf="viewEmailField && ( apiService.userType === '3' )"
+                class="col-lg-4 col-md-4 col-sm-12 col-set-height">
+                <div class="general-tab sandbox">
+                  <ul class="general-list">
+                    <li>
+                      <p>{{'add_to_member_inbox' | translate}}</p>
+                    </li>
+                    <li>
+                      <mat-slide-toggle formControlName="member_inbox" [checked]="profile.member_inbox">
+                      </mat-slide-toggle>
+                      <span matTooltip="{{'add_to_member_inbox_info' | translate}}" class="headTooltip"><i
+                          class="material-icons">
+                          help_outline</i></span>
+                      <div class="text-danger text-left small" *ngIf="errorsendBoxMsg">{{getErrorSandboxMessage('member_inbox')
+                        || errorMsgArrSendBox['member_inbox'] | translate}}</div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div *ngIf="viewEmailField" class="col-lg-4 col-md-4 col-sm-12 col-set-height">
+                <div class="form-group">
+                  <label class="control-label" for="sandbox_email">{{'sandbox_email' | translate}} <span
+                      class="mandatory">*</span></label>
+                  <input type="text" class="form-control" formControlName="sandbox_email"
+                    placeholder="{{'sandbox_email' | translate}}">
+                  <div class="text-danger text-left small" *ngIf="errorsendBoxMsg">{{getErrorSandboxMessage('sandbox_email')
+                    || errorMsgArrSendBox['sandbox_email'] | translate}}</div>
+                </div>
+              </div>
+
+              <div
+                *ngIf="apiService.userType === '8' || apiService.userType === '3' || apiService.userType === '2' || (apiService.userType === '4' && apiService.pages.admin_prv)"
+                class="col-lg-4 col-md-4 col-sm-12 col-set-height">
+                <div class="sandbox-btn">
+                  <button mat-button class="red">{{'save_key' | translate}}</button>
+                </div>
+              </div>
+            </form>
+          </fieldset>
+
+          <fieldset *ngIf="apiService.userType === '2'" class="scheduler-border">
+            <legend class="scheduler-border">{{'embed_code' | translate}}
+              <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                matTooltip="{{'info_embed_code' | translate}}" [matTooltipPosition]="position.value">
+                <i class="fa fa-info-circle"></i>
+              </span>
+            </legend>
+            <form class="form-horizontal" [formGroup]="emdForm">
+
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="general-tab sandbox">
+                  <ul class="editor-list">
+                    <li>
+
+                      <div class="form-group textarea">
+                        <label class="control-label" for="editor">
+                          {{'embed_code' | translate}}
+                        </label>
+                        <textarea #inputTarget class="form-control" type="text" formControlName="embedcode"
+                          placeholder="{{'embed_code' | translate}}" readonly></textarea>
+                      </div>
+
+                    </li>
+                    <li>
+                      <div class="editor-copy">
+                        <button (cbOnSuccess)="onCopiedSuccess()" mat-button class="red"
+                          [ngxClipboard]="inputTarget">{{'copy' | translate}}</button>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </form>
+          </fieldset>
+
+        </mat-tab>
+
+
+        <mat-tab *ngIf="apiService.userType === '3'">
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">language</mat-icon>
+            {{ 'languages' | translate }}
+          </ng-template>
+          <div class="add-student-form">
+            <div class="row">
+              <div class="hpanel">
+                <div class="panel-heading clearfix">
+                  <div class="pull-left">
+                    <h3>Add Translation <span matTooltip="{{'phi_add_translation' | translate}}" class="headTooltip"><i
+                          class="material-icons"> help_outline</i></span></h3>
+                  </div>
+                </div>
+
+                <div class="panel-body standter">
+                  <div class="col-lg-2 col-md-4 col-sm-12">
+                    <div class="account-lang general-tab">
+                      <div class="dropdown">
+                        <ul class="general-list lang_list">
+                          <li>
+                            <p>{{'language_list' | translate}}</p>
+                          </li>
+                          <li>
+                            <select class="form-control" (change)="onChangeLanguage($event.target.value)">
+                              <option [value]="null" [disabled]="true" class="register-type">
+                                {{'select_language' | translate}}</option>
+                              <option value="{{lang.language_key}}" [selected]="defaultlang === lang.language_key"
+                                *ngFor="let lang of languages">
+                                {{lang.language_code}} </option>
+                            </select>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <form #searchFormLangid="ngForm" [formGroup]="searchFormLang">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="account-lang general-tab">
+                          <div class="dropdown">
+                            <ul class="general-list lang_list">
+                              <li>
+                                <p>{{'workflow' | translate}}</p>
+                              </li>
+                              <li>
+                                <select class="form-control" formControlName="workflow"
+                                  (change)="filterChange('workflow',$event)">
+                                  <option [value]="null" class="register-type">
+                                    {{'select' | translate}} {{'workflow' | translate}}</option>
+                                  <option value="{{workflow.workflow_db_id}}" *ngFor="let workflow of workflowlists">
+                                    {{workflow.workflow_id}} </option>
+                                </select>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3 col-md-4 col-sm-12"
+                        *ngIf="searchFormLang.controls['workflow'].value != 'null' && searchFormLang.controls['workflow'].value">
+                        <div class="account-lang general-tab">
+                          <div class="dropdown">
+                            <ul class="general-list lang_list">
+                              <li>
+                                <p>{{'step' | translate}}</p>
+                              </li>
+                              <li>
+                                <select class="form-control" formControlName="step"
+                                  (change)="filterChange('step',$event)">
+                                  <option [value]="null" selected class="register-type">
+                                    {{'select' | translate}} {{'step' | translate}}</option>
+                                  <option value="{{step.value}}" *ngFor="let step of steps">
+                                    {{'step' | translate}}-{{step.value}} </option>
+                                </select>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="account-lang general-tab">
+                          <div class="dropdown">
+                            <ul class="general-list lang_list">
+                              <li>
+                                <p>{{'products' | translate}}</p>
+                              </li>
+                              <li>
+                                <select class="form-control" formControlName="product_id"
+                                  (change)="filterChange('product_id',$event)">
+                                  <option [value]="null" selected class="register-type">
+                                    {{'select' | translate}} {{'products' | translate}}</option>
+                                  <option value="{{product.id}}" *ngFor="let product of productlists">
+                                    {{product.title}} </option>
+                                </select>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-3 col-md-8 col-sm-12 filter-search-box">
+                        <mat-form-field appearance="outline">
+                          <mat-label>{{'search' | translate}}</mat-label>
+                          <input matInput (input)="filterChange('label',$event)" formControlName="search"
+                            placeholder="Search">
+                        </mat-form-field>
+                      </div>
+
+                      <div class="col-lg-6 col-md-12 col-sm-12">
+                        <div class="achievement-btn">
+                          <!-- <button type="button" (click)="searchLangTable(searchFormLangid.value)" class="filter-btn" mat-button>{{'search' | translate}}</button> -->
+                          <button type="reset" class="filter-btn" (click)="resetFilters(true)"
+                            mat-button>{{'reset' | translate}}</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <div class="example-container mat-elevation-z8">
+                    <mat-spinner *ngIf="progress"></mat-spinner>
+                    <div class="col-md-12">
+                      <div class="table-responsive">
+                        <table mat-table [dataSource]="dataSource"
+                          class="table table-striped table-bordered table-hover" *ngIf="!progress">
+
+                          <!-- title Column -->
+                          <ng-container matColumnDef="text">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:25%">
+                              {{'text' | translate}} </th>
+                            <td mat-cell *matCellDef="let element"> {{element.label}} </td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="workflow_name">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:20%">
+                              {{'workflow_name' | translate}} </th>
+                            <td mat-cell *matCellDef="let element"> {{element.workflow_name}} </td>
+                          </ng-container>
+
+                          <!-- barcode Image Column -->
+                          <ng-container matColumnDef="translation">
+                            <th mat-header-cell *matHeaderCellDef> {{'translation' | translate}} </th>
+                            <td mat-cell *matCellDef="let element">
+                              <input *ngIf="langObj[element.key].type == 'input'" type="text" class="form-control"
+                                [(ngModel)]="langObj[element.key].value">
+                              <angular-editor *ngIf="langObj[element.key].type != 'input'" [config]="editorConfig"
+                                [placeholder]="'Insert text here...'" [(ngModel)]="langObj[element.key].value">
+                              </angular-editor>
+                            </td>
+                          </ng-container>
+
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <div class="col-sm-12" *ngIf="!progress">
+                          <div class="alert alert-info no-records"
+                            *ngIf="langList.length === 0 || dataSource.filteredData.length === 0">
+                            {{'no_records_found' | translate}}
+                          </div>
+                        </div>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                        <button *ngIf="langList.length !== 0 && dataSource.filteredData.length != 0" type="submit"
+                          class="btn btn-primary" (click)="submit()">{{'submit' | translate}}</button>
+                        <br><br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab *ngIf="apiService.userType === '3'">
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">report</mat-icon>
+            {{ 'report' | translate }}
+          </ng-template>
+          <fieldset class="scheduler-border">
+            <legend class="scheduler-border">{{'dynamic_report_field_form' | translate}}
+              <span class="tooltip-view" #tooltip="matTooltip" matTooltipClass="example-tooltip-red"
+                matTooltip="{{'info_dynamic_report_field_form' | translate}}" [matTooltipPosition]="position.value">
+                <i class="fa fa-info-circle"></i>
+              </span>
+            </legend>
+            <div class="add-student-form">
+              <div class="row">
+                <form class="form-horizontal" [formGroup]="reportForm" (ngSubmit)="reportFormSubmit(reportForm.value)">
+                  <div class="row">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="general-tab error-activity">
+                          <ul class="general-list bg_color_change">
+                            <li>
+                              <p>{{'dynamic_logo_background' | translate}}</p>
+                            </li>
+                            <li>
+                              <mat-slide-toggle formControlName="is_sep_report_org_logo"
+                                matTooltip="{{'info_dynamic_logo_background' | translate}}"
+                                [checked]="profile.is_sep_report_org_logo"
+                                (change)="logoBgChangeEnable($event.checked)">
+                              </mat-slide-toggle>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="col-md-12 col-sm-12" *ngIf="reportForm.controls['is_sep_report_org_logo'].value">
+                        <div class="col-md-4 col-sm-12">
+                          <div class="avatar-image avatar-image-new">
+                            <img style="height: 100%;"
+                              [src]="(profile.sep_report_logo)? profile.sep_report_logo : 'assets/images/university-logo.png'">
+                            <span *ngIf="profile.sep_report_logo && profile.sep_report_logo != ''"
+                              (click)="deleteReportImage('logo')" class="delete_icons"><i class="fa fa-refresh"
+                                style="font-size:18px;"></i></span>
+                          </div>
+                        </div>
+
+                        <div class="col-md-8 col-sm-12">
+                          <div class="select-file">
+                            <div class="control-label" for="organization">{{'report_logo' | translate}} <span
+                                class="mandatory">*</span></div>
+                            <label class="btn btn-primary">{{'select_file' | translate}}
+                              <input type="file" name="file" accept=".jpg, .jpeg, .png" style="display: none"
+                                (change)="uploadReportImage($event, 'logo')">
+                            </label>
+
+                            <div class="text-info text-left"> {{'image_quality_size' | translate}}: (200x200) <br>
+                              ({{'support_only' | translate}} jpeg, jpg, & png) </div>
+                            <div class="text-danger text-left small" style="position: relative;"
+                              *ngIf="reportErrorMsg || errorMsgArrReport['sep_report_logo']">
+                              {{getErrorReportMessage('sep_report_logo') || errorMsgArrReport['sep_report_logo'] | translate}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12 col-md-12 col-sm-12"
+                        *ngIf="reportForm.controls['is_sep_report_org_logo'].value">
+                        <div class="form-group search_btn_clr ml">
+                          <p class="control-label">{{'background_color' | translate}}</p>
+                          <input type="text" class="form-control" formControlName="page_bg_color"
+                            [(ngModel)]="profile.page_bg_color">
+                          <div class="text-danger text-left small" *ngIf="reportErrorMsg">{{getErrorReportMessage('page_bg_color')
+                                || errorMsgArrReport['page_bg_color'] | translate}}</div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 col-sm-12">
+                        <div class="col-md-4 col-sm-12">
+                          <div class="avatar-image avatar-image-new">
+                            <img style="height: 100%;"
+                              [src]="(profile.sep_report_favicon)? profile.sep_report_favicon : 'assets/images/university-logo.png'">
+                            <span *ngIf="profile.sep_report_favicon && profile.sep_report_favicon != ''"
+                              (click)="deleteReportImage('favicon')" class="delete_icons"><i class="fa fa-refresh"
+                                style="font-size:18px;"></i></span>
+                          </div>
+                        </div>
+
+                        <div class="col-md-8 col-sm-12">
+                          <div class="select-file">
+                            <div class="control-label" for="organization">{{'report_favicon' | translate}}</div>
+                            <label class="btn btn-primary">{{'select_file' | translate}}
+                              <input type="file" name="file" accept=".ico" style="display: none"
+                                (change)="uploadReportImage($event, 'favicon')">
+                            </label>
+
+                            <div class="text-info text-left"> {{'image_quality_size' | translate}}: (16x16) <br>
+                              ({{'support_only' | translate}} ico) </div>
+                            <div class="text-danger text-left small" style="position: relative;"
+                              *ngIf="reportErrorMsg || errorMsgArrReport['sep_report_favicon']">
+                              {{errorMsgArrReport['sep_report_favicon'] || getErrorReportMessage('sep_report_favicon') | translate}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group search_btn_clr ml">
+                          <p class="control-label">{{'page_title' | translate}}</p>
+                          <input type="text" class="form-control" formControlName="page_title"
+                            [(ngModel)]="profile.page_title">
+                          <div class="text-danger text-left small" *ngIf="reportErrorMsg">{{getErrorReportMessage('page_title')
+                                  || errorMsgArrReport['page_title'] | translate}}</div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                          <ul class="general-list report_multiple_language">
+                            <li>
+                              <label>{{'report_language_list' | translate}}</label>
+                            </li>
+                            <li>
+                              <ng-select formControlName="report_multiple_language" (keypress)="onAvoidComma($event)"
+                                placeholder="{{'select' | translate}}
+                              {{'languages' | translate}}" [searchFn]="customSearchFn" [selectOnTab]='true'
+                                [addTag]="false" [items]="languages" [multiple]="true" bindLabel="item" bindValue="id">
+                                <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                  {{item.language_code}}
+                                  <span class="ng-value-icon right" (click)="clear(item); $event.stopPropagation()"
+                                    aria-hidden="true">×</span>
+                                </ng-template>
+                                <ng-template ng-option-tmp let-item="item">
+                                  {{item.language_code}}
+                                </ng-template>
+                              </ng-select>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="apiService.userType === '3'">
+                        <div class="general-tab error-activity">
+                          <ul class="general-list">
+                            <li>
+                              <p>{{'report_searchform_content' | translate}}</p>
+                            </li>
+                            <li>
+                              <angular-editor [config]="editorConfig" [placeholder]="'Insert html here...'"
+                                formControlName="rep_searchform_content" [(ngModel)]="profile.rep_searchform_content">
+                              </angular-editor>
+                              <div class="text-danger text-left small" *ngIf="reportErrorMsg">
+                                {{errorMsgArrReport['rep_searchform_content'] | translate}}</div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group search_btn_clr ml">
+                          <p class="control-label">{{'search_button_color' | translate}}</p>
+                          <input type="text" class="form-control" formControlName="search_bottun_color"
+                            [(ngModel)]="profile.search_bottun_color">
+                          <div class="text-danger text-left small" *ngIf="reportErrorMsg">{{getErrorReportMessage('search_bottun_color')
+                              || errorMsgArrReport['search_bottun_color'] | translate}}</div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group search_btn_clr ml">
+                          <p class="control-label">{{'page_not_found' | translate}}</p>
+                          <angular-editor [config]="editorConfig" [placeholder]="'Insert html here...'"
+                            formControlName="pagenotfountcontent" [(ngModel)]="profile.pagenotfountcontent">
+                          </angular-editor>
+                          <div class="text-danger text-left small" *ngIf="reportErrorMsg">
+                            {{errorMsgArrReport['pagenotfountcontent'] | translate}}</div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group save_btn_container">
+                      <button type="submit" mat-button class="red">{{'save_key' | translate}}</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </fieldset>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</section>
+<ngx-smart-modal #alertfileupload identifier="alertfileupload" [closable]='false' [escapable]='false'
+  [dismissable]='false'>
+  <div style="text-align: center">
+    <div class="view-evidence-title">
+      <h4> {{'alert' | translate}} </h4>
+    </div>
+    <div class="model-view-evidence">
+      <h3> {{'continous_upload_not_possible' | translate}} </h3>
+      <a mat-button (click)="onClickOk()" class="view-evidence-btn green">{{'ok' | translate}}</a>
+      <a mat-button (click)="onClosePopup()" class="view-evidence-btn green">{{'cancel' | translate}}</a>
+    </div>
+  </div>
+</ngx-smart-modal>
+<ngx-smart-modal #sandBoxNotification identifier="sandBoxNotification" [closable]='false' [escapable]='false'
+  [dismissable]='false'>
+  <div style="text-align: center">
+    <div class="view-evidence-title">
+      <h4> {{'alert' | translate}} </h4>
+    </div>
+    <div class="model-view-evidence">
+      <h3> {{'sandbox_testmode_notification' | translate}} </h3>
+      <a mat-button (click)="sandBoxClickOk()" class="view-evidence-btn green">{{'ok' | translate}}</a>
+    </div>
+  </div>
+</ngx-smart-modal>

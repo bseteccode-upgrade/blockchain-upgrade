@@ -1,0 +1,26 @@
+<section class="start_wrapper">
+  <div class="hpanel">
+     <div class="panel-heading clearfix">
+        <div class="pull-left">
+           <h3>{{'TIRME SC Parameters' | translate}} <span matTooltip="{{'phi_smart_contract' | translate}}"
+              class="headTooltip"><i class="material-icons"> help_outline</i></span></h3>
+        </div>
+     </div>
+     <div class="panel-body">
+           <form class="form-horizontal">
+               <div class="col-md-12 col-md-12 col-md-12 box-block" style="margin-bottom: 10px;" *ngFor="let product of items2">
+                     <label class="col-xs-4" style="display: inline-block;" > {{product.smart_contract_parameter}}</label>
+                     <input type="number" step="any"  id={{product.smart_contract_parameter}} defaultValue = {{product.id}} 
+                     value={{product.value_smart_contract_parameter}}>
+               </div>
+           </form>
+           <div class="row">
+            <div class="col-sm-12">
+                  <button type="button"  style="margin-left: 20%;" *ngIf="process" class="btn btn-primary">{{'processing' | translate}}...</button>
+                  <button *ngIf="!process" (click)="updateSCParameters()" style="margin-left: 20%;" mat-button class="btn btn-form-save">{{'save_button' | translate}}</button>
+            </div>
+          </div>
+
+     </div>
+  </div>
+</section>

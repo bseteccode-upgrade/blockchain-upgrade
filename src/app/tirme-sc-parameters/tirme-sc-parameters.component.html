@@ -1,0 +1,7 @@
+<app-header></app-header>
+
+<div id="wrapper" class="main_sapper">
+  <app-side-nav *ngIf="!hideSideNav"></app-side-nav>
+  <router-outlet (activate)="onActivate($event)"></router-outlet>
+  <app-footer></app-footer>
+</div>

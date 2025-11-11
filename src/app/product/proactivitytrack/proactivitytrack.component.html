@@ -1,0 +1,606 @@
+<section class="start_wrapper issue-certificate-list">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'tracebility_activity_details' | translate}}</h3>
+      </div>
+      <div class="pull-right">
+        <div class="form-group">
+          <button mat-button class="blue-btn" routerLink="/productcertificate">
+            <i class="fa fa-hand-o-left fa-1x" style="font-size:20px;"></i> {{'back_to_activities' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-heading clearfix filter-search-box">
+      <fieldset class="scheduler-border">
+
+        <form [formGroup]="searchForm" (ngSubmit)="searchProdLoc(searchForm.value);" class="filter-search-box">
+          <div class="col-md-8 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'out_batchid' | translate}} <span class="mandatory">*</span></mat-label>
+              <input matInput formControlName="search" class="form-control" #searchRef [ngModel]="modelBatchId">
+            </mat-form-field>
+            <div class="text-danger text-left small" *ngIf="errorMsg">
+              {{getErrorMsg('search') || this.errorMsgArr['search'] | translate}}</div>
+          </div>
+
+          <div class="col-md-4 col-sm-12">
+            <div class="user-btn-block">
+              <button mat-button class="filter-btn search">{{'search' | translate}}</button>
+            </div>
+          </div>
+        </form>
+      </fieldset>
+    </div>
+
+    <div class="calender-main" *ngIf="!isLoadingResults && !resultfound">
+      <div class="calender_list">
+        <!-- <span class="start-date">{{'start_date' | translate}} : {{responseData.first_day}}</span>
+        <span class="end-date">{{'end_date' | translate}} : {{responseData.last_day}}</span> -->
+        <ul class="month_list" *ngIf="calenderVals.length > 0">
+          <ng-container *ngFor="let calval of calenderVals">
+            <li><span class="{{calval.month}}"></span>
+              <p>{{calval.month}}</p>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="col-sm-12 no_data" *ngIf="!isLoadingResults && resultfound">
+      <div class="alert alert-info no-records">
+        {{'no_records_found' | translate}}
+      </div>
+    </div>
+
+    <div class="example-container" *ngIf="isLoadingResults">
+      <div>
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="trace-diagram-container">
+      <div class="nested_container">
+        <div class="nested_container_sub">
+          <p class="hint_option">{{'click_drag_the_chart_area_to_zoom' | translate}}</p>
+          <div id="chartDiv" style="max-width:100%;margin: 0px auto">
+            <svg></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- <div class="table-responsive" *ngIf="!isLoadingResults && !resultfound">
+
+      <div class="graphical-container">
+
+        <div class="calender-main">
+          <div class="calender_list" *ngIf="response.length > 0">
+            <span class="start-date">{{'start_date' | translate}} : {{responseData.first_day}}</span>
+            <span class="end-date">{{'end_date' | translate}} : {{responseData.last_day}}</span>
+            <ul class="month_list" *ngIf="calenderVals.length > 0">
+              <ng-container *ngFor="let calval of calenderVals">
+                <li><span class="{{calval.month}}"></span>
+                  <p>{{calval.month}}</p>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+
+        <div class="calender-container" *ngIf="response.length > 0">
+          <span class="start-date">{{'start_date' | translate}} : {{responseData.first_day}}</span>
+          <ul class="calender_tree" *ngIf="calenderVals.length > 0">
+            <ng-container *ngFor="let calval of calenderVals">
+              <li class="{{calval.month}}" style="margin-right: 120px">
+                <span>{{calval.month}}</span>
+              </li>
+            </ng-container>
+          </ul>
+          <span class="end-date">{{'end_date' | translate}} : {{responseData.last_day}}</span>
+        </div>
+
+        <ul class="graphical_tree {{multiclass}}" *ngIf="response.length > 0">
+          <li>
+            <ul>
+              <li *ngFor="let workflowData of response;" class="step_classes">
+                <ng-template #Item let-item>
+                  <ng-container *ngIf="!item.items.length; else Component">
+                    <span class="{{item.month}}">
+                      <img *ngIf="item.company_logo != ''" src="{{item.company_logo}}" class="bar-img">
+                      <div class="box-name">
+                        <h6>{{ item.name }}</h6>
+                        <h6>{{ item.company_name }}</h6>
+                        <h6>{{ item.out_batch_id }}</h6>
+                        <h6 *ngIf="item?.product_name && item?.product_name != ''" class="company"
+                          matTooltip="{{item.product_name}}">{{ item.product_name }}</h6>
+                      </div>
+
+                      <label></label>
+                      <h6>{{ item.date_issued }}</h6>
+                      <span
+                        (click)="ngxSmartModalService.setModalData(item, 'myModal');ngxSmartModalService.getModal('myModal').open()"><i
+                          class="material-icons">more_horiz</i></span>
+                      <button *ngIf="item.is_mistake" [disabled]='isLoading' mat-button class="file-icon"
+                        (click)="dataHistory(item.uid)"> <i class="fa fa-database" aria-hidden="true"></i></button>
+                    </span>
+                    <ng-container *ngFor="let row of item.qc">
+                      <span class="qc-main">
+                        <div class="qc-sub {{item.month}}">
+                          <img *ngIf="row.company_logo != ''" src="{{row.company_logo}}" class="bar-img">
+                          <div class="box-name">
+                            <h6>{{ row.name }}</h6>
+                            <h6>{{ row.company_name }}</h6>
+                            <h6>{{ row.out_batch_id }}</h6>
+                            <h6 *ngIf="item?.product_name && item?.product_name != ''" class="company"
+                              matTooltip="{{item.product_name}}">{{ item.product_name }}</h6>
+                          </div>
+
+                          <label></label>
+                          <h6>{{ row.date_issued }}</h6>
+                          <span
+                            (click)="ngxSmartModalService.setModalData(row, 'myModal');ngxSmartModalService.getModal('myModal').open()"><i
+                              class="material-icons">more_horiz</i></span>
+                          <button *ngIf="row.is_mistake" [disabled]='isLoading' mat-button class="file-icon"
+                            (click)="dataHistory(row.uid)"> <i class="fa fa-database" aria-hidden="true"></i></button>
+                        </div>
+                      </span>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #Component>
+                    <span class="{{item.month}}">
+                      <img *ngIf="item.company_logo != ''" src="{{item.company_logo}}" class="bar-img">
+                      <div class="box-name">
+                        <h6>{{ item.name }}</h6>
+                        <h6>{{ item.company_name }}</h6>
+                        <h6>{{ item.out_batch_id }}</h6>
+                        <h6 *ngIf="item?.product_name && item?.product_name != ''" class="company"
+                          matTooltip="{{item.product_name}}">{{ item.product_name }}</h6>
+                      </div>
+
+                      <label></label>
+                      <h6>{{ item.date_issued }}</h6>
+                      <span
+                        (click)="ngxSmartModalService.setModalData(item, 'myModal');ngxSmartModalService.getModal('myModal').open()"><i
+                          class="material-icons">more_horiz</i></span>
+                      <button *ngIf="item.is_mistake" [disabled]='isLoading' mat-button class="file-icon"
+                        (click)="dataHistory(item.uid)"> <i class="fa fa-database" aria-hidden="true"></i></button>
+                    </span>
+                    <ng-container *ngFor="let row of item.qc">
+                      <span class="qc-main">
+                        <div class="qc-sub {{item.month}}">
+                          <img *ngIf="row.company_logo != ''" src="{{row.company_logo}}" class="bar-img">
+                          <div class="box-name">
+                            <h6>{{ row.name }}</h6>
+                            <h6>{{ row.company_name }}</h6>
+                            <h6>{{ row.out_batch_id }}</h6>
+                            <h6 *ngIf="row?.product_name && row?.product_name != ''" class="company"
+                              matTooltip="{{row.product_name}}">{{ row.product_name }}</h6>
+                          </div>
+
+                          <label></label>
+                          <h6>{{ row.date_issued }}</h6>
+                          <span
+                            (click)="ngxSmartModalService.setModalData(row, 'myModal');ngxSmartModalService.getModal('myModal').open()"><i
+                              class="material-icons">more_horiz</i></span>
+                          <button *ngIf="row.is_mistake" [disabled]='isLoading' mat-button class="file-icon"
+                            (click)="dataHistory(row.uid)"> <i class="fa fa-database" aria-hidden="true"></i></button>
+                        </div>
+                      </span>
+                    </ng-container>
+                    <ul>
+                      <ng-container *ngFor="let child of item.items; let i = index">
+                        <ng-container *ngIf="i == 0">
+                          <li class="firstLi" *ngIf="child.depth != 0;">
+                            <ng-container *ngTemplateOutlet="Item; context: { $implicit: child }"></ng-container>
+                          </li>
+                        </ng-container>
+                        <ng-container *ngIf="i != 0">
+                          <li class="firstLi secoundLi" *ngIf="child.depth != 0;">
+                            <ng-container *ngTemplateOutlet="Item; context: { $implicit: child }"></ng-container>
+                          </li>
+                        </ng-container>
+                      </ng-container>
+                    </ul>
+                  </ng-template>
+                </ng-template>
+
+                <ng-container *ngFor="let child of workflowData | converter">
+                  <ng-container *ngTemplateOutlet="Item; context: { $implicit: child }"></ng-container>
+                </ng-container>
+              </li>
+            </ul>
+            <ul *ngIf="resContinunity.length > 0">
+              <li>
+                <ng-template #Item let-item>
+                  <ng-container *ngIf="!item.items.length; else Component">
+                    <span class="{{item.month}}">
+                      <img *ngIf="item.company_logo != ''" src="{{item.company_logo}}" class="bar-img">
+                      <div class="box-name">
+                        <h6>{{ item.name }}</h6>
+                        <h6>{{ item.company_name }}</h6>
+                        <h6>{{ item.out_batch_id }}</h6>
+                        <h6 *ngIf="item?.product_name && item?.product_name != ''" class="company"
+                          matTooltip="{{item.product_name}}">{{ item.product_name }}</h6>
+                      </div>
+
+                      <label></label>
+                      <h6>{{ item.date_issued }}</h6>
+                      <span
+                        (click)="ngxSmartModalService.setModalData(item, 'myModal');ngxSmartModalService.getModal('myModal').open()"><i
+                          class="material-icons">more_horiz</i></span>
+                      <button *ngIf="item.is_mistake" [disabled]='isLoading' mat-button class="file-icon"
+                        (click)="dataHistory(item.uid)"> <i class="fa fa-database" aria-hidden="true"></i></button>
+                    </span>
+                    <ng-container *ngFor="let row of item.qc">
+                      <span class="qc-main">
+                        <div class="qc-sub {{item.month}}">
+                          <img *ngIf="row.company_logo != ''" src="{{row.company_logo}}" class="bar-img">
+                          <div class="box-name">
+                            <h6>{{ row.name }}</h6>
+                            <h6>{{ row.company_name }}</h6>
+                            <h6>{{ row.out_batch_id }}</h6>
+                            <h6 *ngIf="item?.product_name && item?.product_name != ''" class="company"
+                              matTooltip="{{item.product_name}}">{{ item.product_name }}</h6>
+                          </div>
+
+                          <label></label>
+                          <h6>{{ row.date_issued }}</h6>
+                          <span
+                            (click)="ngxSmartModalService.setModalData(row, 'myModal');ngxSmartModalService.getModal('myModal').open()"><i
+                              class="material-icons">more_horiz</i></span>
+                          <button *ngIf="row.is_mistake" [disabled]='isLoading' mat-button class="file-icon"
+                            (click)="dataHistory(row.uid)"> <i class="fa fa-database" aria-hidden="true"></i></button>
+                        </div>
+                      </span>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #Component>
+                    <span class="{{item.month}}">
+                      <img *ngIf="item.company_logo != ''" src="{{item.company_logo}}" class="bar-img">
+                      <div class="box-name">
+                        <h6>{{ item.name }}</h6>
+                        <h6>{{ item.company_name }}</h6>
+                        <h6>{{ item.out_batch_id }}</h6>
+                        <h6 *ngIf="item?.product_name && item?.product_name != ''" class="company"
+                          matTooltip="{{item.product_name}}">{{ item.product_name }}</h6>
+                      </div>
+
+                      <label></label>
+                      <h6>{{ item.date_issued }}</h6>
+                      <span
+                        (click)="ngxSmartModalService.setModalData(item, 'myModal');ngxSmartModalService.getModal('myModal').open()"><i
+                          class="material-icons">more_horiz</i></span>
+                      <button *ngIf="item.is_mistake" [disabled]='isLoading' mat-button class="file-icon"
+                        (click)="dataHistory(item.uid)"> <i class="fa fa-database" aria-hidden="true"></i></button>
+                    </span>
+                    <ng-container *ngFor="let row of item.qc">
+                      <span class="qc-main">
+                        <div class="qc-sub {{item.month}}">
+                          <img *ngIf="row.company_logo != ''" src="{{row.company_logo}}" class="bar-img">
+                          <div class="box-name">
+                            <h6>{{ row.name }}</h6>
+                            <h6>{{ row.company_name }}</h6>
+                            <h6>{{ row.out_batch_id }}</h6>
+                            <h6 *ngIf="row?.product_name && row?.product_name != ''" class="company"
+                              matTooltip="{{row.product_name}}">{{ row.product_name }}</h6>
+                          </div>
+
+                          <label></label>
+                          <h6>{{ row.date_issued }}</h6>
+                          <span
+                            (click)="ngxSmartModalService.setModalData(row, 'myModal');ngxSmartModalService.getModal('myModal').open()"><i
+                              class="material-icons">more_horiz</i></span>
+                          <button *ngIf="row.is_mistake" [disabled]='isLoading' mat-button class="file-icon"
+                            (click)="dataHistory(row.uid)"> <i class="fa fa-database" aria-hidden="true"></i></button>
+                        </div>
+                      </span>
+                    </ng-container>
+                    <ul class="{{item.items.length > 1 ? 'morethenone' : 'onlyone'}}">
+                      <ng-container *ngFor="let child of item.items; let i = index">
+                        <ng-container *ngIf="i == 0">
+                          <li class="firstLi" *ngIf="child.depth != 0;">
+                            <ng-container *ngTemplateOutlet="Item; context: { $implicit: child }"></ng-container>
+                          </li>
+                        </ng-container>
+                        <ng-container *ngIf="i != 0">
+                          <li class="firstLi secoundLi" *ngIf="child.depth != 0;">
+                            <ng-container *ngTemplateOutlet="Item; context: { $implicit: child }"></ng-container>
+                          </li>
+                        </ng-container>
+                      </ng-container>
+                    </ul>
+                  </ng-template>
+                </ng-template>
+
+                <ng-container *ngFor="let child of resContinunity | converter">
+                  <ng-container *ngTemplateOutlet="Item; context: { $implicit: child }"></ng-container>
+                </ng-container>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div> -->
+
+    <div class="product-activity_popup">
+      <ngx-smart-modal #myModal identifier="myModal" dismissable="false"
+        (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+        <div class="badge-detail-separate" *ngIf="myModal.hasData()">
+
+          <div class="product-detail-list activity-one">
+            <div *ngIf="myModal.getData().final_qr">
+              <div class="col-md-12 col-dm-12">
+                <div class="product-title">
+                  <h3>{{actDetail?.title}}</h3>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12"
+                *ngIf="myModal.getData().issuer_eth_address && myModal.getData().issuer_eth_address !== 'None' && myModal.getData().show_transaction">
+                <div class="product_field">
+                  <h4>{{'transaction_id' | translate}}:</h4>
+                  <p>{{myModal.getData().issuer_eth_address || '&nbsp;'}}</p>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12"
+                *ngIf="myModal.getData().evidence && myModal.getData().evidence !== 'None' && myModal.getData().show_transaction">
+                <div class="product_field">
+                  <h4>{{'evidence' | translate}}:</h4>
+                  <a href="{{myModal.getData().evidence}}" target="_blank"> {{'view_evidence' | translate}} </a>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="myModal.getData().product_array.length > 0">
+                <div class="col-md-12 col-sm-12">
+                  <div class="product_details_title">
+                    <h4>{{'product_information' | translate}}</h4>
+                  </div>
+                  <div class="col-md-12 col-sm-12" *ngFor="let productdata of myModal.getData().product_array">
+                    <div class="product_details">
+                      <ul class="product_list">
+                        <li>
+                          <img
+                            [src]="productdata.image != '' ? productdata.image: 'assets/images/university-image.png'">
+                        </li>
+                        <li>
+                          <p>{{productdata.title}}</p>
+                          <p [innerHtml]="productdata.description"></p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12">
+                <div class="col-md-6 col-sm-12 qr-container"
+                  *ngIf="myModal.getData().qr_files.length > 0 && myModal.getData().show_transaction">
+                  <label>{{'activity_qr_code' | translate}}</label>
+                  <div>
+                    <ul class="qr-code-list">
+                      <li *ngFor="let qrdata of myModal.getData().qr_files">
+                        <img src="{{qrdata}}" class="bar-img">
+
+                        <div class="qr-user-delete">
+                          <a target="_blank" href="{{qrdata}}"><i class="material-icons">
+                              cloud_download
+                            </i></a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12 qr-container"
+                  *ngIf="(myModal.getData().final_qr || myModal.getData().fixed_qr_code_url) && myModal.getData().show_transaction">
+                  <label>{{'end_user_qr_code' | translate}}</label>
+                  <div class="end-user-qr">
+                    <ul class="qr-code-list" *ngIf="myModal.getData().qr_type == 2">
+                      <li class="end_user_main">
+                        <div class="end_user">
+                        <img src="{{myModal.getData().fixed_qr_code_url}}" class="bar-img">                        
+                        <div class="qr-user-delete">
+                          <a target="_blank" href="{{myModal.getData().fixed_qr_code_url}}"><i class="material-icons">
+                              cloud_download
+                            </i></a>
+                        </div>
+                        </div>
+                        <a target="_blank" href="{{activityDetails.final_qr_code_url_value}}" class="click_here">{{'click_here' | translate }}</a>
+                      </li>
+                      <li *ngIf="myModal.getData().eps_qr_files">
+                        <img src="assets/images/eps.png" style="width:90px">
+
+                        <div class="qr-user-delete">
+                          <a target="_blank" href="{{myModal.getData().eps_qr_files}}"><i class="material-icons">
+                              cloud_download
+                            </i></a>
+                        </div>
+                      </li>
+                      <li *ngIf="myModal.getData().svg_qr_files">
+                        <img src="assets/images/svg.png" style="width:90px">
+
+                        <div class="qr-user-delete">
+                          <a target="_blank" href="{{myModal.getData().svg_qr_files}}"><i class="material-icons">
+                              cloud_download
+                            </i></a>
+                        </div>
+                      </li>
+                    </ul>
+                    <ul class="qr-code-list" *ngIf="myModal.getData().qr_type == 1">
+                      <li class="end_user_main">
+                        <div class="end_user">
+                        <img src="{{myModal.getData().final_qr}}" class="bar-img">                        
+                        <div class="qr-user-delete">
+                          <a target="_blank" href="{{myModal.getData().final_qr}}"><i class="material-icons">
+                              cloud_download
+                            </i></a>
+                        </div>
+                      </div>
+                      <a target="_blank" href="{{activityDetails.final_qr_code_url_value}}" class="click_here">{{'click_here' | translate }}</a>
+                      </li>
+                      <li *ngIf="myModal.getData().eps_qr_files">
+                        <img src="assets/images/eps.png" style="width:90px">
+
+                        <div class="qr-user-delete">
+                          <a target="_blank" href="{{myModal.getData().eps_qr_files}}"><i class="material-icons">
+                              cloud_download
+                            </i></a>
+                        </div>
+                      </li>
+                      <li *ngIf="myModal.getData().svg_qr_files">
+                        <img src="assets/images/svg.png" style="width:90px">
+
+                        <div class="qr-user-delete">
+                          <a target="_blank" href="{{myModal.getData().svg_qr_files}}"><i class="material-icons">
+                              cloud_download
+                            </i></a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+            <div *ngIf="!myModal.getData().final_qr">
+              <div class="col-md-12 col-dm-12">
+                <div class="product-title">
+                  <h3>{{actDetail?.title}}</h3>
+                </div>
+              </div>
+
+              <div class="col-md-8 col-sm-12">
+                <div
+                  *ngIf="myModal.getData().issuer_eth_address && myModal.getData().issuer_eth_address !== 'None' && myModal.getData().show_transaction">
+                  <div class="product_field">
+                    <h4>{{'transaction_id' | translate}}:</h4>
+                    <p>{{myModal.getData().issuer_eth_address || '&nbsp;'}}</p>
+                  </div>
+                </div>
+
+                <div
+                  *ngIf="myModal.getData().evidence && myModal.getData().evidence !== 'None' && myModal.getData().show_transaction">
+                  <div class="product_field">
+                    <h4>{{'evidence' | translate}}:</h4>
+                    <a href="{{myModal.getData().evidence}}" target="_blank"> {{'view_evidence' | translate}} </a>
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="myModal.getData().product_array.length > 0">
+                  <div class="col-md-12 col-sm-12">
+                    <div class="product_details_title">
+                      <h4>{{'product_information' | translate}}</h4>
+                    </div>
+                    <div class="col-md-12 col-sm-12" *ngFor="let productdata of myModal.getData().product_array">
+                      <div class="product_details">
+                        <ul class="product_list">
+                          <li>
+                            <img
+                              [src]="productdata.image != '' ? productdata.image: 'assets/images/university-image.png'">
+                          </li>
+                          <li>
+                            <p>{{productdata.title}}</p>
+                            <p [innerHtml]="productdata.description"></p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-sm-12 qr-container"
+                *ngIf="myModal.getData().qr_files.length > 0 && myModal.getData().show_transaction">
+                <label>{{'activity_qr_code' | translate}}</label>
+                <div>
+                  <ul class="qr-code-list">
+                    <li *ngFor="let qrdata of myModal.getData().qr_files">
+                      <img src="{{qrdata}}" class="bar-img">
+
+                      <div class="qr-user-delete">
+                        <a target="_blank" href="{{qrdata}}"><i class="material-icons">
+                            cloud_download
+                          </i></a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 content_center"
+              *ngIf="myModal.getData().step_content && myModal.getData().step_content != '' &&  myModal.getData().step_content != 'None'">
+              <h3>{{'description' | translate}}</h3>
+              <p [innerHtml]="myModal.getData().step_content"></p>
+            </div>
+
+            <div class="col-md-12 col-sm-12">
+              <div class="product-title">
+                <h3>{{'activity' | translate}}</h3>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12"
+              *ngIf="myModal.getData().in_batch_id && myModal.getData().in_batch_id != 'None' && myModal.getData().show_inoutbatch">
+              <div class="product_field">
+                <h4>{{'batchid' | translate}}:</h4>
+                <p>{{myModal.getData().in_batch_id || '&nbsp;'}}</p>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12" *ngIf="myModal.getData().show_inoutbatch">
+              <div class="product_field">
+                <h4>{{'subproductbatch' | translate}}:</h4>
+                <p>{{myModal.getData().out_batch_id || '&nbsp;'}}</p>
+              </div>
+            </div>
+
+            <ng-container *ngFor="let displaycontent of myModal.getData().field_set">
+              <div class="col-md-6 col-sm-12" *ngIf="displaycontent.in_box">
+                <div class="product_field">
+                  <h4><b>{{displaycontent.label}}</b>:</h4>
+                  <p
+                    *ngIf="displaycontent.type !== 'document' && displaycontent.type !== 'productimage' && displaycontent.type !== 'date' && displaycontent.type !== 'timestamp'">
+                    {{displaycontent.value || '&nbsp;'}}</p>
+
+                  <p *ngIf="displaycontent.type === 'date'">
+                    <span
+                      *ngIf="displaycontent.dateformat == 1;else dmyy">{{displaycontent.value | date:'MM/dd/yyyy'}}</span>
+                    <ng-template #dmyy>
+                      <span>{{displaycontent.value | date:'dd/MM/yyyy'}}</span>
+                    </ng-template>
+                  </p>
+                  <p *ngIf="displaycontent.type === 'timestamp'">
+                    <span
+                      *ngIf="displaycontent.dateformat == 1;else dmyytime">{{displaycontent.value != '' ? convertDateToStringMM(displaycontent.value) : ''}}</span>
+                    <ng-template #dmyytime>
+                      <span>{{displaycontent.value != '' ? convertDateToString(displaycontent.value) : ''}}</span>
+                    </ng-template>
+                  </p>
+                  <p *ngIf="displaycontent.type === 'document' || displaycontent.type === 'productimage'"><a
+                      *ngIf="displaycontent.value && displaycontent.value != null && displaycontent.value !== ''"
+                      target="_blank" href="{{displaycontent.value}}">{{'click' | translate}}</a></p>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ngx-smart-modal>
+    </div>
+  </div>
+</section>

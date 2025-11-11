@@ -1,0 +1,164 @@
+<section class="start_wrapper student-list">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'mandril' | translate}} <span matTooltip="{{'phi_mandril' | translate}}" class="headTooltip"><i
+              class="material-icons"> help_outline</i></span></h3>
+      </div>
+    </div>
+
+    <div class="panel-heading clearfix filter-search-box">
+      <fieldset class="scheduler-border" *ngIf="!advanceSearch">
+        <form [formGroup]="searchForm" (ngSubmit)="getStudents(searchForm.value)">
+          <div class="col-lg-6 col-md-4 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'email' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="email" name="search">
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="user-btn-block">
+              <button type="submit" class="filter-btn search" mat-button>{{'search' | translate}}</button>
+              <button type="submit" class="filter-btn search" mat-button
+                (click)="advanceSearch = true">{{'advanced_search' | translate}}</button>
+              <button type="reset" class="filter-btn reset" mat-button
+                (click)="getStudents('', false, true)">{{'reset' | translate}}</button>
+            </div>
+          </div>
+        </form>
+      </fieldset>
+
+      <fieldset class="scheduler-border" *ngIf="advanceSearch">
+        <form [formGroup]="searchForm" (ngSubmit)="getStudents(searchForm.value)">
+          <div class="col-lg-6 col-md-4 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'email' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="email">
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-6 col-md-4 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'subject' | translate}}</mat-label>
+              <input matInput class="form-control" formControlName="subject">
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>{{'state' | translate}}</mat-label>
+              <mat-select placeholder="Select" formControlName="state">
+                <mat-option [value]="1">sent</mat-option>
+                <mat-option [value]="2">bounced</mat-option>
+                <mat-option [value]="3">soft-bounced</mat-option>
+                <mat-option [value]="4">rejected</mat-option>
+                <mat-option [value]="5">spam</mat-option>
+                <mat-option [value]="6">unsub</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <div class="user-btn-block">
+              <button type="submit" class="filter-btn search" mat-button>{{'search' | translate}}</button>
+              <button type="reset" class="filter-btn reset" mat-button
+                (click)="getStudents('', false, true)">{{'reset' | translate}}</button>
+              <button type="reset" class="filter-btn reset" mat-button
+                (click)="advanceSearch = false">{{'close' | translate}}</button>
+            </div>
+          </div>
+        </form>
+      </fieldset>
+    </div>
+
+    <div class="panel-body">
+      <div class="table-responsive">
+        <div class="example-container mat-elevation-z8">
+
+          <table mat-table #table [dataSource]="dataSource" class="table table-striped table-bordered table-hover"
+            *ngIf="!process">
+
+            <!-- Certificate Number Column -->
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef> {{'email_address' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+            </ng-container>
+
+            <!-- Issue Date Column -->
+            <ng-container matColumnDef="sender">
+              <th mat-header-cell *matHeaderCellDef> {{'sender' | translate}}</th>
+              <td mat-cell *matCellDef="let element"> {{element.sender || '-'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="subject">
+              <th mat-header-cell *matHeaderCellDef> {{'subject' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.subject || '-'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="state">
+              <th mat-header-cell *matHeaderCellDef> {{'status' | translate}} </th>
+              <td mat-cell *matCellDef="let element"> {{element.state || '-'}} </td>
+            </ng-container>
+            <!-- Evidence Number Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> {{'actions' | translate}} </th>
+              <td mat-cell *matCellDef="let element" class="edt_delt">
+                <button *ngIf="element.state !== 'rejected'" mat-button class="green"
+                  (click)="setCertId(element._id);ngxSmartModalService.getModal('myModal').open();">{{'view' | translate}}
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-spinner *ngIf="process"></mat-spinner>
+          <div class="col-sm-12" *ngIf="!process">
+            <div class="alert alert-info no-records" *ngIf="studentList.length === 0">
+              {{'no_records_found' | translate}}
+            </div>
+          </div>
+          <mat-paginator [hidePageSize]="true" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-smart-modal #myModal identifier="myModal" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+    <div>
+
+      <div class="mail-content-class">
+        <fieldset>
+          <legend>{{'mail_detail' | translate}}</legend>
+          <div class="spinner-center">
+            <mat-spinner *ngIf="loaderMailcontent"></mat-spinner>
+          </div>
+          <div *ngIf="!loaderMailcontent && resMandrilData.status != 'error'" class="password-enter delete-container">
+            <h5><span class="email-title">{{'to_mail' | translate}} </span> {{resMandrilData.to.email}}</h5>
+            <h5><span class="email-title">{{'from_name' | translate}} </span> {{resMandrilData.from_name}}</h5>
+            <h5><span class="email-title">{{'subject' | translate}} </span> {{resMandrilData.subject}}</h5>
+            <h5><span class="email-title">{{'message' | translate}}</span></h5>
+            <div class="dynamic-content" *ngIf="resMandrilData.html;else textContent;"
+              [innerHTML]="resMandrilData.html"></div>
+            <ng-template #textContent>
+              <div class="mandrilldate">
+                <p>{{resMandrilData.text}}</p>
+              </div>
+            </ng-template>
+            <br>
+          </div>
+          <div *ngIf="!loaderMailcontent && resMandrilData.status === 'error'">
+            <div>Mail service : {{'some_error_occurred' | translate}}</div>
+          </div>
+        </fieldset>
+        <div *ngIf="!loaderMailcontent && resMandrilData.status != 'error'" class="form-group" style="float: right">
+          <button type="button" [disabled]="checkSubmit" mat-button class="password-submit" style="margin-right:10px"
+            (click)="reasonFormSubmit(resMandrilData._id)">{{'resend' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </ngx-smart-modal>
+
+</section>

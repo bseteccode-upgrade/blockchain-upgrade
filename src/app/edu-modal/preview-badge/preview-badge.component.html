@@ -1,0 +1,166 @@
+<div class="badgeDetails">
+  <a class="arrowClose" (click)="onCancel()"><span class="material-icons">
+      close
+    </span></a>
+  <div>
+    <div class="badgeDetailedContainer">
+      <div class="row">
+      <div class="col-md-12">
+        <div class="badgeDetailedHeight row">      
+          <div class="col-md-4 col-sm-12">
+            <div class="badgeDetailedLeft">
+              <div class="badgeDetailImage">
+                <img src="{{badgeDetail.logo}}">
+              </div>
+
+              <div class="badgeDetailInfo">
+                <h4>{{'organization' | translate}}:</h4>
+                <p>{{userDetails.org_name}}
+                </p>
+                <div class="detailedLabel">
+                  <ul>
+                    <li>
+                      <img src="assets/images/hyperledger.png">
+                    </li>
+                    <li>
+                      <p class="uppercase">blockchain</p>
+                    </li>
+                  </ul>
+                </div>
+                <hr>
+                <div *ngIf="badgeDetail.collaborate">
+                  <h4>{{'collaborate' | translate}}:</h4>
+                  <p>{{badgeDetail.collaborate}}</p>
+                </div>
+                <div class="badgeDetailedImage">
+                  <img src="{{badgeDetail.collaborate_img_1 ? badgeDetail.collaborate_img_1 : 'assets/images/no-image.png'}}" />
+                  <img src="{{badgeDetail.collaborate_img_2 ? badgeDetail.collaborate_img_2 : 'assets/images/no-image.png'}}" />
+                </div>
+                <hr>
+                <div *ngIf="badgeDetail.others_collaborate">
+                  <h4>{{'others_collaborators' | translate}}:</h4>
+                  <p [innerHtml]="convertStyle(badgeDetail.others_collaborate)"></p>
+                </div>
+                <div *ngIf="badgeDetail.cert_type" class="tipo">
+                  <hr>
+                  <h4>{{'tipo' | translate}}: <span>{{badgeDetail.cert_type}}</span></h4>
+                  <hr>
+                </div>
+              </div>
+
+              <div>
+                <div class="detailedSharing">
+                  <div class="pull-left">
+                    <p>{{'sharing' | translate}}</p>
+                  </div>
+                </div>
+
+
+                <ul class="detailedSharingList">
+                  <li>
+                    <img src="assets/images/facebook.png">
+                  </li>
+                  <li>
+                    <img src="assets/images/twitter.png">
+                  </li>
+                  <li>
+                    <img src="assets/images/linkedin.png">
+                  </li>
+                  <li>
+                    <img src="assets/images/whatsapp.png">
+                  </li>
+                </ul>
+
+
+
+                <div class="detailedDoc">
+                  <ul>
+                    <li><img src="assets/images/mail.png"></li>
+                    <li>
+                      <h5>{{'email_credential' | translate}}</h5>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="detailedDoc">
+                  <ul>
+                    <li><img src="assets/images/pdf-red.png"></li>
+                    <li>
+                      <h5>{{'download_pdf' | translate}}</h5>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="detailedDoc">
+                  <ul>
+                    <li><img src="assets/images/green-image.png"> </li>
+                    <li>
+                      <a>
+                        <h5>{{'download_badge' | translate}}</h5>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="detailedDoc">
+                  <ul>
+                    <li><img src="assets/images/code-file.png"></li>
+                    <li>
+                      <h5>{{'embed_credential' | translate}}</h5>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="detailedLabelEvidence">
+                <a>{{'view_evidence' | translate}}</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-8 col-sm-12">
+            <div class="badgeDetailedRight">
+
+              <div class="badgeDetailInfo">
+                <h4>{{ 'micro_certificate_issued' | translate  }}:</h4>
+                <p class="uppercase"><b>{{'first_name' | translate}} {{'last_name' | translate}}</b></p>
+                <p>on: xxxx/xx/xx</p>
+                <h4>{{'end_date' | translate}}:
+                  <span>xxxx/xx/xx</span>
+                </h4>
+
+                <div *ngIf="badgeDetail.description" class="badgesContentBlock">
+                  <hr>
+                  <h4>{{'description' | translate}}:</h4>
+                  <p [innerHtml]="convertStyle(badgeDetail.description)"></p>
+                </div>
+
+                <div *ngIf="badgeDetail.skills.length != 0" class="badgesContentBlock">
+                  <h4>{{'skills' | translate}}:</h4>
+                  <ul class="skillsLists">
+                    <li *ngFor="let skill of badgeDetail.skills">{{skill | translate}}</li>
+                  </ul>
+                </div>
+
+                <div *ngIf="badgeDetail.criteria" class="badgesContentBlock">
+                  <h4>{{'criteria' | translate}}:</h4>
+                  <p [innerHtml]="convertStyle(badgeDetail.criteria)"></p>
+                </div>
+
+                <div *ngIf="badgeDetail.testimonial" class="badgesContentBlock">
+                  <h4>{{'testimonial' | translate}}:</h4>
+                  <p [innerHtml]="badgeDetail.testimonial"></p>
+                </div>
+
+                <div class="badgeFooter">
+                  <img src="assets/images/certtun-by-vottun.jpg" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

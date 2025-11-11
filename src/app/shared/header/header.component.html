@@ -1,0 +1,51 @@
+<div id="header" class="main_header_substream">
+  <div id="logo" class="light-version">
+    <span *ngIf="apiService.user && apiService.user.first_name">
+      {{ apiService.user.first_name + ' ' + apiService.user.last_name }}
+    </span>
+    <img *ngIf="apiService.user.profile_details.avatar" src="{{apiService.user.profile_details.avatar}}"
+      class="header_default_avatar">
+  </div>
+  <nav role="navigation">
+    <div *ngIf="!hideSideNav" class="header-link hide-menu" (click)="toggleSidebar($event)">
+      <i class="fa fa-bars"></i>
+    </div>
+
+    <div class="logodash pull-right">
+      <ul class="nav-right">
+        <li>
+
+        </li>
+        <li>
+          <h1>
+            <a *ngIf="!apiService.user.top_right_logo" routerLink="/">
+              <div class="vottun-logo">
+                <!-- <span class="vottun-image" *ngIf="apiService.user.vouttun_logo"></span> -->
+                <img [src]="pagelogo" *ngIf="apiService.user.vouttun_logo">
+              </div>
+            </a>
+            <a *ngIf="apiService.user.top_right_logo && apiService.user.vouttun_logo" routerLink="/">
+              <div class="vottun-logo header">
+                <span><img src="{{apiService.user.top_right_logo}}" class="img-responsive"></span>
+              </div>
+            </a>
+          </h1>
+        </li>
+        <li *ngIf="apiService.userType !== '6'">
+          <div class="theme-palette">
+            <div class="lang">
+              <button mat-button [matMenuTriggerFor]="menulang">
+                {{selectedLang}}
+                <span class="caret"></span>
+              </button>
+              <mat-menu #menulang="matMenu">
+                <button mat-menu-item class="lang_submenu" *ngFor="let lang of languages" (click)="selectLang(lang)">
+                  {{lang.language_code}}</button>
+              </mat-menu>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>

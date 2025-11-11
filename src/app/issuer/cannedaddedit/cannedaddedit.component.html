@@ -1,0 +1,151 @@
+<section class="start_wrapper canned-messgae">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3 *ngIf="cannedMsdId == null">{{'add_canned_message' | translate}} <span
+            matTooltip="{{'info_about_add_canned_msg' | translate}}" class="headTooltip"><i class="material-icons">
+              help_outline</i></span></h3>
+        <h3 *ngIf="cannedMsdId">{{'edit_canned_message' | translate}} <span
+            matTooltip="{{'info_about_edit_canned_msg' | translate}}" class="headTooltip"><i class="material-icons">
+              help_outline</i></span></h3>
+      </div>
+      <div class="pull-right">
+        <button mat-button routerLink="/cannedlist">
+          <i class="fa fa-hand-o-left fa-1x" style="font-size:20px;"></i> {{'back_canned_message' | translate}}
+        </button>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div *ngIf="apiService.userType === '2' || apiService.userType === '4'" class="standter clearfix">
+        <form class="form-horizontal" (ngSubmit)="submit(mailform.value)" [formGroup]="mailform">
+          <div class="">
+
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label> {{'select' | translate}} {{'mail_type' | translate}}</label>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <select class="form-control" formControlName="mail_type" (change)="optionChanges($event.target.value)">
+                  <option value='1'>{{'recipient_first_cert_issue_mail' | translate}}</option>
+                  <option value='2'>{{'recipient_cert_issue_mail' | translate}}</option>
+                  <option value='3'>{{'recipient_first_badge_issue_mail' | translate}}</option>
+                  <option value='4'>{{'recipient_badge_issue_mail' | translate}}</option>
+                  <option value='5'>{{'team_member_invite_mail' | translate}}</option>
+                  <option value='6'>{{'recipient_email_share' | translate}}</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'title' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <input class="form-control" formControlName="title">
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('title') || errorMsgArr['title'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="subject" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('subject') || errorMsgArr['subject'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-12">
+                <span class="alert-message">
+                  <p><i class="fa fa-info-circle" aria-hidden="true"></i>
+                    {{messageContentError | translate}}</p>
+                </span>
+                <div class="form-group">
+                  <div class="invisible-input-cont">
+                    <input #quillFile type="file" (change)="quillFileSelected($event)">
+                  </div>
+                  <quill-editor class="hidebasictools" [formControl]="mailform.controls['message']"
+                    [(ngModel)]="mailModel.message" [modules]="modules" [placeholder]="'Insert text here...'"
+                    [style]="{height: '100px'}" (onEditorCreated)="getEditorInstance($event)">
+                  </quill-editor>
+
+                  <!-- <angular-editor [placeholder]="'Insert text here...'" [config]="editorConfig" class="hidebasictools"
+                    [style]="{height: '100px'}" formControlName="message">
+                  </angular-editor> -->
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('message') || errorMsgArr['message'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="selectedCannedOption != 6 && selectedCannedOption != 5" class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_share_button' | translate}}</label>
+                </div>
+              </div>
+
+              <div *ngIf="selectedCannedOption != 6 &&  selectedCannedOption != 5" class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <mat-checkbox formControlName="linkedin">
+                    <span> {{'linked_in' | translate}} </span>
+                  </mat-checkbox>
+                  <mat-checkbox formControlName="wallet_login">
+                    <span> {{'wallet_login' | translate}} </span>
+                  </mat-checkbox>
+                  <mat-checkbox formControlName="view_credentials">
+                    <span> {{'view_credential' | translate}} </span>
+                  </mat-checkbox>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group canned-message-btn">
+                <button type="submit" mat-button class="btn btn-form-save">{{'save_button' | translate}}</button>
+              </div>
+            </div>
+
+          </div>
+        </form>
+        <div *ngIf="edu_keywords?.length > 0" class="listData">
+          <h4>{{'mail_content_key_values' | translate}}</h4>
+          <div class="table-responsive">
+            <ul>
+              <li *ngFor="let listData of edu_keywords">
+                <table>
+                  <tr>
+                    <td>{{'{' + listData.key + '}'}}</td>
+                    <td>: </td>
+                    <td> {{listData.desc | translate}}</td>
+                  </tr>
+                </table>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

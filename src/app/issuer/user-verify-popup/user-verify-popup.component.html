@@ -1,0 +1,13 @@
+<ngx-smart-modal #userVerifyPopup identifier="userVerifyPopup" [closable]='false' [escapable]='false'
+  [dismissable]='false'>
+  <div style="text-align: center">
+    <div class="view-evidence-title">
+      <h4> {{'verify_user_info' | translate}} </h4>
+    </div>
+    <div class="model-view-evidence">
+      <h3> {{'verify_user_content' | translate}} </h3>
+      <a mat-button (click)="onClosePopup()" target="_blank" href="https://www.certtun.com/contact-us/"
+        class="view-evidence-btn green">{{'contact_us' | translate}}</a>
+    </div>
+  </div>
+</ngx-smart-modal>

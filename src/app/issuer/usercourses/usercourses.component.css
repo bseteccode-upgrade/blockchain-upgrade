@@ -1,0 +1,27 @@
+.hide {visibility: hidden;}
+.start_wrapper .standter .col-sm-3{padding:0 15px}
+.user-btn-block .filter-btn.mat-button { margin-bottom:20px; }
+:host /deep/ .block-left { padding: 5px 10px; }
+:host /deep/ .eng_group img { padding:0 10px;height:155px}
+:host /deep/ .block-right { right:0px;}
+:host /deep/ .delete-input .mat-form-field-appearance-outline .mat-form-field-infix { padding:3px 0px;}
+:host /deep/ .eng_group:hover .blockchain-submain { height:188px;}
+:host /deep/ .eng_group { min-height:220px;margin-bottom:0;height:100%}
+:host /deep/ .eng_group .blockchain-submain a { top:5px; }
+:host /deep/ .certificate-view-model .nsm-dialog-animation-fade.nsm-dialog.nsm-dialog-open {min-width: 47%;}
+.delete-input .text-danger.text-left.small { position: absolute; bottom: 2px; }
+.eng_group .blockchain-main .blockchain-details .block-left { width:64%;}
+.eng_group .blockchain-main .blockchain-details .block-left h4 { text-overflow: ellipsis; white-space: nowrap; width:100%; height:auto;}
+.progress_animation { width:100%; text-align: center; display: inline-block;}
+.progress_animation mat-spinner { display: inline-block;}
+.course-scroll.scroll-window { color:#6a6c6f;padding: 15px 0;max-height: 520px;border-right: 1px solid transparent;display: inline-block;position: relative;width: 100%;overflow:auto;display:-webkit-box!important;display:-webkit-flex!important;display:-ms-flexbox!important;display:flex!important;flex-wrap:wrap}
+.course-scroll.scroll-window >  [class*='col-']{margin-bottom:18px}
+
+.identifier_name{width:100%;display:inline-block;text-align:center}
+.identifier_name p{text-overflow: ellipsis; white-space: nowrap;font-size:14px;color:#2ab6d7;font-family: 'Roboto-Regular';margin-bottom:0;width:100%;overflow:hidden;padding:15px 10px 0 10px}
+
+
+@media (min-width: 980px) and (max-width: 1262px)
+{
+:host /deep/ .block-left, :host /deep/ .block-left h4 {width: 100%;}
+}

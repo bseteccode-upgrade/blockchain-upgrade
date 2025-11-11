@@ -1,0 +1,33 @@
+:host /deep/ .group-field .mat-form-field.mat-focused .mat-form-field-ripple { background-color: transparent;}
+:host /deep/ .group-field .mat-form-field-appearance-legacy .mat-form-field-underline { display:none;background-color: transparent; }
+:host /deep/ .group-field input.mat-input-element { border: 1px solid #eaeaea;  font-size: 16px;    padding: 6px 12px;   border-radius: 4px; }
+:host /deep/ .group-field label.mat-form-field-label { font-size: 16px; }
+:host /deep/ .group-field .mat-focused label.mat-form-field-label { display: none !important; }
+:host /deep/ .mat-form-field-should-float label.mat-form-field-label { display: none !important; }
+:host /deep/ .group-field .mat-form-field-appearance-legacy .mat-form-field-label { top: 30px; padding-left: 15px; }
+:host /deep/ .group-field .mat-form-field-appearance-legacy .mat-form-field-wrapper { padding-bottom:0px; }
+:host /deep/ .mat-form-field-appearance-legacy .mat-form-field-wrapper { padding-bottom:0px; }
+:host /deep/ .group-field .mat-form-field-infix { border-top:none;}
+.label-btn { width:200px; display: inline-block; }
+.add-student-form .form-group { margin-bottom:30px; }
+:host /deep/ .avatar-image { text-align: center; margin:0px 0px; }
+.group-field-block { position: relative; padding-top:0px; bottom:5px;}
+.avatar-image label.btn.btn-primary.select-file-btn { margin-top:10px; }
+.avatar-upload .text-info.text-left { font-size: 12px;position: relative;margin: 5px 0px; }
+:host /deep/ .avatar-upload { margin:10px 0px; }
+.avatar-info { position: relative; margin:20px 0px;}
+
+@media (max-width:991px)
+{
+.add-student-form .form-group { margin-bottom:15px; }
+}
+
+@media (min-width: 767px) and (max-width: 1028px)
+{
+:host /deep/ .refresh-icon { margin:0px 0px; }
+}
+
+@media (max-width: 767px)
+{
+.add-student-form form { margin-top:60px; }
+}

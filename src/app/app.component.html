@@ -1,0 +1,4 @@
+<router-outlet (activate)="onActivate($event)"></router-outlet>
+<div *ngIf="is_display_feedback" class="feedback_btn">
+    <button type="button" (click)="onFeedback()">{{'feedback' | translate}}</button>
+</div>

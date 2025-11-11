@@ -1,0 +1,168 @@
+<section class="start_wrapper student-list">
+    <div class="hpanel">
+        <div class="panel-heading clearfix">
+            <div class="pull-left">
+                <h3>{{'add_existing_student' | translate}} <span matTooltip="{{'phi_add_exist_stud' | translate}}"
+                        class="headTooltip"><i class="material-icons"> help_outline</i></span></h3>
+            </div>
+            <div class="pull-right">
+                <button mat-button (click)="redirectFind()">
+                    <i class="fa fa-hand-o-left fa-1x" style="font-size:20px;"></i>
+                    {{'back_to_student_list' | translate}}</button>
+            </div>
+        </div>
+        <div *ngIf="!norecordfound">
+            <div class="panel-heading clearfix">
+                <div class="pull-left sub-heading">
+                    <h4>{{'profile' | translate}}</h4>
+                </div>
+            </div>
+
+            <div class="student-block">
+
+                <div class="existing-fields">
+                    <form [formGroup]="addStudentExtra" #resetFormID="ngForm"
+                        (ngSubmit)="addExsitingStud(addStudentExtra.value)">
+
+                        <div class="pull-left"
+                            *ngIf="apiService.user.profile_details.is_private_user">
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{'comp_code' | translate}}</mat-label>
+                                    <input matInput class="form-control" formControlName="company_code">
+                                </mat-form-field>
+                                <div class="text-danger text-left small" *ngIf="errorMsg">
+                                    {{geterrorMsg('company_code') | translate}}</div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{'sap_code' | translate}}</mat-label>
+                                    <input matInput class="form-control" formControlName="sap_code">
+                                </mat-form-field>
+                                <div class="text-danger text-left small" *ngIf="errorMsg">
+                                    {{geterrorMsg('sap_code') | translate}}</div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{'social_security_code' | translate}}</mat-label>
+                                    <input matInput class="form-control" formControlName="social_security_code">
+                                </mat-form-field>
+                                <div class="text-danger text-left small" *ngIf="errorMsg">
+                                    {{geterrorMsg('social_security_code') | translate}}</div>
+                            </div>
+                        </div>
+
+                        <div class="pull-right">
+                            <div class="col-lg-2 col-md-12 col-sm-12">
+                                <div class="add-btn-block">
+                                    <button type="submit" class="add-btn" mat-button>{{'add_student' | translate}} <i
+                                            class="fa fa-plus-circle"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="badge-details-modelpopup student-detail-popup">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="col-md-4 col-sm-12">
+                            <div class="student-header">
+                                <img *ngIf='selectedStudents.avatar' src="{{selectedStudents.avatar}}"
+                                    class="img-responsive">
+                                <img *ngIf='!selectedStudents.avatar' src="assets/images/avatar.jpeg"
+                                    class="img-responsive">
+                            </div>
+                        </div>
+
+                        <div class="col-md-8 col-sm-12">
+                            <div class="student-info">
+                                <ul class="student-list">
+                                    <li>
+                                        <p>{{'student_id' | translate}}:</p>
+                                    </li>
+                                    <li><span>{{selectedStudents.student_id}}</span></li>
+                                </ul>
+                                <ul class="student-list">
+                                    <li>
+                                        <p>{{'first_name' | translate}}:</p>
+                                    </li>
+                                    <li><span>{{selectedStudents.first_name}}</span></li>
+                                </ul>
+                                <ul class="student-list">
+                                    <li>
+                                        <p>{{'last_name' | translate}}:</p>
+                                    </li>
+                                    <li><span>{{selectedStudents.last_name}}</span></li>
+                                </ul>
+
+                                <ul class="student-list">
+                                    <li>
+                                        <p>{{'email' | translate}}:</p>
+                                    </li>
+                                    <li><span>{{selectedStudents.email}}</span></li>
+                                </ul>
+
+                                <ul class="student-list">
+                                    <li>
+                                        <p>{{'phone_number' | translate}}:</p>
+                                    </li>
+                                    <li><span>{{selectedStudents.phone}}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="apiService.user.profile_details.is_private_user && certificateLists.length > 0">
+                <div class="panel-heading clearfix">
+                    <div class="pull-left sub-heading">
+                        <h4>{{'certificate' | translate}}</h4>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let certi of certificateLists">
+                        <div class="certificate-img">
+                            <img src="{{certi ? certi : 'assets/images/awaiting.gif'}}" class="img-responsive">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="apiService.user.profile_details.is_private_user && certificateLists.length > 0">
+                <div class="panel-heading clearfix">
+                    <div class="pull-left sub-heading">
+                        <h4>Certificate</h4>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let certi of certificateLists">
+                        <div class="certificate-img">
+                            <img src="{{certi ? certi : 'assets/images/awaiting.gif'}}" class="img-responsive">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="apiService.user.profile_details.is_private_user && certificateLists.length > 0">
+                <div class="panel-heading clearfix">
+                    <div class="pull-left sub-heading">
+                        <h4>{{'certificate' | translate}}</h4>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let certi of certificateLists">
+                        <div class="certificate-img">
+                            <img src="{{certi ? certi : 'assets/images/awaiting.gif'}}" class="img-responsive">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="norecordfound" class="alert alert-info no-records">
+            {{'no_records_found' | translate}}
+        </div>
+    </div>
+</section>

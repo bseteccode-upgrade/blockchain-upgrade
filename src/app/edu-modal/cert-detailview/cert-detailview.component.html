@@ -1,0 +1,799 @@
+<div *ngIf="process" class="progress_animation certificat-vottun">
+  <img [src]="progressGif" class="img-responsive">
+</div>
+<div *ngIf="!process">
+  <div class="detailedBlock">
+    <!-- Mobile menu start -->
+    <!-- <div class="detailedMobileContainer">
+      <div class="detailedMobileSub">
+        <div class="pull-left">
+          <button mat-button [matMenuTriggerFor]="menu">{{selectedLang | translate}}</button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngFor="let lang of languages"
+              (click)="selectLang(lang)">{{lang.language_code}}</button>
+          </mat-menu>
+        </div>
+
+        <div class="pull-right">
+          <button mat-button class="exitBtn" (click)="onCancel()"><img src="assets/images/exit.png" /> Exit</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="detailedMobileSubtwo">
+          <div class="pull-left">
+            <img src="assets/images/logo.png">
+          </div>
+
+          <div class="pull-right">
+            <img src="assets/images/avatar.jpeg">
+
+            <a class="arrow" (click)="togglearrow($event)"><span class="material-icons">
+                arrow_forward_ios
+              </span></a>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <!-- Mobile menu end -->
+
+
+    <ul class="detailedList">
+      <!-- <li>
+        <div class="detailed-left">
+          <img src="assets/images/logo.png" />
+          <div class="detailedMenu">
+            <h5><img src="assets/images/lang.png" /> Language</h5>
+            <ul class="menu-list">
+              <li *ngFor="let lang of languages" class="{{selectedLang == lang.language_code ? 'selected' : ''}}"><a
+                  (click)="selectLang(lang)">{{lang.language_code}}</a></li>
+              <li><a>CAT</a></li>
+              <li class="selected"><a>EN</a></li>
+              <li><a>ESP</a></li>
+              <li><a>FR</a></li>
+              <li><a>DE</a></li>
+              <li><a>IT</a></li>
+            </ul>
+          </div>
+
+          <div class="detailedLeftBottom">
+            <h4>Something <br />wrong?</h4>
+
+            <a (click)="onFeedback()">{{'feedback' | translate}}</a>
+          </div>
+        </div>
+      </li> -->
+
+      <li>
+        <div class="detailed-center">
+          <div class="detailedBox">
+            <div class="detailedHead">
+              <div class="pull-left">
+                <h3><img src="assets/images/verified.png" />{{'certificate' | translate}}</h3>
+              </div>
+
+              <div class="pull-right">
+                <div *ngIf="apiService.user.register_type == '1'" class="shareToggle">
+                  <h5>{{'make_certificate_public' | translate}}</h5>
+                  <div class="toggle-container">
+                    <mat-slide-toggle [checked]="badgeDetail.is_public"
+                      (change)="toggleCertificateSearch(badgeDetail.id, $event.checked)"></mat-slide-toggle>
+                    <span matTooltip="{{'public_enable_disable' | translate}}" class="headTooltip"><i
+                        class="material-icons"> help_outline</i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="detailedCertificate">
+              <div *ngIf="badgeDetail.is_test" class="corner-ribbon top-left sticky"><span>Test</span></div>
+              <img id="{{'detail' + badgeDetail.id}}"
+                src="{{badgeDetail.uploads ? badgeDetail.uploads : 'assets/images/awaiting.gif'}}" />
+              <div *ngIf="badgeDetail.is_expired || badgeDetail.is_invalidated" class="expired-label">
+                <img
+                  src="{{badgeDetail.is_deleted ? 'assets/images/deleted-img.png' : badgeDetail.is_invalidated ? 'assets/images/invalidado.png' : badgeDetail.is_apple_wallet ? 'assets/images/expirado.png' : badgeDetail.badges === '13' ? 'assets/images/expirado.png': 'assets/images/course-expired.png'}}"
+                  class="img-responsive">
+              </div>
+            </div>
+          </div>
+
+          <div class="detailedBox" *ngIf="badgeDetail.skills && badgeDetail.skills.length != 0">
+            <div class="detailedHead">
+              <div class="pull-left">
+                <h3>{{'skills' | translate}}</h3>
+              </div>
+
+              <div class="pull-right">
+              </div>
+            </div>
+
+
+            <div class="content-block">
+              <span *ngFor="let skill of badgeDetail.skills">{{skill | translate}}</span>
+            </div>
+          </div>
+
+          <div class="detailedBox" *ngIf="badgeDetail.description">
+            <div class="detailedHead">
+              <div class="pull-left">
+                <h3>{{'description' | translate}}</h3>
+              </div>
+
+              <div class="pull-right">
+              </div>
+            </div>
+
+
+            <div class="">
+              <p [innerHtml]="convertStyle(badgeDetail.description)"></p>
+            </div>
+          </div>
+
+
+
+          <div class="detailedBox" *ngIf="badgeDetail.criteria">
+            <div class="detailedHead">
+              <div class="pull-left">
+                <h3>{{'criteria' | translate}}</h3>
+              </div>
+
+              <div class="pull-right">
+              </div>
+            </div>
+
+
+            <div class="">
+              <p [innerHtml]="convertStyle(badgeDetail.criteria)"></p>
+            </div>
+          </div>
+
+          <div class="detailedBox" *ngIf="badgeDetail.testimonial">
+            <div class="detailedHead">
+              <div class="pull-left">
+                <h3>{{'testimonial' | translate}}</h3>
+              </div>
+
+              <div class="pull-right">
+              </div>
+            </div>
+
+
+            <div class="">
+              <p [innerHtml]="convertStyle(badgeDetail.testimonial)"></p>
+            </div>
+          </div>
+
+
+        </div>
+      </li>
+      <li>
+        <div class="detailed-right">
+          <div class="pull-right">
+            <!-- <button mat-button class="exitBtn"><img src="assets/images/exit.png"/> Exit</button> -->
+
+            <a class="arrowClose" (click)="onCancel()"><span class="material-icons">
+                close
+              </span></a>
+          </div>
+
+
+          <div class="detailedInfo">
+            <div class="detailedProfile">
+              <img [src]="(badgeDetail.student_image)? badgeDetail.student_image : 'assets/images/avatar.jpeg'">
+              <img src="assets/images/verified.png" class="verified">
+              <a href="mailto:{{badgeDetail.student_email}}" class="emailMessage"><img src="assets/images/black-mail.png"></a>
+            </div>
+            <div class="detailedProfileDetails">
+              <h4 class="uppercase">{{badgeDetail.first_name}}</h4>
+              <p class="uppercase">{{badgeDetail.last_name}}</p>
+            </div>
+
+            <div class="detailedLabel">
+              <ul class="firstLabel">
+                <li><img
+                    [src]="(badgeDetail.university_logo)? badgeDetail.university_logo : 'assets/images/Univer-logo.png'">
+                </li>
+                <li>
+                  <p class="uppercase"><label>{{badgeDetail.organization || badgeDetail.issuer_firstname + ' ' +
+                  badgeDetail.issuer_lastname}}</label> <a href="mailto:{{badgeDetail.issuer_email}}"><img
+                        src="assets/images/black-mail.png"></a>
+                    <span><img src="assets/images/verified.png"></span></p>
+                </li>
+              </ul>
+            </div>
+
+            <div class="detailedLabel">
+              <ul>
+                <li>
+                  <img src="assets/images/hyperledger.png">
+                </li>
+                <li>
+                  <p class="uppercase">{{ badgeDetail.blockchain_client }}</p>
+                </li>
+              </ul>
+            </div>
+
+            <div class="detailedLabelEvidence">
+              <a (click)="viewEvidence(badgeDetail);">{{'view_evidence' | translate}}</a>
+            </div>
+
+
+            <div class="detailedDates" *ngIf="badgeDetail.start_validity">
+              <h4 class="uppercase">{{'issue_date' | translate}}</h4>
+              <p>{{badgeDetail.start_validity}}</p>
+            </div>
+
+            <div class="detailedDates" *ngIf="badgeDetail.end_validity">
+              <h4 class="uppercase">{{'expire_date' | translate}}</h4>
+              <p>{{badgeDetail.end_validity}}</p>
+            </div>
+
+            <div class="detailedDates" *ngIf="badgeDetail.start_date">
+              <h4 class="uppercase">{{'start_date' | translate}}</h4>
+              <p>{{badgeDetail.start_date}}</p>
+            </div>
+
+            <div class="detailedDates" *ngIf="badgeDetail.end_date">
+              <h4 class="uppercase">{{'end_date' | translate}}</h4>
+              <p>{{badgeDetail.end_date}}</p>
+            </div>
+
+            <div *ngIf="apiService.user.register_type == '1'">
+              <div class="detailedSharing">
+                <div class="pull-left">
+                  <p>{{'sharing' | translate}}</p>
+                </div>
+
+                <div class="pull-right">
+                  <mat-slide-toggle matTooltip="{{'share_enable_disable' | translate}}"
+                    [checked]="badgeDetail.is_student_social_media_share"
+                    (change)="toggleShare(badgeDetail.id, $event.checked)"></mat-slide-toggle>
+                </div>
+              </div>
+
+              <!-- <div>
+                <h5>{{'make_certificate_public' | translate}}</h5>
+                <div class="toggle-container">
+                  <mat-slide-toggle [checked]="badgeDetail.is_public"
+                    (change)="toggleCertificateSearch(badgeDetail.id, $event.checked)"></mat-slide-toggle>
+                  <span matTooltip="{{'public_enable_disable' | translate}}" class="headTooltip"><i
+                      class="material-icons"> help_outline</i></span>
+                </div>
+              </div> -->
+
+              <ul class="detailedSharingList">
+                <li (click)="socialShare('facebook', badgeDetail.social_share_url, badgeDetail.facebook_content )">
+                  <img src="assets/images/facebook.png">
+                </li>
+                <li (click)="socialShare('twitter', badgeDetail.social_share_url, badgeDetail.twitter_content )">
+                  <img src="assets/images/twitter.png">
+                </li>
+                <li (click)="ngxSmartModalService.getModal('linkedinShare').open();">
+                  <img src="assets/images/linkedin.png">
+                </li>
+                <li (click)="socialShare('whatsapp', badgeDetail.social_share_url, badgeDetail.whatsapp_content )">
+                  <img src="assets/images/whatsapp.png">
+                </li>
+              </ul>
+
+
+
+              <div class="detailedDoc">
+                <ul>
+                  <li><img src="assets/images/mail.png"></li>
+                  <li (click)="ngxSmartModalService.getModal('EmailModal').open();">
+                    <h5>{{'email_credential' | translate}}</h5>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detailedDoc">
+                <ul>
+                  <li><img src="assets/images/pdf-red.png"></li>
+                  <li (click)="downloadPdf(badgeDetail.pdf_uploads)" *ngIf="badgeDetail.pdf_uploads">
+                    <h5>{{'download_pdf' | translate}}</h5>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detailedDoc" *ngIf="badgeDetail.uploads">
+                <ul>
+                  <li><img src="assets/images/green-image.png"> </li>
+                  <li>
+                    <a [href]="badgeDetail.uploads" target="_blank">
+                      <h5>{{'download_badge' | translate}}</h5>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detailedDoc">
+                <ul>
+                  <li><img src="assets/images/code-file.png"></li>
+                  <li (click)="ngxSmartModalService.getModal('embedModal').open();">
+                    <h5>{{'embed_credential' | translate}}</h5>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="col-md-6 col-sm-12" [hidden]="!badgeDetail.is_apple_wallet">
+                <button mat-button class="download-btn blue" (click)="addMobileWallet(badgeDetail.id)">
+                  <i class="fa fa-code"></i> <span class="btn-text">{{'add_mobile_wallet' | translate}}</span></button>
+              </div>
+            </div>
+        
+
+            <div class="blockchainedCerttun">
+
+              <div *ngIf="apiService.user.register_type == '2'">
+                <div class="text-center">
+                  <button *ngIf="!badgeDetail.is_deleted" mat-button class="badge-delete"
+                    matTooltip="{{'delete_achievement_details' | translate}}"
+                    (click)="ngxSmartModalService.getModal('deletemyModal').open();ngxSmartModalService.setModalData({gdpr :badgeDetail.is_gdpr}, 'deletemyModal');">
+                    <i class="fa fa-trash-o" style="font-size:18px;"></i> {{'delete' | translate}}
+                  </button>
+                  <button *ngIf="!badgeDetail.is_deleted" mat-button class="badge-delete expired-revoke"
+                    matTooltip="{{badgeDetail.is_expired ? 'revoke' : 'experied' | translate}}"
+                    (click)="experiedCertId(badgeDetail.id, badgeDetail.is_expired);">
+                    <i class="fa fa-ban" style="font-size:18px;"></i>
+                    {{ badgeDetail.is_expired ? 'revoke' : 'experied' | translate}}
+                  </button>
+                </div>
+              </div>
+
+              
+              <a>{{'blockchained_by' | translate}} {{appName}}</a>
+            </div>
+
+          </div>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<div *ngIf="!process">
+  <div class="acheivement-popup certificate-view-model">
+    <ngx-smart-modal #myModal identifier="myModal"
+      (onAnyCloseEvent)="myTemplate = '';ngxSmartModalService.resetModalData('myModal')"
+      [ngClass]="{'modelCertificate': modelOpen}">
+      <div class="certificate-image-view" *ngIf="myModal.hasData()">
+        <img style="width:100%" src="{{myModal.getData()}}">
+        <br>
+        <br>
+        <div *ngIf="selectedCertificate.is_expired || selectedCertificate.is_invalidated" class="expired-label big">
+          <img
+            src="{{selectedCertificate.is_deleted ? 'assets/images/deleted-img.png' : selectedCertificate.is_invalidated ? 'assets/images/invalidado.png' : selectedCertificate.is_apple_wallet ? 'assets/images/expirado.png' : selectedCertificate.badges === '13' ? 'assets/images/expirado.png': 'assets/images/course-expired.png'}}"
+            class="img-responsive">
+        </div>
+      </div>
+    </ngx-smart-modal>
+  </div>
+
+  <ngx-smart-modal #myModal2 identifier="myModal2" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal2')"
+    [ngClass]="{'modelEvidence': modelOpen}">
+    <div *ngIf="myModal2.hasData()" style="text-align: center">
+      <div class="view-evidence-title">
+        <h4> {{'view_evidence_list' | translate}} </h4>
+      </div>
+      <div *ngFor="let evidencelist of myModal2.getData(); let i = index" class="model-view-evidence">
+        <a *ngIf="evidencelist.evid && evidencelist.evid !== 'None' && i < (myModal2.getData().length - 1)"
+          href="{{evidencelist.evid}}" class="view-evidence-btn"
+          matTooltip="{{(evidencelist.label)? evidencelist.label : 'view_evidence' | translate}}" mat-button
+          target="_blank">
+          <i class="fa fa-eye"></i> {{(evidencelist.label)? evidencelist.label : 'view_evidence' | translate}}
+        </a>
+        <a *ngIf="evidencelist.blockchainType !== 'oracle' && evidencelist.evid && evidencelist.evid !== 'None' && i === (myModal2.getData().length - 1)"
+          href="{{evidencelist.evid}}" class="view-evidence-btn"
+          matTooltip="{{(evidencelist.label)? evidencelist.label : 'view_evidence' | translate}}" mat-button
+          target="_blank">
+          <span *ngIf="evidencelist.transaction"><i class="fa fa-eye"></i> {{'view_blockchain' | translate}}</span>
+          <span *ngIf="!evidencelist.transaction"><i class="fa fa-eye"></i>{{(evidencelist.label)? evidencelist.label :
+          'view_evidence' | translate}}</span>
+        </a>
+        <div
+          *ngIf="evidencelist.blockchainType === 'oracle' && evidencelist.evid && evidencelist.evid !== 'None' && i === (myModal2.getData().length - 1)">
+          <span *ngIf="evidencelist.transaction">
+            <h4>Blockchain Transaction ID :</h4>
+            <p>{{evidencelist.transaction}}</p>
+          </span>
+        </div>
+      </div>
+    </div>
+  </ngx-smart-modal>
+  <div class="email-popup">
+    <ngx-smart-modal #EmailModal identifier="EmailModal"
+      (onAnyCloseEvent)="ngxSmartModalService.resetModalData('EmailModal')">
+      <div class="view-evidence-title">
+        <h4><i class="fa fa-envelope"></i> {{'share_email_cred' | translate}}</h4>
+      </div>
+
+      <div class="email-details">
+        <input type="text" required email name="email" #email="ngModel" [(ngModel)]="emailID" class="form-control"
+          placeholder="Enter Email Id">
+        <div *ngIf="email.invalid && submitted">
+          <div *ngIf="email.errors.required" class="text-danger small">
+            {{'enter_email' | translate}}.
+          </div>
+          <div *ngIf="email.errors.email" class="text-danger small">
+            {{'enter_valid_email' | translate}}.
+          </div>
+        </div>
+        <br>
+        <button class="btn btn-primary" *ngIf="emailProcess"> {{'processing' | translate}}... </button>
+        <button mat-button class="email-submit" *ngIf="!emailProcess"
+          (click)="submitted = true; shareEmail(badgeDetail.id, email)">{{'submit'
+      | translate}}</button>
+      </div>
+    </ngx-smart-modal>
+  </div>
+
+  <div class="email-popup embed-popup">
+    <ngx-smart-modal #embedModal identifier="embedModal">
+      <div class="view-evidence-title">
+        <h4><i class="fa fa-code"></i> {{'email_credential' | translate}}</h4>
+      </div>
+      <div class="col-md-12 col-sm-12">
+        {{'choose_from_options' | translate}}
+        <div class="embed-btn-block">
+          <button mat-button class="embed-btn" [ngClass]="{active: activeTab === 'gmail'}"
+            (click)="activeTab = 'gmail'">{{'gmail_signature'
+          | translate}}</button>
+          <button mat-button class="embed-btn" [ngClass]="{active: activeTab === 'outlook'}"
+            (click)="activeTab = 'outlook'">{{'outlook_signature'
+          | translate}}</button>
+          <button mat-button class="embed-btn" [ngClass]="{active: activeTab === 'embedimg'}"
+            (click)="activeTab = 'embedimg'">{{'embed_image'
+          | translate}}</button>
+          <button mat-button class="embed-btn" [ngClass]="{active: activeTab === 'embedfullpage'}"
+            (click)="activeTab = 'embedfullpage'">{{'embed_fullpage'
+          | translate}}</button>
+        </div>
+
+        <div class="" *ngIf="activeTab === 'gmail'">
+          <ul class="embed-list">
+            <li>1. {{'open_gmail' | translate}}</li>
+            <li>2. {{'scroll_down' | translate}}</li>
+            <li>3. {{'click_insert_image' | translate}}</li>
+            <li>4. {{'paste_image_url' | translate}}</li>
+            <li>5. {{'signature_selection' | translate}} </li>
+            <li>6. {{'click_on_link_icon' | translate}}</li>
+            <span>{{baseUrl}}/badgedetail?id={{badgeDetail.id}}</span>
+            <li>7. {{'now_save' | translate}}</li>
+          </ul>
+
+          <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+              <div class="col-md-12 col-sm-12">
+                <label><i class="fa fa-id-badge"></i> {{'badge_image' | translate}}</label>
+              </div>
+              <div class="col-md-9 col-sm-10">
+                <input type="text" #badgeimg readonly value="{{badgeDetail.logo}}" class="form-control">
+              </div>
+              <div class="col-md-3 col-sm-2">
+                <span><a (click)="copyText(badgeimg)"><i class="fa fa-files-o" aria-hidden="true"></i> {{'copy_text' |
+                  translate}}</a></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+              <div class="col-md-12 col-sm-12">
+                <label><i class="fa fa-certificate"></i> {{'certificate_image' | translate}}</label>
+              </div>
+              <div class="col-md-9 col-sm-10">
+                <input type="text" #pdfurl readonly value="{{badgeDetail.uploads}}" class="form-control">
+              </div>
+              <div class="col-md-3 col-sm-2">
+                <span><a (click)="copyText(pdfurl)"><i class="fa fa-files-o" aria-hidden="true"></i> {{'copy_text' |
+                  translate}}</a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="" *ngIf="activeTab === 'outlook'">
+          <ul class="embed-list">
+            <li>1. {{'open_outlook_and_click' | translate}}</li>
+            <li>2. {{'add_new_signature' | translate}}</li>
+            <li>3. {{'right_click_download' | translate}}</li>
+            <li>4. {{'insert_image_sign' | translate}}</li>
+            <li>5. {{'link_to_credentials' | translate}} </li>
+            <span>{{baseUrl}}/badgedetail?id={{badgeDetail.id}}</span>
+            <li>6. {{'now_save' | translate}}</li>
+          </ul>
+          <div class="col-md-6 col-sm-6">
+            <div class="embed-image">
+              <img src="{{badgeDetail.uploads}}" style="max-width:50%;height:auto;display:inline-block;"
+                class="img-responsive">
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <div class="embed-image">
+              <img src="{{badgeDetail.uploads}}" style="max-width:50%;height:auto;display:inline-block;"
+                class="img-responsive">
+            </div>
+          </div>
+          <h5
+            style="font-style: italic;margin:10px 0px;text-align: center;width:100%;display:inline-block;position:relative;">{{'download_sign_image'
+          | translate}}</h5>
+        </div>
+        <div *ngIf="activeTab === 'embedimg'">
+          <pre class="col-md-12 col-sm-12">{{'paste_image_credentials' | translate}}</pre>
+          <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+              <div class="col-md-12 col-sm-12">
+                <label><i class="fa fa-id-badge"></i> {{'badge_image' | translate}}</label>
+              </div>
+              <div class="col-md-9 col-sm-10">
+                <input type="text" #badgeimg readonly value="{{badgeDetail.logo}}" class="form-control">
+              </div>
+              <div class="col-md-3 col-sm-2">
+                <span><a (click)="copyText(badgeimg)"><i class="fa fa-files-o" aria-hidden="true"></i> {{'copy_text' |
+                  translate}}</a></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+              <div class="col-md-12 col-sm-12">
+                <label><i class="fa fa-certificate"></i> {{'certificate_image' | translate}}</label>
+              </div>
+              <div class="col-md-9 col-sm-10">
+                <input type="text" #pdfurl readonly value="{{badgeDetail.uploads}}" class="form-control">
+              </div>
+              <div class="col-md-3 col-sm-2">
+                <span><a (click)="copyText(pdfurl)"><i class="fa fa-files-o" aria-hidden="true"></i> {{'copy_text' |
+                  translate}}</a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="activeTab === 'embedfullpage'">
+          <textarea class="form-control" readonly rows="6">{{'fullpage_embedding' | translate}}
+
+{{'embed_credential_blog' | translate}}
+        </textarea>
+          <br>
+          <br>
+          <div class="col-md-6">
+            <label>{{'width' | translate}}</label>
+            <input class="form-control" name="width" [(ngModel)]="width" type="text">
+          </div>
+          <div class="col-md-6">
+            <label>{{'height' | translate}}</label>
+            <input class="form-control" name="height" [(ngModel)]="height" type="text">
+          </div>
+          <div class="col-md-12"><br>
+            <textarea class="form-control" readonly rows="8">
+            <iframe
+              src="{{baseUrl}}/badgedetail?id={{badgeDetail.id}}"
+              width="{{width}}px"
+              height="{{height}}px"
+              frameborder="0"
+              allowfullscreen>
+            </iframe>
+          </textarea>
+          </div>
+        </div>
+        <div class="col-md-12 col-sm-12"><br>
+          <button class="btn btn-default" style="float:right"
+            (click)="ngxSmartModalService.getModal('embedModal').close()">{{'close'
+          | translate}}</button>
+        </div>
+      </div>
+    </ngx-smart-modal>
+  </div>
+
+  <div class="linkedin-popup">
+    <ngx-smart-modal #linkedinModal identifier="linkedinModal"
+      (onAnyCloseEvent)="ngxSmartModalService.resetModalData('linkedinModal')">
+      <div class="view-evidence-title">
+        <h4><i class="fa fa-linkedin"></i> {{'add_to_linkedin_profile' | translate}}</h4>
+      </div>
+      <div class="">
+        <div class="form-group">
+          <div class="col-md-12 col-sm-12">
+            <label>{{'content' | translate}}</label>
+          </div>
+          <div class="col-md-9 col-sm-10">
+            <input type="text" [readonly]="true" name="content" #content [ngModel]="badgeDetail.linkedin_content"
+              class="form-control">
+          </div>
+          <div class="col-md-3 col-sm-2">
+            <span><a (click)="copyText(content)"><i class="fa fa-files-o" aria-hidden="true"></i> {{'copy_text' |
+                    translate}}</a></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-12 col-sm-12">
+            <label>{{'certificate_name' | translate}}</label>
+          </div>
+          <div class="col-md-9 col-sm-10">
+            <input type="text" [readonly]="true" name="certiname" #certiname [ngModel]="badgeDetail.title"
+              class="form-control">
+          </div>
+          <div class="col-md-3 col-sm-2">
+            <span><a (click)="copyText(certiname)"><i class="fa fa-files-o" aria-hidden="true"></i> {{'copy_text' |
+              translate}}</a></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-12 col-sm-12"><br>
+            <label>{{'certification_authority' | translate}}</label>
+          </div>
+          <div class="col-md-9 col-sm-10">
+            <input type="text" [readonly]="true" name="certiauth" #certiauth [ngModel]="badgeDetail.organization"
+              class="form-control">
+          </div>
+          <div class="col-md-3 col-sm-2">
+            <span><a (click)="copyText(certiauth)"><i class="fa fa-files-o" aria-hidden="true"></i> {{'copy_text' |
+              translate}}</a></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-12 col-sm-12"><br>
+            <label>{{'license_number' | translate}}</label>
+          </div>
+          <div class="col-md-9 col-sm-10">
+            <input type="text" [readonly]="true" name="licensenumber" id="myInput" #licence
+              [ngModel]="badgeDetail.licence" class="form-control">
+          </div>
+          <div class="col-md-3 col-sm-2">
+            <span><a (click)="copyText(licence)"><i class="fa fa-files-o" aria-hidden="true"></i> {{'copy_text' |
+              translate}}</a></span>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12 form-group"><br>
+          <label>{{'from_share' | translate}}</label>
+          <input class="form-control" name="issue_month" [readonly]="true"
+            [ngModel]="badgeDetail.originalIssueDate"><br>
+          <input class="form-control" name="issue_year" [readonly]="true" [ngModel]="badgeDetail.originalIssueDate">
+        </div>
+
+        <div class="col-md-6 col-sm-12 form-group"><br>
+          <label>{{'to_share' | translate}}</label>
+          <input class="form-control" name="end_month" [readonly]="true"
+            [ngModel]="badgeDetail.end_validity_dateformat"><br>
+          <input class="form-control" name="end_year" [readonly]="true" [ngModel]="badgeDetail.end_validity_dateformat">
+        </div>
+
+        <div class="col-md-12 col-sm-12 form-group">
+          <input type="checkbox" class="form-control signup-checkbox" [readonly]="true" id="accept"
+            [checked]="badgeDetail.end_validity === null">
+          <label for="accept" class="certificate-label">{{'certification_not_expire' | translate}}</label>
+        </div>
+
+        <div class="form-group">
+          <div class="col-md-12 col-sm-12"><br>
+            <label>{{'certificate_url' | translate}}</label>
+          </div>
+          <div class="col-md-9 col-sm-10">
+            <input type="text" [readonly]="true" name="certiurl" #certiurl
+              [ngModel]="baseUrl + '/badgedetail?id=' +badgeDetail.id" class="form-control">
+          </div>
+          <div class="col-md-3 col-sm-2">
+            <span><a (click)="copyText(certiurl)"><i class="fa fa-files-o" aria-hidden="true"></i> {{'copy_text' |
+              translate}}</a></span>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 linkedin-savebtn form-group"><br>
+          <a mat-button class="btn btn-form-save"
+            href="https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME" rel="nofollow"
+            target="_blank">{{'open_linkedin' | translate}}</a>
+        </div>
+      </div>
+    </ngx-smart-modal>
+  </div>
+
+  <div class="linkedin-popup">
+    <ngx-smart-modal #linkedinShare identifier="linkedinShare"
+      (onAnyCloseEvent)="ngxSmartModalService.resetModalData('linkedinShare')">
+      <div class="view-evidence-title">
+        <h4><i class="fa fa-linkedin"></i> {{'add_to_linkedin_profile' | translate}}</h4>
+      </div>
+      <div class="">
+        <div class="form-group">
+          <div class="col-md-12 col-sm-12">
+            <label>{{'content' | translate}}</label>
+          </div>
+          <div class="col-md-9 col-sm-10">
+            <input type="text" [readonly]="true" name="content" #content [ngModel]="badgeDetail.linkedin_content"
+              class="form-control">
+          </div>
+          <div class="col-md-3 col-sm-2">
+            <span><a (click)="copyText(content)"><i class="fa fa-files-o" aria-hidden="true"></i> {{'copy_text' |
+                    translate}}</a></span>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 linkedin-savebtn form-group"><br>
+          <button class="social-share-linkedin" mat-button
+            (click)="socialShare('linkedin', badgeDetail.linkedin_social_share_url, badgeDetail.linkedin_content )"
+            type="button"> <i class="fa fa-linkedin"></i> {{'linkedin' | translate}}</button>
+        </div>
+      </div>
+    </ngx-smart-modal>
+  </div>
+
+  <ngx-smart-modal #CertificateInfoPopup identifier="CertificateInfoPopup" class="CertificateInfoPopup">
+    <h4>{{'cert_info' | translate}}</h4>
+    <p>{{'cert_info_content' | translate}}</p>
+  </ngx-smart-modal>
+
+  <ngx-smart-modal #infoAboutShare identifier="infoAboutShare" class="CertificateInfoPopup" [closable]='false'
+  [escapable]='false' [dismissable]='false'>
+  <div class="infoTooltip">
+    <h4>{{'sharing_cert_header' | translate}}</h4>
+    <p>{{'info_about_sharing_cert' | translate}}</p>
+
+    <div class="infoTooltip-btn">
+      <button type="button" (click)="callSharingSave(infoAboutShare.getData()?.id, infoAboutShare.getData()?.status);"
+        mat-button class="btn btn-form-save">{{'ok' | translate}}</button>
+      <!-- <button type="button" (click)="cancelShare();" mat-button
+          class="btn btn-form-save">{{'cancel' | translate}}</button> -->
+    </div>
+  </div>
+</ngx-smart-modal>
+
+  <ngx-smart-modal #deletemyModal identifier="deletemyModal"
+    (onAnyCloseEvent)="ngxSmartModalService.resetModalData('deletemyModal')">
+    <div>
+      <form [formGroup]="reasonForm" #resetFormID="ngForm"
+        (ngSubmit)="reasonFormSubmit(reasonForm.value, deletemyModal.getData().countAchSelect)">
+        <fieldset>
+          <legend>{{'confirm_delete' | translate}}</legend>
+          <div class="password-enter delete-container">
+            <h5
+              *ngIf="deletemyModal.getData() && deletemyModal.getData().countAchSelect && deletemyModal.getData().is_check_all">
+              {{'count_of_selected_achievement' | translate}} : {{deletemyModal.getData().total_count}}</h5>
+            <h5
+              *ngIf="deletemyModal.getData() && deletemyModal.getData().countAchSelect && !deletemyModal.getData().is_check_all">
+              {{'count_of_selected_achievement' | translate}} : {{deletemyModal.getData().countAchSelect}}</h5>
+            <h5 *ngIf="deletemyModal.getData() && !deletemyModal.getData().countAchSelect">
+              {{'hard_delete_info' | translate}}</h5>
+            <h5>{{'are_you_sure' | translate}}?</h5>
+            <br>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <mat-form-field appearance="outline">
+                  <mat-select formControlName="reason_type" placeholder="{{'pls_select_reason_type' | translate}}">
+                    <mat-option (click)="getReasonType(1)" value='1'>{{'misspelling' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(2)" value='2'>{{'issued_by_mistake' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(3)" value='3'>{{'sanction' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(4)" value='4'>{{'test' | translate}}</mat-option>
+                    <mat-option (click)="getReasonType(5)" value='5'>{{'other' | translate}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="text-danger text-left small" *ngIf="reasonErrorMsg">{{getreasonErrorMsg('reason_type') |
+                translate}}</div>
+              </div>
+
+              <div *ngIf="hideOtherField" class="col-sm-6 delete-input">
+                <mat-form-field appearance="outline">
+                  <input #otherTxt formControlName="reason" matInput class="form-control">
+                </mat-form-field>
+                <div class="text-danger text-left small" *ngIf="reasonErrorMsg">{{getreasonErrorMsg('reason') |
+                translate}}</div>
+              </div>
+            </div>
+
+          </div>
+        </fieldset>
+        <div class="form-group" style="float: right">
+          <button type="submit" [disabled]="checkSubmit" mat-button class="password-submit" style="margin-right:10px">{{'yes'
+          | translate}}</button>
+          <button type="button" mat-button class="password-submit"
+            (click)="deletemyModal.close()">{{'no' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </ngx-smart-modal>
+</div>

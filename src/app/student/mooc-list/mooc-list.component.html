@@ -1,0 +1,107 @@
+<section class="start_wrapper certificate-list">
+  <div class="user-certificate">
+    <div class="hpanel">
+      <div class="panel-heading clearfix">
+        <div class="pull-left">
+          <h3>{{'mooc_certificates' | translate}}</h3>
+        </div>
+        <div class="pull-right">
+          <button mat-button routerLink="/mooc">
+            <i class="fa fa-hand-o-right fa-1x" style="font-size:20px;"></i> {{'add_certificate' | translate}}
+          </button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <div class="example-container mat-elevation-z8">
+            <mat-spinner *ngIf="process"></mat-spinner>
+            <table mat-table [dataSource]="dataSource" class="table table-striped table-bordered table-hover"
+              *ngIf="!process">
+
+              <!-- title Column -->
+              <ng-container matColumnDef="mooc_name">
+                <th mat-header-cell *matHeaderCellDef> {{'mooc_name' | translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.mooc_name}} </td>
+              </ng-container>
+
+              <!-- barcode Image Column -->
+              <ng-container matColumnDef="course_name">
+                <th mat-header-cell *matHeaderCellDef> {{'course_name' | translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.course_name}} </td>
+              </ng-container>
+
+              <!-- Certificate Number Column -->
+              <ng-container matColumnDef="issue_date">
+                <th mat-header-cell *matHeaderCellDef> {{'issue_date' | translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.issue_date}} </td>
+              </ng-container>
+
+              <!-- Issue Date Column -->
+              <ng-container matColumnDef="expire_date">
+                <th mat-header-cell *matHeaderCellDef> {{'expiry_date' | translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.expiry_date}} </td>
+              </ng-container>
+
+              <!-- Issue Date Column -->
+              <ng-container matColumnDef="certi_number">
+                <th mat-header-cell *matHeaderCellDef> {{'certificate_number' | translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.certificate_number}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="website">
+                <th mat-header-cell *matHeaderCellDef> {{'website' | translate}} </th>
+                <td mat-cell *matCellDef="let element"> {{element.mooc_website}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="certificate">
+                <th mat-header-cell *matHeaderCellDef> {{'certificate' | translate}} </th>
+                <td mat-cell *matCellDef="let element"> <a href="{{element.upload}}" target="_blank"
+                    class="btn btn-primary">{{'view' | translate}} <i class="fa fa-eye"></i></a> </td>
+              </ng-container>
+
+              <!-- Evidence Number Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> {{'actions' | translate}} </th>
+                <td mat-cell *matCellDef="let element" class="edt_delt">
+                  <button mat-button class="green" routerLink="/mooc/{{element.id}}">{{'edit' | translate}}
+                    <i class="fa fa-pencil-square-o" style="font-size:18px;"></i>
+                  </button>
+                  <button mat-button class="red"
+                    (click)="ngxSmartModalService.setModalData(element.id, 'myModal');ngxSmartModalService.getModal('myModal').open();">{{'delete' | translate}}
+                    <i class="fa fa-trash-o" style="font-size:18px;"></i>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <div class="col-sm-12" *ngIf="!process">
+              <div class="alert alert-info no-records" *ngIf="certificates.length === 0">
+                {{'no_records_found' | translate}}
+              </div>
+            </div>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-smart-modal #myModal identifier="myModal" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+    <div *ngIf="myModal.hasData()">
+      <fieldset>
+        <legend>{{'confirm_delete' | translate}}</legend>
+        <div class="password-enter">
+          <h5>{{'are_you_sure' | translate}} {{'certificate' | translate}}? </h5>
+          <br>
+
+        </div>
+      </fieldset>
+      <div class="form-group" style="float: right">
+        <button mat-button class="password-submit" style="margin-right:10px"
+          (click)="delete(myModal.getData())">{{'yes' | translate}}</button>
+        <button mat-button class="password-submit" (click)="myModal.close()">{{'no' | translate}}</button>
+      </div>
+    </div>
+  </ngx-smart-modal>
+</section>

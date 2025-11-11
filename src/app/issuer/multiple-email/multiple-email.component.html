@@ -1,0 +1,111 @@
+<section class="start_wrapper certificate-list">
+  <div class="user-certificate">
+    <div class="hpanel">
+      <div class="panel-heading clearfix">
+        <div class="pull-left">
+          <h3>{{'multiple_mail' | translate}} <span matTooltip="{{'phi_multiple_mail' | translate}}" class="headTooltip"><i class="material-icons"> help_outline</i></span></h3>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div class="standter clearfix">
+
+          <div class="multiple-emails">
+            <h3>{{'login_security' | translate}}</h3>
+
+            <div class="panel-heading clearfix">
+              <div class="multiple-email-header">
+                <div class="pull-left">
+                  <h5>{{'email_addresses' | translate}}</h5>
+                </div>
+                <div class="pull-right">
+                  <button class="green" mat-button (click)="ngxSmartModalService.getModal('deletemyModal').open();openDialogReset();">Add</button>
+                </div>
+              </div>
+
+              <div class="multiple-email-header">
+                <div class="pull-left">
+                  <p>{{'add_remove_email_address' | translate}}</p>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="">
+              <div class="">
+                <p>{{'email_address_added' | translate}}:</p>
+              </div>
+
+              <div class="col-md-12 col-sm-12">
+
+                <div class="table-responsive">
+                <table class="table">
+                  <tr *ngFor="let stud of resStudMailLists">
+                    <td>{{stud.email}}</td>
+                    <td></td>
+                    <td>
+                      <a *ngIf="!stud.primary && stud.verified" href="javascript:void(0)" class="make-primary" (click)="makePrimaryEmail(stud.id, stud.email)">{{'make_primary' | translate}}</a>
+                      <a *ngIf="!stud.verified" href="javascript:void(0)" class="make-primary" (click)="resendEmail(stud.id)">{{'resend' | translate}}</a>
+                    </td>
+                    <td>
+                      <a  *ngIf="!stud.verified" verified matTooltip="Not Verified"><i class="material-icons red">highlight_off</i></a>
+                      <a  *ngIf="stud.verified" matTooltip="Verified"><i class="material-icons green">check_circle_outline</i></a>
+                    </td>
+                    <td>
+                      <p *ngIf="stud.primary" class="primary">{{'primary' | translate}}</p>
+                      <a *ngIf="stud.deletable" href="javascript:void(0)" class="remove" (click)="ngxSmartModalService.getModal('myModal').open();getDeleteMailID(stud.id)">{{'remove' | translate}}</a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+    </div>
+    </section>
+
+    <ngx-smart-modal #deletemyModal identifier="deletemyModal" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('deletemyModal')">
+        <div>
+          <form [formGroup]="reasonForm" #resetFormID="ngForm" (ngSubmit)="reasonFormSubmit(reasonForm.value)">
+          <fieldset>
+              <div class="view-evidence-title"><h4>{{'add_new_mail' | translate}}</h4></div>
+            <div class="password-enter delete-container">
+              <div class="row">      
+                <div class="col-sm-12 delete-input">
+                  <mat-form-field appearance="outline">
+                      <mat-label>{{'add_new_mail' | translate}}</mat-label>
+                      <input formControlName="email" matInput class="form-control">
+                  </mat-form-field>
+                  <div class="text-danger text-left small" *ngIf="reasonErrorMsg">{{getreasonErrorMsg('email') || this.errorMsgArr['email'] | translate}}</div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="form-group" style="float: right">
+            <button type="submit" mat-button class="password-submit" style="margin-right:10px">{{'Add' | translate}}</button>
+          </div>
+          </form>
+        </div>
+      </ngx-smart-modal>
+
+    <ngx-smart-modal #myModal identifier="myModal" (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+        <div>
+          <fieldset>
+              <legend>{{'confirm_delete' | translate}}</legend>
+              <div class="password-enter delete-container">
+                <h5>{{'are_you_sure' | translate}}?</h5>
+                <br>
+              </div>
+          </fieldset>
+          <div class="form-group" style="float: right">
+              <button type="button" mat-button class="password-submit" (click)="deleteMailAddress()" style="margin-right:10px">{{'yes' | translate}}</button>
+              <button type="button" mat-button class="password-submit" (click)="ngxSmartModalService.getModal('myModal').close();" style="margin-right:10px">{{'no' | translate}}</button>
+          </div>
+        </div>
+    </ngx-smart-modal>

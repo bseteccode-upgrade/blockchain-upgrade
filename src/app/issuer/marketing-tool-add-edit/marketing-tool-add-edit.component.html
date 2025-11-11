@@ -1,0 +1,134 @@
+<section class="start_wrapper canned-messgae">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'edit_marketing_tools' | translate}} <span
+            matTooltip="{{'info_about_edit_marketing_tools' | translate}}" class="headTooltip"><i
+              class="material-icons"> help_outline</i></span></h3>
+      </div>
+      <div class="pull-right">
+        <button mat-button routerLink="/marketingtool">
+          <i class="fa fa-hand-o-left fa-1x" style="font-size:20px;"></i> {{'back_marketing_tools' | translate}}
+        </button>
+      </div>
+    </div>
+    <div class="panel-body">      
+      <div class="standter clearfix">
+        <div class="{{socialTitle}}">
+          <h3>{{socialTitle | translate}}</h3>
+        </div>
+        <form class="form-horizontal" (ngSubmit)="submit(marketingform.value)" [formGroup]="marketingform">
+          <div class="">
+            <div *ngIf="socialTitle == 'facebook'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="facebook_content" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('facebook_content') || errorMsgArr['facebook_content'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="socialTitle == 'twitter'">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label> {{'content' | translate}} <span class="mandatory">*</span></label>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <textarea class="form-control" formControlName="twitter_content" rows="6"></textarea>
+                      <div class="text-danger text-left small" *ngIf="errorMsg">
+                        {{geterrorMsg('twitter_content') || errorMsgArr['twitter_content'] | translate}}
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div *ngIf="socialTitle == 'linkedin'">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label> {{'content' | translate}} <span class="mandatory">*</span></label>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <textarea class="form-control" formControlName="linkedin_content" rows="6"></textarea>
+                      <div class="text-danger text-left small" *ngIf="errorMsg">
+                        {{geterrorMsg('linkedin_content') || errorMsgArr['linkedin_content'] | translate}}
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div *ngIf="socialTitle == 'whatsapp'">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                      <label> {{'content' | translate}} <span class="mandatory">*</span></label>
+                    </div>
+                  </div>
+    
+                  <div class="col-md-12 col-sm-12">
+                    <div class="form-group">
+                      <textarea class="form-control" formControlName="whatsapp_content" rows="6"></textarea>
+                      <div class="text-danger text-left small" *ngIf="errorMsg">
+                        {{geterrorMsg('whatsapp_content') || errorMsgArr['whatsapp_content'] | translate}}
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div *ngIf="socialTitle == 'email_share'">
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'subject' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                  <textarea class="form-control" formControlName="email_share_mail_subject" rows="6"></textarea>
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('email_share_mail_subject') || errorMsgArr['email_share_mail_subject'] | translate}}
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                  <label> {{'mail_content' | translate}} <span class="mandatory">*</span></label>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                  <quill-editor class="hidebasictools" [formControl]="marketingform.controls['email_share_mail_content']" [modules]="modules"
+                  [(ngModel)]="marketingform.email_share_mail_content" [placeholder]="'Insert text here...'" [style]="{height: '100px'}">
+                  </quill-editor>
+
+                  <div class="text-danger text-left small" *ngIf="errorMsg">
+                    {{geterrorMsg('email_share_mail_content') || errorMsgArr['email_share_mail_content'] | translate}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group canned-message-btn">
+                <button type="submit" mat-button class="btn btn-form-save">{{'save_button' | translate}}</button>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

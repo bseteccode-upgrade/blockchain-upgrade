@@ -1,0 +1,42 @@
+.create_company_user{width:100%;padding:0 20px}
+.assign.mat-button{font-size:16px;background-color:#29b6d8;border-color:#29b6d8;color:#fff}
+.create_company_user .block.mat-button{font-size:16px;background-color:#e74c3c;border-color:#e74c3c;color:#fff}
+.create_company_user .re-assign.mat-button{font-size:16px;background-color:#337ab7;border-color:#337ab7;color:#fff}
+.save_btn {width:100%;text-align:center;display:inline-block;padding:40px 0}
+.save_btn .save.mat-button{font-size:16px;background-color:#34495e;border-color:#34495e;color:#fff}
+.create_company_user .user-list-view{width:100%;padding-left:0}
+.create_company_user .user-list-view li{display:inline-block;padding:0 15px}
+.create_company_user .user-list-view li:first-child{min-width:33%}
+.create_company_user .user-list-view li p{font-size:18px;}
+.create_company_user .select-form{width:100%;display: -webkit-box;display: -webkit-flex;display: -ms-flexbox;display: flex;flex-wrap: wrap;border: 1px solid #ccc;}
+.create_company_user .select-form .form-group{margin-bottom:0}
+
+.add_new_member{width:100%;display:inline-block;padding:10px 0}
+.add_new_member span{width:70%;display:inline-block;float:left;white-space: nowrap;}
+.add_new_member a{background-color:#337ab7;padding:6px;font-size:12px;color:#fff}
+
+
+ul.workflowscroll{padding-left:0;margin-bottom:0;height:300px}
+ul.workflowscroll li{padding:10px 0}
+ul.workflowscroll li p{margin-bottom:0}
+ul.workflowscroll li p span{width:85%;display:inline-block;padding-right:10px;font-size:14px;}
+button.assign.mat-mini-fab.mat-accent{background-color:#34495e}
+button.block.mat-mini-fab.mat-accent{background-color:tomato;}
+button.re-assign.mat-mini-fab.mat-accent{background-color: #087edc;}
+.create_company_user ul.user-list{padding-left:0;margin-bottom:0;height:300px;}
+.create_company_user ul.user-list li{width:100%;display: inline-block;padding:10px 0}
+.create_company_user ul.user-list li p{width:68%;display:inline-block;padding-right:10px;font-size:16px;margin-bottom:0}
+.create_company_user ul.user-list li button{margin:0 5px;}
+.create_company_user .select-form .company_title{display:inline-block;padding:10px;width:100%;border-bottom:1px solid #ccc}
+.create_company_user .select-form .company_border{border-right: 1px solid #ccc;padding:0 0}
+.create_company_user .select-form .company_border .form-group{padding:10px}
+
+@media(max-width:1199px)
+{
+    .create_company_user ul.user-list li p{width:55%}
+}
+
+@media(max-width:991px)
+{
+    .create_company_user ul.user-list li p{width:50%}
+}

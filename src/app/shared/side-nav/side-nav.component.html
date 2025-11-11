@@ -1,0 +1,442 @@
+<aside id="menu" class="menuslides">
+  <div id="navigation" class="scroll-window" slimScroll (scrollChanged)="scrollChanged($event)" [options]="options">
+    <div class="profile-picture" style="text-align: center"
+      *ngIf="apiService.userType !== '1' && apiService.user.university_avatar">
+      <a>
+        <img src="{{apiService.user.university_avatar}}" class="img-responsive img-circle m-b" alt="logo">
+      </a>
+    </div>
+    <div class="profile-wallet" *ngIf="!testMode">
+      <span *ngIf="apiService.userType !== '1' && ( apiService.userType == '2' || apiService.userType == '4' )">
+
+        <ul class="wallet-list">
+          <li>{{ 'purchased_plan' | translate }}</li>
+          <li>{{apiService.wallet}} VTN</li>
+        </ul>
+
+        <ul class="wallet-list">
+          <li>{{ 'used_diploma' | translate }}</li>
+          <li>{{apiService.diploma_count}} VTN</li>
+        </ul>
+
+        <ul class="wallet-list">
+          <li>{{ 'used_course' | translate }}</li>
+          <li>{{apiService.course_count}} VTN</li>
+        </ul>
+
+        <ul class="wallet-list">
+          <li>{{'your_current_wallet' | translate}}</li>
+          <li>{{apiService.remaining_wallet}} VTN</li>
+        </ul>
+        <ul class="wallet-list" *ngIf="apiService.blockchain_client">
+          <li>{{'blockchain' | translate}}</li>
+          <li>{{apiService.blockchain_client}}</li>
+        </ul>
+      </span>
+
+    </div>
+    <ul class="nav" id="side-menu" *ngIf="apiService.userType === '1'">
+      <li>
+        <a id="menu_usercertificate" routerLink="/certificates" routerLinkActive="menu-active">
+          <span class="side-icon icon-certificate"></span>
+          <span class="nav-label"> {{ 'certificates' | translate }}</span>
+        </a>
+      </li>
+      <!-- <li>
+        <a id="menu_usercertificate" routerLink="/credential" routerLinkActive="menu-active">
+          <span class="side-icon icon-certificate"></span>
+          <span class="nav-label"> {{ 'blockchain_your_credential' | translate }}</span>
+        </a>
+      </li> -->
+      <li>
+        <a id="menu_accountsetting" routerLink="/accountsetting" routerLinkActive="menu-active">
+          <span class="side-icon icon-settings"></span>
+          <span class="nav-label">{{ 'account_settings' | translate }}</span>
+        </a>
+      </li>
+      <li>
+        <a id="menu_changepwd" routerLink="/changepwd" routerLinkActive="menu-active">
+          <span class="side-icon icon-password"></span>
+          <span class="nav-label">{{ 'change_password' | translate }}</span>
+        </a>
+      </li>
+      <li>
+        <a id="menu_logout" (click)="logout()" routerLinkActive="menu-active">
+          <span class="side-icon icon-logout"></span>
+          <span class="nav-label">{{ 'log_out' | translate }}</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="nav" id="side-menu" *ngIf="apiService.userType === '6'">
+      <li>
+        <a id="menu_languages" routerLink="/languages" routerLinkActive="menu-active">
+          <span class="side-icon icon-certificate"></span>
+          <span class="nav-label"> {{ 'languages' | translate }}</span>
+        </a>
+      </li>
+      <li>
+        <a id="menu_logout" (click)="logout()" routerLinkActive="menu-active">
+          <span class="side-icon icon-logout"></span>
+          <span class="nav-label">{{ 'log_out' | translate }}</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="nav" id="side-menu" *ngIf="apiService.userType === '2' || apiService.userType === '4'">
+      <li *ngIf="apiService.pages.dashboard">
+        <a id="menu_payment_plans" routerLink="/publisherdash" routerLinkActive="menu-active">
+          <span class="side-icon icon-dashboard"></span>
+          <span class="nav-label">{{'dashboard' | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="userDetails.show_upgrade && apiService.userType === '2'">
+        <a id="menu_payment_plans" routerLink="/payment" routerLinkActive="menu-active">
+          <span class="side-icon icon-plan"></span>
+          <span class="nav-label">{{'plans' | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.pages.students || apiService.pages === ''">
+        <a id="menu_students" routerLink="/students" routerLinkActive="menu-active">
+          <span class="side-icon icon-student"></span>
+          <span class="nav-label">{{ 'students' | translate }}</span>
+          <span *ngIf="apiService.userType === '2' && displayStudLabel" class="left-arrow">STEP - 1</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.pages.course || apiService.pages === ''">
+        <a id="menu_usercourse" routerLink="{{redirectCourse ? '/courseadd' : '/usercourse'}}"
+          routerLinkActive="menu-active">
+          <span class="side-icon icon-course"></span>
+          <span class="nav-label">{{ 'courses' | translate }}</span>
+          <span *ngIf="apiService.userType === '2' && displayCourseLabel" class="left-arrow">STEP - 2</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.pages.certificate || apiService.pages === ''">
+        <a id="menu_usercertificate" routerLink="{{redirectCert ? '/certificateadd' : '/usercertificate'}}"
+          routerLinkActive="menu-active">
+          <span class="side-icon icon-certificate"></span>
+          <span class="nav-label">{{ 'certificates' | translate }}</span>
+          <span *ngIf="apiService.userType === '2' && displayCertLabel" class="left-arrow">STEP - 3</span>
+        </a>
+      </li>
+      <li>
+        <a id="menu_issuecertificate" routerLink="/issuecertificate" routerLinkActive="menu-active">
+          <span class="side-icon icon-issue-certificate"></span>
+          <span class="nav-label">{{ 'achievements' | translate }}</span>
+          <span *ngIf="apiService.userType === '2' && displayAchLabel" class="left-arrow">STEP - 4</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '2' || apiService.pages.bouncedmail_prv">
+        <a routerLink="/emaillogs" routerLinkActive="menu-active">
+          <img src="assets/images/mail.svg">
+          <span class="nav-label">{{ 'email_logs' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType !== '4' && apiService.pages.managements">
+        <a id="menu_logs" routerLink="/logs" routerLinkActive="menu-active">
+          <span class="side-icon icon-activity"></span>
+          <span class="nav-label">{{ 'logs' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '4' && apiService.pages.logs_prv">
+        <a id="menu_logs" routerLink="/logs" routerLinkActive="menu-active">
+          <span class="side-icon icon-activity"></span>
+          <span class="nav-label">{{ 'logs' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType !== '4' && apiService.pages.managements">
+        <a id="menu_teamlist" routerLink="/teamlist" routerLinkActive="menu-active">
+          <span class="side-icon icon-management"></span>
+          <span class="nav-label">{{ 'team_members' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '4' && apiService.pages.teammembers_prv">
+        <a id="menu_teamlist" routerLink="/teamlist" routerLinkActive="menu-active">
+          <span class="side-icon icon-management"></span>
+          <span class="nav-label">{{ 'team_members' | translate }}</span>
+        </a>
+      </li>
+
+      <li *ngIf="apiService.userType === '2'">
+        <a routerLink="/marketingtool" routerLinkActive="menu-active">
+          <img src="assets/images/marketing_tools.png">
+          <span class="nav-label">{{ 'marketing_tools' | translate }}</span>
+        </a>
+      </li>
+
+      <li *ngIf="apiService.userType === '4' && apiService.pages.marketing_tool_prv">
+        <a routerLink="/marketingtool" routerLinkActive="menu-active">
+          <img src="assets/images/marketing_tools.png">
+          <span class="nav-label">{{ 'marketing_tools' | translate }}</span>
+        </a>
+      </li>
+
+      <li *ngIf="apiService.userType !== '4' && apiService.pages.managements">
+        <a id="menu_canned" routerLink="/cannedlist" routerLinkActive="menu-active">
+          <span class="side-icon icon-message"></span>
+          <span class="nav-label">{{'canned_message' | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '4' && apiService.pages.cannedmessage_prv">
+        <a id="menu_canned" routerLink="/cannedlist" routerLinkActive="menu-active">
+          <span class="side-icon icon-message"></span>
+          <span class="nav-label">{{'canned_message' | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '2' && apiService.user.profile_details.allow_api">
+        <a id="menu_teamlist" routerLink="/planapi" routerLinkActive="menu-active">
+          <span class="side-icon icon-management"></span>
+          <span class="nav-label">{{ 'api' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '4' && apiService.user.profile_details.allow_api && apiService.pages.api_prv">
+        <a id="menu_teamlist" routerLink="/planapi" routerLinkActive="menu-active">
+          <span class="side-icon icon-management"></span>
+          <span class="nav-label">{{ 'api' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.pages.account_settings || apiService.pages === ''">
+        <a id="menu_accountsetting" routerLink="/accountsetting" routerLinkActive="menu-active">
+          <span class="side-icon icon-settings"></span>
+          <span class="nav-label">{{ 'account_settings' | translate }}</span>
+        </a>
+      </li>
+      <!-- <li *ngIf="apiService.userType !== '4' && !displayBouncedEmail && apiService.pages.managements">
+        <a id="menu_mandril" routerLink="/mandril" routerLinkActive="menu-active">
+          <span class="side-icon icon-email-bounce"></span>
+          <span class="nav-label">{{ 'mandril' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '4' && !displayBouncedEmail && apiService.pages.bouncedmail_prv">
+        <a id="menu_mandril" routerLink="/mandril" routerLinkActive="menu-active">
+          <span class="side-icon icon-email-bounce"></span>
+          <span class="nav-label">{{ 'mandril' | translate }}</span>
+        </a>
+      </li> -->
+      <li
+        *ngIf="apiService.userType !== '4' && apiService.pages.request_list && apiService.pages.request_list === true && apiService.user.profile_details.is_private_user">
+        <a routerLink="/request" routerLinkActive="menu-active">
+          <span class="side-icon icon-management"></span>
+          <span class="nav-label">{{ 'request_list' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.pages.change_password || apiService.pages === ''">
+        <a id="menu_changepwd" routerLink="/changepwd" routerLinkActive="menu-active">
+          <span class="side-icon icon-password"></span>
+          <span class="nav-label">{{ 'change_password' | translate }}</span>
+        </a>
+      </li>
+      <li>
+        <a id="menu_logout" (click)="logout()" routerLinkActive="menu-active">
+          <span class="side-icon icon-logout"></span>
+          <span class="nav-label">{{ 'log_out' | translate }}</span>
+        </a>
+      </li>
+    </ul>
+    <!-- product Menu- start -->
+    <ul class="nav" id="side-menu" [ngClass]="status ? 'show-menu' : 'hide-menu'"
+      *ngIf="apiService.userType === '3' || apiService.userType === '0' || apiService.userType === '5' || apiService.userType === '8' || apiService.userType === '9'">
+      <li
+        *ngIf="apiService.userType !== '8' && apiService.userType !== '9' && apiService.userType !== '5' && apiService.userType !== '0'">
+        <a id="menu_dashboard" routerLink="/product/dashboard" routerLinkActive="menu-active">
+          <span class="side-icon icon-dashboard"></span>
+          <span class="nav-label">{{ 'dashboard' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="( apiService.userType === '5' || apiService.userType == '0' ) && apiService.pages.dashboard_prv">
+        <a id="menu_dashboard" routerLink="/product/dashboard" routerLinkActive="menu-active">
+          <span class="side-icon icon-dashboard"></span>
+          <span class="nav-label">{{ 'dashboard' | translate }}</span>
+        </a>
+      </li>
+      <li
+        *ngIf="( apiService.pages.students || apiService.pages.add_product )&& apiService.userType !== '9' && apiService.userType !== '8'">
+        <a id="menu_productlist" routerLink="/productlist" routerLinkActive="menu-active">
+          <span class="side-icon icon-product"></span>
+          <span class="nav-label">{{ 'products' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="userDetails.profile_details['show_tirme_sc_parameters'] && apiService.userType === '3'">
+        <a id="menu_payment_plans" routerLink="/tirme-sc-parameters" routerLinkActive="menu-active">
+          <span class="side-icon icon-plan"></span>
+          <span class="nav-label">{{'Tirme Parameters' | translate}}</span>
+        </a>
+      </li>
+      <li
+        *ngIf="apiService.userType !== '8' && apiService.userType !== '9' && apiService.userType !== '5' && apiService.userType !== '0'">
+        <a id="menu_members" routerLink="/members" routerLinkActive="menu-active">
+          <span class="side-icon icon-student"></span>
+          <span class="nav-label">{{ 'members' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="( apiService.userType === '5' || apiService.userType === '0' ) && apiService.pages.member_menu_pre">
+        <a id="menu_members" routerLink="/members" routerLinkActive="menu-active">
+          <span class="side-icon icon-student"></span>
+          <span class="nav-label">{{ 'members' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '3' && apiService.userType !== '9'">
+        <a id="menu_teamlist" routerLink="/workflowlist" routerLinkActive="menu-active">
+          <span class="side-icon icon-management"></span>
+          <span class="nav-label">{{ 'workflow' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="( apiService.userType === '5' || apiService.userType === '0' ) && apiService.pages.workflow_menu_pre">
+        <a id="menu_members" routerLink="/workflowlist" routerLinkActive="menu-active">
+          <span class="side-icon icon-management"></span>
+          <span class="nav-label">{{ 'workflow' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '0'">
+        <a id="menu_members" routerLink="/membersassign" routerLinkActive="menu-active">
+          <span class="side-icon icon-member-inbox"></span>
+          <span class="nav-label">{{ 'workflow_notification' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType !== '8' && apiService.pages.certificate && !apiService.pages.issue_certificate"
+        class="nav-item dropdown" routerLinkActive="menu-active">
+        <a id="menu_productcertificate_activities" routerLink="/productcertificate" class="nav-link dropdown-toggle"
+          routerLinkActive="menu-active">
+          <span class="side-icon icon-activity"></span>
+          <span class="nav-label">{{ 'activities_menu' | translate }}</span>
+        </a>
+      </li>
+
+      <li *ngIf="apiService.userType !== '8' && apiService.pages.certificate && apiService.pages.issue_certificate"
+        class="nav-item dropdown" routerLinkActive="menu-active">
+        <a id="menu_productcertificate_activities" routerLink="/productcertificate" class="nav-link dropdown-toggle"
+          routerLinkActive="menu-active">
+          <span class="side-icon icon-activity"></span>
+          <span class="nav-label">{{ 'activities_menu' | translate }}</span>
+        </a>
+      </li>
+
+      <li *ngIf="apiService.userType !== '8' && !apiService.pages.certificate && apiService.pages.issue_certificate"
+        class="nav-item dropdown" routerLinkActive="menu-active">
+        <a id="menu_productcertificate_activities" routerLink="/activity" class="nav-link dropdown-toggle"
+          routerLinkActive="menu-active">
+          <span class="side-icon icon-activity"></span>
+          <span class="nav-label">{{ 'activities_menu' | translate }}</span>
+        </a>
+      </li>
+
+      <li
+        *ngIf="((apiService.userType === '3' ||  ( apiService.userType === '5' || apiService.userType === '0' || apiService.userType === '9')) && apiService.pages.producttrack_pre)">
+        <a id="menu_payment_track" routerLink="/activitytrack" routerLinkActive="menu-active">
+          <span class="side-icon icon-trace"></span>
+          <span class="nav-label">{{'track_menu' | translate}}</span>
+        </a>
+      </li>
+
+      <li
+        *ngIf="((apiService.userType === '3' ||  ( apiService.userType === '5' || apiService.userType === '0' || apiService.userType === '9')) && apiService.pages.producttrace_pre)">
+        <a id="menu_payment_trace" routerLink="/activitytrace" routerLinkActive="menu-active">
+          <span class="side-icon icon-track"></span>
+          <span class="nav-label">{{'trace_menu' | translate}}</span>
+        </a>
+      </li>
+
+      <li
+        *ngIf="((apiService.userType === '3' ||  ( apiService.userType === '5' || apiService.userType === '0' || apiService.userType === '9')) && apiService.pages.productloc_pre)">
+        <a id="menu_payment_report" routerLink="/activityreport" routerLinkActive="menu-active">
+          <span class="side-icon icon-report"></span>
+          <span class="nav-label">{{'report_menu' | translate}}</span>
+        </a>
+      </li>
+
+      <li *ngIf="apiService.userType === '3'" class="nav-item dropdown" routerLinkActive="menu-active">
+        <a id="menu_productcertificate_download" routerLink="/downloadactivitydata" class="nav-link dropdown-toggle"
+          routerLinkActive="menu-active">
+          <span class="side-icon icon-download-activity"></span>
+          <span class="nav-label">{{ 'download_activities' | translate }}</span>
+        </a>
+      </li>
+
+      <li *ngIf="apiService.userType === '9' && apiService.pages.download_activities_pre" class="nav-item dropdown"
+        routerLinkActive="menu-active">
+        <a id="menu_productcertificate_download" routerLink="/downloadactivitydata" class="nav-link dropdown-toggle"
+          routerLinkActive="menu-active">
+          <span class="side-icon icon-download-activity"></span>
+          <span class="nav-label">{{ 'download_activities' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '8'">
+        <a id="menu_payment_metrics" routerLink="/matricgraph" routerLinkActive="menu-active">
+          <span class="side-icon icon-dashboard"></span>
+          <span class="nav-label">{{'metrics' | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '8' && checkIfExist('1')">
+        <a id="menu_payment_contractapi" routerLink="/contractapi" routerLinkActive="menu-active">
+          <span class="side-icon icon-activity"></span>
+          <span class="nav-label">{{'credential_api_list' | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '8' && checkIfExist('3')">
+        <a id="menu_payment_customapi" routerLink="/customapi" routerLinkActive="menu-active">
+          <span class="side-icon icon-plan"></span>
+          <span class="nav-label">{{'custom_api_list' | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '8' && checkIfExist('2')">
+        <a id="menu_payment_supplychainapi" routerLink="/supplychainapi" routerLinkActive="menu-active">
+          <span class="side-icon icon-blockchain"></span>
+          <span class="nav-label">{{'supplychain_api_list' | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '8'">
+        <a id="menu_payment_faq" routerLink="/faq" routerLinkActive="menu-active">
+          <span class="side-icon icon-total-review"></span>
+          <span class="nav-label">{{'faq' | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '3'">
+        <a id="menu_payment_supplychainapi" routerLink="/supplychainapi" routerLinkActive="menu-active">
+          <span class="side-icon icon-blockchain"></span>
+          <span class="nav-label">{{'supplychain_api_list' | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '3' && apiService.userType !== '9'">
+        <a id="menu_logs" routerLink="/supplychainlogs" routerLinkActive="menu-active">
+          <span class="side-icon icon-activity"></span>
+          <span class="nav-label">{{ 'logs' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType !== '3' && apiService.userType !== '8'">
+        <a id="menu_members" routerLink="/membersinbox" routerLinkActive="menu-active">
+          <span class="side-icon icon-member-inbox"></span>
+          <span class="nav-label">{{ 'member_inbox' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.pages.account_settings">
+        <a id="menu_accountsetting" routerLink="/accountsetting" routerLinkActive="menu-active">
+          <span class="side-icon icon-settings"></span>
+          <span class="nav-label">{{ 'account_settings' | translate }}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.userType === '3'">
+        <a id="menu_canned" routerLink="/canned" routerLinkActive="menu-active">
+          <span class="side-icon icon-message"></span>
+          <span class="nav-label">{{'canned_message' | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="( apiService.userType === '5' || apiService.userType === '0' ) && apiService.pages.canned_message_pre">
+        <a id="menu_canned" routerLink="/canned" routerLinkActive="menu-active">
+          <span class="side-icon icon-message"></span>
+          <span class="nav-label">{{'canned_message' | translate}}</span>
+        </a>
+      </li>
+      <li *ngIf="apiService.pages.change_password">
+        <a id="menu_changepwd" routerLink="/changepwd" routerLinkActive="menu-active">
+          <span class="side-icon icon-password"></span>
+          <span class="nav-label">{{ 'change_password' | translate }}</span>
+        </a>
+      </li>
+      <li>
+        <a id="menu_logout" (click)="logout()" routerLinkActive="menu-active">
+          <span class="side-icon icon-logout"></span>
+          <span class="nav-label">{{ 'log_out' | translate }}</span>
+        </a>
+      </li>
+    </ul>
+    <!-- product Menu- end -->
+  </div>
+</aside>

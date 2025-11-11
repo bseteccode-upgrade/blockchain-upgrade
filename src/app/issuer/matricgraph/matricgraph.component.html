@@ -1,0 +1,35 @@
+<section class="start_wrapper change-pwd">
+      <div class="panel-heading clearfix">
+        <div class="pull-left">
+          <h3>{{'api_response_status' | translate}}</h3>
+        </div>
+
+        <div class="pull-right">
+            <button mat-mini-fab [matMenuTriggerFor]="menu" class="user-status_menu"><span><i class="material-icons">more_vert</i></span></button>
+              <mat-menu #menu="matMenu">
+                <button *ngFor="let type of types" mat-menu-item (click)="onChangeType(type.value)">{{type.viewValue | translate}}</button>
+              </mat-menu>
+          </div>
+      </div>
+  
+
+<div *ngIf="norecordfound;else other_content" class="alert alert-info no-records">
+  <h2>{{'no_records_found' | translate}}</h2>
+</div>
+
+<ng-template #other_content>
+
+  <div class="col-md-12">
+  <canvas
+      baseChart
+      [chartType]="'line'"
+      [datasets]="chartData"
+      [labels]="chartLabels"
+      [options]="chartOptions"
+      [legend]="true">
+  </canvas>
+</div>
+
+</ng-template>
+
+</section>

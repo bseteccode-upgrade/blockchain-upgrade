@@ -1,0 +1,137 @@
+<section class="signup-block">
+  <div class="container">
+    <div class="col-md-8 col-sm-12 col-md-offset-2 signin-section">
+
+      <div class="signin-container">
+        <ul class="sign-container">
+          <li>
+            <div class="img-container">
+              <img src="{{pagelogo}}">
+            </div>
+          </li>
+
+          <li>
+            <div class="signup-block-two">
+              <div class="signup-form">
+                <h3>{{'login' | translate}}</h3>
+
+                <form class="form-horizontal" [formGroup]="loginForm" (ngSubmit)="userLogin(loginForm.value)">
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control" id="username" formControlName="email"
+                        (blur)="trimInput('email', $event)" placeholder="Email">
+                      <div class="text-danger text-left small" *ngIf="errorMsg">{{getErrorMessage('email') | translate}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <input type="password" class="form-control" id="password" formControlName="password"
+                        placeholder="{{'password' | translate}}">
+                      <div class="text-danger text-left small" *ngIf="errorMsg">
+                        {{getErrorMessage('password') | translate}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-6">
+                      <div>
+                        <input type="checkbox" class="form-control signup-checkbox" id="accept" name="">
+                        <label for="accept" class="signin-accept-label">{{'remember_me' | translate}}</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="signin-forgot">
+                        <a routerLink="/forgot-pwd"> {{'forgot_your_password' | translate}} </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="alert alert-danger" *ngIf="errorMsg">
+                      {{errorMsg | translate}}
+                    </div>
+                  </div>
+                  <div class="">
+                    <div class="col-sm-12">
+                      <button *ngIf="!disableReg" type="submit"
+                        class="btn btn-signin-form">{{'enter_account' | translate}}</button>
+                      <button *ngIf="disableReg" class="btn btn-signin-form"
+                        disabled>{{'acc_login' | translate}}...</button>
+                      <br>
+                      <br>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="form-group signup-button">
+              </div>
+              <div class="col-md-12 sign-footer">
+                <div class="col-md-12">
+                  <div class="vottun-footer">
+                    <p><a [href]="siteName" target="_blank">{{'blockchained_by' | translate}} {{appName}}</a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<ngx-smart-modal #fromadmin [closable]='false' [escapable]='false' [dismissable]='false' identifier="fromadmin"
+  class="emailveri-block">
+  <h4>{{'header_admin_user_login' | translate}}</h4>
+  <p>{{'info_about_admin_backdoor_login' | translate}}</p>
+  <div class="emailVerify_btn">
+    <button mat-button class="wrong_ok"
+      (click)="ngxSmartModalService.getModal('fromadmin').close()">{{'login' | translate}}</button>
+  </div>
+</ngx-smart-modal>
+
+<div class="signin_modal">
+  <ngx-smart-modal #myModal identifier="myModal" [closable]='false' [escapable]='false' [dismissable]='false'>
+    <div>
+      <fieldset>
+        <legend>
+          {{'act_like_now' | translate}}
+          <span class="help_icon" matTooltip="{{'info_act_like_now' | translate}}"><i class="material-icons">
+              help_outline </i></span>
+        </legend>
+
+        <div class="password-enter delete-container">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="col-lg-6 col-md-6 col-sm-12" *ngFor="let registerDetails of myModal.getData()">
+                <button id="publisherLogin" mat-button (click)="onCheckWho(registerDetails)"
+                  class="signin-popup-btn">{{register_list[registerDetails] | translate}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </ngx-smart-modal>
+  <ngx-smart-modal #emailverifypopup [closable]='false' [escapable]='false' [dismissable]='false'
+    identifier="emailverifypopup" class="emailverifypopup">
+    <div class="email-verify">
+      <i class="material-icons"> email </i>
+      <h4>{{emailverifypopup.getData()}}</h4>
+    </div>
+  </ngx-smart-modal>
+  <ngx-smart-modal #workwrongurl [closable]='false' [escapable]='false' [dismissable]='false' identifier="workwrongurl"
+    class="emailveri-block">
+    <div class="email-verify-warning">
+      <i class="material-icons"> warning </i>
+      <h4>{{'wrong_url_content' | translate}}</h4>
+    </div>
+
+    <div class="emailVerify_btn">
+      <button mat-button class="wrong_ok"
+        (click)="ngxSmartModalService.getModal('workwrongurl').close()">{{'ok' | translate}}</button>
+    </div>
+  </ngx-smart-modal>
+</div>

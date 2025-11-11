@@ -1,0 +1,137 @@
+<section class="start_wrapper certificate-list">
+  <div class="user-certificate">
+    <div class="hpanel">
+      <div class="panel-heading clearfix">
+        <div class="pull-left">
+          <h3>{{ 'logs' | translate}} <span matTooltip="{{'phi_logs' | translate}}" class="headTooltip"><i
+                class="material-icons"> help_outline</i></span></h3>
+        </div>
+      </div>
+
+      <div class="panel-heading clearfix filter-search-box">
+        <fieldset class="scheduler-border">
+          <form [formGroup]="searchForm" (ngSubmit)="searchFormSubmit(searchForm.value)">
+            <div class="col-md-4 col-sm-12">
+              <!-- <mat-form-field appearance="outline">
+                <mat-label>{{'search' | translate}}</mat-label>
+                <input #searchVal formControlName="search" matInput class="form-control">
+              </mat-form-field> -->
+
+              <mat-form-field appearance="outline" class="autocomplete">
+                <input formControlName="search" [formControl]="searchControl" autocomplete="off" (input)="getinputsearch($event.target.value)" placeholder="{{'search' | translate}}"
+                  matInput [matAutocomplete]="auto_search">
+                <mat-autocomplete #auto_search="matAutocomplete" (optionSelected)="searchInput = $event.option.value">
+                  <mat-option *ngFor="let option of filterSearch| async" [value]="option.search">
+                    {{option.search}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="reason_type" placeholder="{{'pls_select_reason_type' | translate}}">
+                  <mat-option (click)="getReasonType(1)" value='1'>{{'misspelling' | translate}}</mat-option>
+                  <mat-option (click)="getReasonType(2)" value='2'>{{'issued_by_mistake' | translate}}</mat-option>
+                  <mat-option (click)="getReasonType(3)" value='3'>{{'sanction' | translate}}</mat-option>
+                  <mat-option (click)="getReasonType(4)" value='4'>{{'test' | translate}}</mat-option>
+                  <mat-option (click)="getReasonType(5)" value='5'>{{'other' | translate}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              </div>
+              <!-- <mat-form-field *ngIf="otherFieldDisplay" appearance="outline">
+                <mat-label>{{'other_reason' | translate}}</mat-label>
+                <input #reasonOther formControlName="reason" matInput class="form-control" name="reason">
+              </mat-form-field> -->
+              <div class="col-md-4 col-sm-12">
+                <mat-form-field appearance="outline" class="autocomplete" *ngIf="otherFieldDisplay">
+                <input formControlName="reason" [formControl]="reasonControl" autocomplete="off" (input)="getinputreason($event.target.value)" placeholder="{{'other_reason' | translate}}"
+                  matInput [matAutocomplete]="auto_reason">
+                <mat-autocomplete #auto_reason="matAutocomplete" (optionSelected)="reasonInput = $event.option.value">
+                  <mat-option *ngFor="let option of filterReason| async" [value]="option.reason">
+                    {{option.reason}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+              <div class="user-btn-block">
+                <button type="submit" class="filter-btn search" mat-button>{{'search' | translate}}</button>
+                <button type="reset" class="filter-btn reset" mat-button
+                  (click)="searchFormReset()">{{'reset' | translate}}</button>
+              </div>
+            </div>
+          </form>
+        </fieldset>
+      </div>
+      <div class="panel-body">
+        <div class="standter clearfix">
+          <div class="col-sm-12 example-loading-shade" *ngIf="isLoadingResults">
+            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+          </div>
+
+          <div class="example-container mat-elevation-z8">
+            <div class="table-responsive">
+
+              <table *ngIf="!isLoadingResults" mat-table #table [dataSource]="dataSource" class="table table-striped table-bordered table-hover">
+
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>{{'deleted_by' | translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.first_name }} {{ element.last_name }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="item_short_detail">
+                  <th mat-header-cell *matHeaderCellDef>{{'deleted_obj' | translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.item_short_detail }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="role">
+                  <th mat-header-cell *matHeaderCellDef> {{'role' | translate}} </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.role === 'None' || element.role === '' ? '-' : element.role }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="module">
+                  <th mat-header-cell *matHeaderCellDef> {{'module' | translate}} </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.module }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="reason">
+                  <th mat-header-cell *matHeaderCellDef> {{'reason' | translate}}</th>
+                  <td mat-cell *matCellDef="let element">
+                    <p *ngIf="element.reason_type != 5">{{ reasonTypeArr[element.reason_type] | translate}}</p>
+                    <div *ngIf="element.reason">{{element.reason}}</div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="deleted_at">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear="true"> {{'delete_at' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.deleted_at | date }}
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+              <div class="col-sm-12" *ngIf="!isLoadingResults">
+                <div class="alert alert-info no-records" *ngIf="resultsLength === 0">
+                  {{'no_records_found' | translate}}
+                </div>
+              </div>
+
+              <mat-paginator [hidePageSize]="true" [length]="resultsLength" [pageSize]="5">
+              </mat-paginator>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

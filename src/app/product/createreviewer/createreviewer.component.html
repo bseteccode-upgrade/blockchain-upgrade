@@ -1,0 +1,117 @@
+<section class="start_wrapper">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'reviewer' | translate}} <span matTooltip="{{'phi_workflow' | translate}}" class="headTooltip"><i
+              class="material-icons">help_outline</i></span></h3>
+      </div>
+      <div class="pull-right">
+        <div class="form-group">
+          <button id="back_to_team" mat-button class="add-course-btn" routerLink="/reviewerlist">
+            <i class="fa fa-hand-o-left fa-1x" style="font-size:20px;"></i>
+            {{'back_to_reviewer' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="add-student-form add-team">
+        <div class="row">
+          <form class="form-horizontal" #workflowFormGen="ngForm" [formGroup]="workflowForm"
+            (ngSubmit)="submitForm(workflowForm.value)">
+
+            <div class="create_form">
+              <div class="col-sm-12">
+                <div class="create_header  edit_step_title">
+                  <div class="pull-left">
+                      <div class="form-group">
+                          <label class="control-label" for="name">{{'workflow_id' | translate}}
+                            <span class="mandatory">*</span>
+                          </label>
+                          <input type="text" class="form-control" formControlName="workflow_id"
+                            placeholder="{{'workflow_id' | translate}}">
+                          <div class="text-danger text-left small" *ngIf="errorMsg">
+                            {{getErrorMsg('workflow_id') || this.errorMsgArr['workflow_id'] | translate}}</div>
+                      </div>
+                  </div>
+                </div>
+
+
+                <div class="create_header">
+                    <div class="pull-left">
+                      <h4 class="create-title">{{'reviewer_configuration' | translate}}</h4> <span *ngIf="disfield"
+                        class="access_notify_label">*{{'enter_all_fields' | translate}}</span>
+                    </div>
+                    <div class="pull-right"><a href="javascript:;" mat-button class="add_fields"
+                      (click)="addFields()"><i class="material-icons">add_circle</i>  {{'add_steps' | translate}}
+                    </a> </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div formArrayName="steps" class="evidence_content" id="dragID" dragula="MANY_ITEMS" [(dragulaModel)]="workflowForm.controls.steps['controls']">
+                    <div (dragleave)="drop($event)"  *ngFor="let child of workflowForm.controls.steps['controls']; let i = index"
+                      class="evidence-field">
+                      <div formGroupName="{{i}}" id="drag{{i+1}}">
+                        <div class="form-group border">
+                          <div class="row">
+
+                              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                <div class="form-group">
+                                  <span class="step-field">{{'reviewer' | translate}} {{i + 1}}</span>
+                                  <input type="hidden" formControlName="step" class="form-control evidence-input"
+                                    [ngModel]="i + 1">
+                                  <input  *ngIf="fieldData.length > 0 && i < allcount && i < fieldData.length" type="hidden" formControlName="user_id"
+                                    value="{{fieldData[i].user_id}}">
+                                  <input *ngIf="fieldData.length == 0 || i >= allcount || i >= fieldData.length"
+                                  type="hidden" formControlName="user_id" value="" />
+                                </div>
+                              </div>
+
+
+                              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                <div class="form-group">
+                                  <input *ngIf="fieldData.length > 0 && i < allcount && i < fieldData.length"
+                                    style="width:100%" type="text" formControlName="role"
+                                    class="form-control evidence-input" placeholder="{{'role' | translate}} *"
+                                    [ngModel]="fieldData[i].role" />
+                                  <input *ngIf="fieldData.length == 0 || i >= allcount || i >= fieldData.length"
+                                    style="width:100%" type="text" formControlName="role"
+                                    class="form-control evidence-input" placeholder="{{'role' | translate}} *"
+                                    [ngModel]="" />
+                                </div>
+                              </div>
+
+                              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                <div class="button-container">
+                                <button type="button" mat-button class="configure" (click)="configureStep(i+1, workflowForm.value)">
+                                  {{'configure' | translate}}
+                                </button>
+                                <a *ngIf="fieldData.length > 0 && i < allcount && i < fieldData.length"
+                                  class="evidence-delete" (click)="removeFieldSet(i,2)">
+                                  <i class="material-icons">delete</i>
+                                </a>
+                                <a *ngIf="(fieldData.length == 0 || i >= allcount || i >= fieldData.length) && i != 0"
+                                  class="evidence-delete" (click)="removeFieldSet(i)">
+                                  <i class="material-icons">delete</i>
+                                </a>
+                                <span class="handle"><i class="material-icons">open_with</i></span>
+                                </div>
+                              </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

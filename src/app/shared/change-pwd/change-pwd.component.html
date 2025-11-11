@@ -1,0 +1,55 @@
+<section class="start_wrapper change-pwd">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'change_password' | translate}}  <span matTooltip="{{'phi_change_password' | translate}}" class="headTooltip"><i class="material-icons"> help_outline</i></span></h3>
+      </div>
+    </div>
+
+    <div class="add-student-form">
+      <div class="alert alert-success change-pwd-message" *ngIf="successMsg">
+        {{successMsg | translate}}
+      </div>
+      <form class="form-horizontal" [formGroup]="changeForm" (ngSubmit)="changePassword(changeForm.value)">
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="password">{{'old_password' | translate}} </label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control" formControlName="old_password" placeholder="{{'old_password' | translate}}">
+            <div class="text-danger text-left small" *ngIf="errorMsg">{{getErrorMessage('old_password') || this.errorMsgArr['old_password'] | translate}}</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="password">{{'new_password' | translate}} </label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control" #pass1 formControlName="new_password2" placeholder="{{'new_password' | translate}}">
+            <div class="text-danger text-left small" *ngIf="errorMsg">{{getErrorMessage('new_password2') || this.errorMsgArr['new_password2'] | translate}}</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-4" for="password">{{'confirm_password' | translate}} </label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control" #pass2 formControlName="new_password1" placeholder="{{'confirm_password' | translate}} ">
+            <div class="text-danger text-left small" *ngIf="pass1.value && pass2.value && pass1.value !== pass2.value && errorMsg && !getErrorMessage('new_password1')">{{'password_mis' | translate}}</div>
+            <div class="text-danger text-left small" *ngIf="errorMsg">{{getErrorMessage('new_password1') || this.errorMsgArr['new_password1'] | translate}}</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-4"></label>
+          <div class="col-sm-8">
+            <div class="alert alert-danger" *ngIf="errorMsg">
+              {{errorMsg | translate}}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-4 col-sm-8">
+            <button *ngIf="process" class="btn btn-primary">{{'processing' | translate}}...</button>
+            <button *ngIf="!process" type="submit" mat-button class="btn btn-form-save">{{'save_button' | translate}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

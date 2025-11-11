@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>{{'confirmation_deactive_prod_cert' | translate}}</h1>
+<mat-dialog-content>
+  <div>
+    <div class="table-responsive protest">
+      <h3>{{'are_you_sure_you_are_going' | translate}} {{data.status ? 'active' : 'deactive' | translate}}?</h3>
+      <form class="form-horizontal" [formGroup]="reasonForm" (ngSubmit)="reasonFormSubmit(reasonForm.value)">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="form-group">
+            <label>{{'reason' | translate}}</label>
+            <textarea rows="5" formControlName="reason" placeholder="{{'enter_reason_here' | translate}}"></textarea>
+          </div>
+        </div>
+        <button mat-button [disabled]="isDisable" class="close-btn" type="submit">{{'submit' | translate}}</button>
+        <button mat-button class="close-btn" [mat-dialog-close]="false">{{'close' | translate}}</button>
+      </form>
+    </div>
+  </div>
+</mat-dialog-content>

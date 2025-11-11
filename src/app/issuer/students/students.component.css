@@ -1,0 +1,19 @@
+:host /deep/ .delete-input .mat-form-field-appearance-outline .mat-form-field-infix { padding:3px 0px;}
+.delete-input .text-danger.text-left.small { position: absolute; bottom: 2px; }
+:host /deep/ .user-btn-block { position: relative; margin-bottom: 20px; }
+.notify-info { position: absolute;top:0;right:0;bottom:0;left:0;margin:0 auto;z-index:99;width: 100%;height: 100%; }
+.notify-info p { width: 350px; padding: 15px; background-color: #f20; color: #fff; position: absolute; margin: auto; left: 0; right: 0; text-align: center; top:19%;}
+.student_notify { width:100%; text-align: center; display: inline-block; }
+.student_notify p {font-size: 16px;}
+.student_notify .password-submit.mat-button { text-transform: capitalize; }
+
+@media (min-width:992px) and (max-width:1280px)
+{
+:host /deep/ .total-left {width:100%;}
+:host /deep/ .total-right {width:100%;}
+} 
+
+@media (max-width:767px)
+{
+.notify-info p { width: 200px; }    
+}

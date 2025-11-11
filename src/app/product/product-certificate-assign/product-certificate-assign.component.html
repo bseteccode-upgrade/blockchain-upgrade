@@ -1,0 +1,536 @@
+<section class="start_wrapper new-assign">
+  <div class="hpanel">
+    <div *ngIf="teamMemberDetails.register_type === '5'">
+
+      <div class="fieldset-main">
+        <div class="fieldset-block">
+          <ul class="info-details">
+            <li>
+              <h3>Step {{activityDetails.product_step}} <span *ngIf="activityDetails.certifier_designation"
+                  class="hif-spacing">-</span> </h3>
+            </li>
+            <li>
+              <h3> {{activityDetails.certifier_designation}} <span
+                  *ngIf="teamMemberDetails.org_name && activityDetails.certifier_designation"
+                  class="hif-spacing">-</span> {{teamMemberDetails.org_name}} </h3>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'view_activities' | translate}}</h3>
+      </div>
+      <div class="pull-right">
+        <div class="form-group">
+          <button mat-button class="add-course-btn" (click)="backToPage()">
+            <i class="fa fa-hand-o-left fa-1x" style="font-size:20px;"></i> {{'back_to_activities' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="">
+        <div class="add-student-form">
+          <form class="form-horizontal" [formGroup]="productCertForm"
+            (ngSubmit)="submitProdCertForm(productCertForm.value)">
+            <div class="col-md-6 col-sm-12"
+              *ngIf="activityDetails.manufacture_date && activityDetails.manufacture_date !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="manufacture_date">{{'manufacture_date' | translate}}</label>
+                <mat-form-field *ngIf="!viewMode" class="angular-datepicker">
+                  <input matInput (click)="manufacturerpicker.open()" formControlName="manufacture_date"
+                    [matDatepicker]="manufacturerpicker" placeholder="mm/dd/yyyy" max={{maxDateSelect}}
+                    (dateChange)="changeDateEvent($event, 'manufacture_date');" readonly>
+                  <mat-datepicker-toggle matSuffix [for]="manufacturerpicker"></mat-datepicker-toggle>
+                  <mat-datepicker #manufacturerpicker></mat-datepicker>
+                </mat-form-field>
+                <div *ngIf="!viewMode" class="refresh-icon" (click)="refreshFromDate()">
+                  <mat-icon>refresh</mat-icon>
+                </div>
+                <input class="form-control" *ngIf="viewMode" value="{{activityDetails.manufacture_date}}"
+                  [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('manufacture_date') || this.errorMsgArr['manufacture_date'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12"
+              *ngIf="activityDetails.expiry_date && activityDetails.expiry_date !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="expiry_date">{{'expiry_date' | translate}}</label>
+                <mat-form-field *ngIf="!viewMode" class="angular-datepicker">
+                  <input matInput formControlName="expiry_date" (click)="expiryDate.open()" [matDatepicker]="expiryDate"
+                    [readonly]="true" placeholder="mm/dd/yyyy" min={{minendDate}}
+                    (dateChange)="changeDateEvent($event, 'expiry_date');">
+                  <mat-datepicker-toggle matSuffix [for]="expiryDate"></mat-datepicker-toggle>
+                  <mat-datepicker #expiryDate></mat-datepicker>
+                </mat-form-field>
+                <div *ngIf="!viewMode" class="refresh-icon" (click)="refreshToDate()">
+                  <mat-icon>refresh</mat-icon>
+                </div>
+                <input class="form-control" *ngIf="viewMode" value="{{activityDetails.expiry_date}}"
+                  [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('expiry_date') || this.errorMsgArr['expiry_date'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12"
+              *ngIf="activityDetails.date_certified && activityDetails.date_certified !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="date_certified">{{'date_certified' | translate}}</label>
+                <mat-form-field *ngIf="!viewMode" class="angular-datepicker">
+                  <input matInput formControlName="date_certified" (click)="dateCertpicker.open()"
+                    [matDatepicker]="dateCertpicker" [readonly]="true" placeholder="mm/dd/yyyy" max={{maxDateSelect}}
+                    (dateChange)="changeDateEvent($event, 'date_certified');">
+                  <mat-datepicker-toggle matSuffix [for]="dateCertpicker"></mat-datepicker-toggle>
+                  <mat-datepicker #dateCertpicker></mat-datepicker>
+                </mat-form-field>
+                <div *ngIf="!viewMode" class="refresh-icon" (click)="refreshFromDate()">
+                  <mat-icon>refresh</mat-icon>
+                </div>
+                <input class="form-control" *ngIf="viewMode" value="{{activityDetails.date_certified}}"
+                  [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('date_certified') || this.errorMsgArr['date_certified'] | translate}}</div>
+              </div>
+            </div>
+            <div class="col-sm-12 pull-left" *ngIf="activityDetails.product && activityDetails.product !== 'None'">
+              <button mat-button class="blue deactivate"
+                (click)="onActiveAction(activityDetails.activity_status, activityDetails.id)">{{activityDetails.activity_status ? 'deactive' : 'active' | translate}}</button>
+              <!-- <mat-slide-toggle (change)="onActiveAction($event.checked, activityDetails.id)" [checked]="activityDetails.activity_status">{{'status' | translate}}</mat-slide-toggle> -->
+            </div>
+            <div class="col-sm-12" *ngIf="displayField.length > 0 && viewMode">
+              <div id="print-dynamic-details" class="dynamic-details">
+                <table class="col-md-12 col-sm-12 col-xs-12">
+                  <tr class="col-md-6 col-sm-12" *ngIf="activityDetails.in_batch_id">
+                    <td>
+                      <h2>{{'batchid' | translate}}:</h2>
+                    </td>
+                    <td>
+                      <h2>{{activityDetails.in_batch_id}}</h2>
+                    </td>
+                  </tr>
+                  <tr class="col-md-6 col-sm-12" *ngIf="teamMemberDetails.profile_details.is_final_step">
+                    <td>
+                      <h2>{{'product' | translate}}:</h2>
+                    </td>
+                    <td>
+                      <h2>{{activityDetails.product_name}}</h2>
+                    </td>
+                  </tr>
+                  <tr class="col-md-6 col-sm-12" *ngIf="teamMemberDetails.profile_details.is_final_step">
+                    <td>
+                      <h2>{{'barcode' | translate}}:</h2>
+                    </td>
+                    <td>
+                      <h2>{{activityDetails.barcode}}</h2>
+                    </td>
+                  </tr>
+                  <tr class="col-md-6 col-sm-12" *ngIf="activityDetails.out_batch_id">
+                    <td>
+                      <h2>{{'subproductbatch' | translate}}:</h2>
+                    </td>
+                    <td>
+                      <h2>{{activityDetails.out_batch_id}}</h2>
+                    </td>
+                  </tr>
+                  <tr class="col-md-6 col-sm-12" *ngFor="let displaycontent of displayField">
+                    <td>
+                      <h2>{{displaycontent.label}}:</h2>
+                    </td>
+                    <td
+                      *ngIf="displaycontent.type !== 'document' && displaycontent.type !== 'productimage' && displaycontent.type !== 'date' && displaycontent.type !== 'timestamp'">
+                      <h2>{{displaycontent.value}}</h2>
+                    </td>
+                    <td *ngIf="displaycontent.type === 'date'">
+                      <h2 *ngIf="displaycontent.dateformat == 1;else dmyy">{{displaycontent.value | date:'MM/dd/yyyy'}}
+                      </h2>
+                      <ng-template #dmyy>
+                        <h2>{{displaycontent.value | date:'dd/MM/yyyy'}}</h2>
+                      </ng-template>
+                    </td>
+                    <td *ngIf="displaycontent.type === 'timestamp'">
+                      <h2 *ngIf="displaycontent.dateformat == 1;else dmyytime">
+                        {{displaycontent.value != '' ? convertDateToStringMM(displaycontent.value) : ''}}</h2>
+                      <ng-template #dmyytime>
+                        <h2>{{displaycontent.value != '' ? convertDateToString(displaycontent.value) : ''}}</h2>
+                      </ng-template>
+                    </td>
+                    <td *ngIf="displaycontent.type === 'document' || displaycontent.type === 'productimage'"><a
+                        *ngIf="displaycontent.value && displaycontent.value != null && displaycontent.value !== ''"
+                        target="_blank" href="{{displaycontent.value}}">{{'click_here' | translate}}</a></td>
+                  </tr>
+                </table>
+              </div>
+
+                <div class="col-md-12 col-sm-12 qrimagelist qrimagelist-new"
+                  *ngIf="activityDetails.fixed_qr_code_url && activityDetails?.qr_type == 2">
+                  <label class="control-label shipping" for="shipping">{{'end_user_qr_code' | translate}}</label>
+                  <ul class="col-md-12 col-sm-12 qr-code-block qr-user-list">
+                    <li class="end_user_main">
+
+                    <div class="end_user">
+                      <img [src]="activityDetails.fixed_qr_code_url" style="width:100px;height:100px;">
+
+                      <div
+                        *ngIf="teamMemberDetails.register_type !== '9' || (teamMemberDetails.register_type === '9' && apiService.user.pages.download)"
+                        class="qr-user-delete">
+                        <a target="_blank" href="{{activityDetails.fixed_qr_code_url}}"><i class="material-icons">
+                            cloud_download
+                          </i></a>
+                      </div>
+                    </div>
+                      <a target="_blank" href="{{activityDetails.final_qr_code_url_value}}" class="click_here">{{'click_here' | translate }}</a>
+                    </li>
+                    <li *ngIf="activityDetails?.eps_qr_files">
+                      <img src="assets/images/eps.png" style="width:90px;height:90px;">
+
+                      <div
+                        *ngIf="teamMemberDetails.register_type !== '9' || (teamMemberDetails.register_type === '9' && apiService.user.pages.download)"
+                        class="qr-user-delete">
+                        <a target="_blank" href="{{activityDetails.eps_qr_files}}"><i class="material-icons">
+                            cloud_download
+                          </i></a>
+                      </div>
+                    </li>
+                    <li *ngIf="activityDetails?.svg_qr_files">
+                      <img src="assets/images/svg.png" style="width:90px;height:90px;">
+
+                      <div
+                        *ngIf="teamMemberDetails.register_type !== '9' || (teamMemberDetails.register_type === '9' && apiService.user.pages.download)"
+                        class="qr-user-delete">
+                        <a target="_blank" href="{{activityDetails.svg_qr_files}}"><i class="material-icons">
+                            cloud_download
+                          </i></a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="col-md-12 col-sm-12 qrimagelist qrimagelist-new"
+                  *ngIf="activityDetails.pdf_uploads && activityDetails?.qr_type == 1">
+                  <label class="control-label" for="shipping">{{'end_user_qr_code' | translate}}</label>
+                  <ul class="col-md-12 col-sm-12 qr-code-block qr-user-list">
+                    <li class="end_user_main">
+                      <div class="end_user">
+                      <img [src]="activityDetails.pdf_uploads" style="width:100px;height:100px;">
+                      <div
+                        *ngIf="teamMemberDetails.register_type !== '9' || (teamMemberDetails.register_type === '9' && apiService.user.pages.download)"
+                        class="qr-user-delete">
+                        <a target="_blank" href="{{activityDetails.pdf_uploads}}"><i class="material-icons">
+                            cloud_download
+                          </i></a>
+                      </div>
+                    </div>
+                    <a target="_blank" href="{{activityDetails.final_qr_code_url_value}}" class="click_here">{{'click_here' | translate }}</a>
+                    </li>
+                    <li *ngIf="activityDetails?.eps_qr_files">
+                      <img src="assets/images/eps.png" style="width:90px;height:90px;">
+
+                      <div
+                        *ngIf="teamMemberDetails.register_type !== '9' || (teamMemberDetails.register_type === '9' && apiService.user.pages.download)"
+                        class="qr-user-delete">
+                        <a target="_blank" href="{{activityDetails.eps_qr_files}}"><i class="material-icons">
+                            cloud_download
+                          </i></a>
+                      </div>
+                    </li>
+                    <li *ngIf="activityDetails?.svg_qr_files">
+                      <img src="assets/images/svg.png" style="width:90px;height:90px;">
+
+                      <div
+                        *ngIf="teamMemberDetails.register_type !== '9' || (teamMemberDetails.register_type === '9' && apiService.user.pages.download)"
+                        class="qr-user-delete">
+                        <a target="_blank" href="{{activityDetails.svg_qr_files}}"><i class="material-icons">
+                            cloud_download
+                          </i></a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              
+
+              <div class="col-md-12 col-sm-12 qrimagelist qrimagelist-new" *ngIf="activityDetails.qr_list.length > 0">
+                <button *ngIf="activityDetails.is_mistake" [disabled]='isLoading' mat-button class="file-icon"
+                  (click)="dataHistory(activityDetails.uid)"> <i class="fa fa-database" aria-hidden="true"></i></button>
+                <label class="control-label" for="shipping">{{'activity_qr_code' | translate}}</label>
+                <ul class="qr-user-list">
+                  <li *ngFor="let qrdetail of activityDetails.qr_list">
+                    <img [src]="qrdetail.file" style="width:100px;height:100px;">
+                    <br />
+                    <div
+                      *ngIf="teamMemberDetails.register_type !== '9' || (teamMemberDetails.register_type === '9' && apiService.user.pages.download)"
+                      class="qr-user-delete">
+                      <a target="_blank" href="{{qrdetail.file}}"><i class="material-icons">
+                          cloud_download
+                        </i></a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="col-md-12 col-sm-12 dynamic-details-sub">
+                <ul class="col-md-12 col-sm-12">
+                  <li>{{'transaction_id' | translate}}: <span>{{activityDetails.transaction_address}} </span> </li>
+                  <li *ngIf="activityDetails.evidence && activityDetails.evidence != 'None'">{{'evidence' | translate}}:
+                    <span><a target="_blank" href="{{activityDetails.evidence}}">{{'click_here' | translate}}</a></span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="col-md-12 col-sm-12 qrimagelist qrimagelist-new" *ngIf="correctionDatas.length > 0">
+                <h5 class="control-label" for="shipping">{{'history_of_activity_data' | translate}}</h5>
+                <div class="dynamic-details activityHistory">
+                  <div class="smart-data-one" *ngFor="let certData of correctionDatas">
+                    <h5 class="activityHistoryDate">{{certData.created}}</h5>
+
+                    <div class="col-md-12 col-sm-12 no-padding">
+                      <ul class="col-md-12 col-sm-12">
+                        <li>{{'transaction_id' | translate}}: <span>{{certData.transaction_address}} </span> </li>
+                        <li *ngIf="certData.evidence && certData.evidence != 'None'">{{'evidence' | translate}}:
+                          <span><a target="_blank" href="{{certData.evidence}}">{{'click_here' | translate}}</a></span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-9 col-sm-8 col-xs-12 no-padding">
+                      <div class="table-responsive">
+                        <table class="table col-md-12 col-sm-8 col-xs-12">
+                          <tr class="col-md-6 col-sm-12 col-xs-12" *ngFor="let details of certData.field_set">
+                            <td>
+                              <h2>{{details.label}}:</h2>
+                            </td>
+                            <td *ngIf="details.type !== 'document' && details.type !== 'productimage'">
+                              <h2>{{details.value}}</h2>
+                            </td>
+                            <td *ngIf="details.type === 'document' || details.type === 'productimage'">
+                              <a *ngIf="details.value && details.value != null && details.value !== ''" target="_blank"
+                                href="{{details.value}}">{{'click_here' | translate}}</a>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12"
+                *ngIf="teamMemberDetails.register_type !== '9' || (teamMemberDetails.register_type === '9' && apiService.user.pages.download)">
+                <div class="bottom-buttons">
+                  <button mat-button class="blue-btn" type="button"
+                    (click)="ngxSmartModalService.getModal('EmailModal').open();"><i
+                      class="material-icons">mail_outline</i> {{'email' | translate}}</button>
+                  <button mat-button class="blue-btn" type="button" printTitle="Actvity Details"
+                    printSectionId="print-dynamic-details" [useExistingCss]="true" ngxPrint><i
+                      class="material-icons">print</i>
+                    {{'print' | translate}}</button>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-sm-12" *ngIf="activityDetails.reason.length > 0">
+
+                <div class="table-responsive">
+                  <h4>{{'reason_history' | translate}}</h4>
+                  <table class="table">
+                    <tr>
+                      <th>
+                        {{'reason' | translate}}
+                      </th>
+                      <th>
+                        {{'status' | translate}}
+                      </th>
+                      <th>
+                        {{'created_on' | translate}}
+                      </th>
+                    </tr>
+                    <tr *ngFor="let reasonData of activityDetails.reason">
+                      <td>
+                        <p>{{reasonData.reason}}</p>
+                      </td>
+                      <td>
+                        <p>{{reasonData.status}}</p>
+                      </td>
+                      <td>
+                        <p>{{reasonData.created | date }}</p>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12"
+              *ngIf="activityDetails.country_certified && activityDetails.country_certified !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="country_certified">{{'country_certified' | translate}}</label>
+                <input type="text" class="form-control" id="certificate_number" formControlName="country_certified"
+                  placeholder="{{'certified_country' | translate}}" [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('country_certified') || this.errorMsgArr['country_certified'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12" *ngIf="activityDetails.first_name && activityDetails.first_name !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="certifier_name">{{'certifier_name' | translate}}</label>
+                <input type="text" class="form-control" id="certifier_name" formControlName="certifier_name"
+                  placeholder="{{'certifier_name' | translate}}"
+                  value="{{teamMemberDetails.first_name}} {{teamMemberDetails.last_name}}" [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('certifier_name') || this.errorMsgArr['certifier_name'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12" *ngIf="activityDetails.transport && activityDetails.transport !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="transport">{{'transport' | translate}}</label>
+                <input type="text" class="form-control" id="transport" formControlName="transport"
+                  placeholder="{{'transport' | translate}}" [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('transport') || this.errorMsgArr['transport'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12" *ngIf="activityDetails.shipping && activityDetails.shipping !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="shipping">{{'shipping' | translate}}</label>
+                <input type="text" class="form-control" id="shipping" formControlName="shipping"
+                  placeholder="{{'shipping' | translate}}" [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('shipping') || this.errorMsgArr['shipping'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12" *ngIf="activityDetails.category && activityDetails.category !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="category">{{'category' | translate}}</label>
+                <input type="text" class="form-control" formControlName="category"
+                  placeholder="{{'category' | translate}}" [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('category') || this.errorMsgArr['category'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12" *ngIf="activityDetails.weight && activityDetails.weight !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="weight">{{'weight' | translate}}</label>
+                <input type="text" formControlName="weight" class="form-control" placeholder="{{'weight' | translate}}"
+                  [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('weight') || this.errorMsgArr['weight'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12" *ngIf="activityDetails.grade && activityDetails.grade !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="grade">{{'grade' | translate}}</label>
+                <input type="text" class="form-control" formControlName="grade" placeholder="{{'grade' | translate}}"
+                  [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('grade') || this.errorMsgArr['grade'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12"
+              *ngIf="activityDetails.type_of_packing && activityDetails.type_of_packing !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="type_of_packing">{{'packing_type' | translate}}</label>
+                <input type="text" formControlName="type_of_packing" class="form-control"
+                  placeholder="{{'packing_type' | translate}}" [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('type_of_packing') || this.errorMsgArr['type_of_packing'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12"
+              *ngIf="activityDetails.minimum_shell_life && activityDetails.minimum_shell_life !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="minimum_shell_life">{{'minimum_shell_life' | translate}}</label>
+                <input type="text" class="form-control" formControlName="minimum_shell_life"
+                  placeholder="{{'minimum_shell_life' | translate}}" [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('minimum_shell_life') || this.errorMsgArr['minimum_shell_life'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12"
+              *ngIf="activityDetails.storage_condition && activityDetails.storage_condition !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="storage_condition">{{'storage_condition' | translate}}</label>
+                <input type="text" formControlName="storage_condition" class="form-control"
+                  placeholder="{{'storage_condition' | translate}}" [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('storage_condition') || this.errorMsgArr['storage_condition'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12"
+              *ngIf="activityDetails.processing_plant && activityDetails.processing_plant !== 'None'">
+              <div class="form-group">
+                <label class="control-label" for="processing_plant">{{'processing_plant' | translate}}</label>
+                <input type="text" formControlName="processing_plant" class="form-control"
+                  placeholder="{{'processing_plant' | translate}}" [readOnly]="viewMode">
+                <div class="text-danger text-left small" *ngIf="errorMsg">
+                  {{geterrorMsg('processing_plant') || this.errorMsgArr['processing_plant'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12"
+              *ngIf="activityDetails.description && activityDetails.description !== 'None'">
+              <div class="form-group border">
+                <label class="control-label" for="description">{{'description' | translate}}</label>
+                <quill-editor [style]="{height: '250px'}" formControlName="description"></quill-editor>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="alert alert-danger" *ngIf="errorMsg">
+                {{errorMsg | translate}}
+              </div>
+              <br>
+            </div>
+
+            <div class="col-sm-12" *ngIf="!viewMode">
+              <div class="form-group">
+                <br>
+                <mat-spinner *ngIf="process"></mat-spinner>
+                <button *ngIf="!process" type="submit" mat-button
+                  class="btn btn-form-save">{{'post_to_blockchain' | translate}}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="email-popup">
+    <ngx-smart-modal #EmailModal identifier="EmailModal"
+      (onAnyCloseEvent)="ngxSmartModalService.resetModalData('EmailModal')">
+      <div class="view-evidence-title">
+        <h4><i class="fa fa-envelope"></i> {{'send_activity_details_mail' | translate}}</h4>
+      </div>
+
+      <div class="email-details">
+        <input type="text" required email name="email" #email="ngModel" [(ngModel)]="emailID" class="form-control"
+          placeholder="Enter Email Id">
+        <div *ngIf="email.invalid && submitted">
+          <div *ngIf="email.errors.required" class="text-danger small">
+            {{'enter_email' | translate}}.
+          </div>
+          <div *ngIf="email.errors.email" class="text-danger small">
+            {{'enter_valid_email' | translate}}.
+          </div>
+        </div>
+        <br>
+        <button class="btn btn-primary" *ngIf="emailProcess"> {{'processing' | translate}}... </button>
+        <button mat-button class="email-submit" *ngIf="!emailProcess"
+          (click)="submitted = true; shareEmail(activityId, email)">{{'submit'
+          | translate}}</button>
+      </div>
+    </ngx-smart-modal>
+  </div>
+</section>

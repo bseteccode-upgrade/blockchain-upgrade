@@ -1,0 +1,149 @@
+.scheduler-border .filter-btn.mat-button {padding: 0% 2%;width: 45%;margin:3px;color:#fff;}
+
+.scheduler-border form > [class*='col-'] { min-height:70px }
+
+.team_list_image { width: 100px; height: 100px; text-align: center; display: inline-block; object-fit: contain; } 
+:host /deep/ .delete-input .mat-form-field-appearance-outline .mat-form-field-infix { padding:3px 0px;}
+.delete-input .text-danger.text-left.small { position: absolute; bottom: 2px; }
+a.workflow_id { color:#337ab7; font-size: 14px; text-decoration: underline; } 
+.mat-button.send_btn { background-color:#29b6d8; color:#fff; }
+.scroll-window { color:#6a6c6f; }
+.scheduler-border .mat-checkbox.inactivate{position:relative;margin:10px auto;display:table}
+/* box start */
+.search-results-stud {padding:10px 0;max-height:650px;border-right:1px solid transparent;display: inline-block;position: relative;width:100%;overflow: auto;}
+.content-height { display: -webkit-box;display: -webkit-flex;display: -ms-flexbox;display: flex; flex-wrap: wrap; }
+.box-container { width:100%; position: relative; display: inline-block; margin-bottom:20px; }
+.box-block { margin-bottom:20px;}
+.sub-box { width:100%; height:100%; display: inline-block; position: relative; padding:15px; border:1px solid #29b6d8; border-radius:6px;-webkit-box-shadow:3px 10px 30px -5px rgba(0,0,0,0.4);-moz-box-shadow: 3px 10px 30px -5px rgba(0,0,0,0.4);box-shadow:3px 10px 30px -5px rgba(0,0,0,0.4);margin-bottom:0;}
+.box-details { width:100%; display: inline-block; text-align: center;padding-top:25px;}
+.box-details img{width:90px;height:90px;border-radius:50%;border:3px solid #93dbea;}
+.box-details h3{text-transform:capitalize;font-size:16px;font-weight:bold;color:#000000;width:100%; text-overflow: ellipsis;overflow:hidden;white-space:nowrap;display:inline-block;margin-top:15px}
+.box-details h4{text-transform:capitalize;font-size:14px;font-weight:normal;color:#232531;width:100%; text-overflow: ellipsis;overflow:hidden;white-space:nowrap;margin-top:0;display:inline-block}
+.side-btn{float:right}
+.menu-icon.mat-button{color:#b2b2b2;min-width:auto;line-height:10px;padding:0;position:absolute;right:10px;top:5px}
+.menu-icon.mat-button .material-icons{font-size:30px}
+.form-group.button-block{width:100%;text-align:center;display:inline-block;margin:20px 0}
+.form-group.button-block .password-submit{text-transform:capitalize}
+ul.member-list{width:100%;padding-left:0;margin-bottom:0}
+ul.member-list li{width:50%;display:inline-block;padding:0 10px;text-align:center}
+ul.member-list li{font-size:14px;color:#000000}
+ul.member-list h2{font-size:20px;font-weight:bold;color:#000000}
+button.mat-button.side-btn{text-align:left;text-transform:capitalize}
+button.mat-menu-item{text-align:left;text-transform:capitalize}
+
+.inactive_section{width:100%;display:inline-block;text-align:center}
+.inactive_section .inactive_icon{font-size:12px;color:#fff;background-color:#f20;border-radius:4px;padding:4px 6px}
+.inactive_section .inactive_icon i{font-size:11px;color:#fff}
+
+.spinner-container { width:100%; text-align: center; display: inline-block;}
+.spinner-container mat-spinner { display: inline-block;}
+/* graphical chart start */
+.graph-title h3 { font-size:16px;padding-bottom: 10px; border-bottom: 1px solid #ccc;margin-bottom: 20px;display: inline-block;width: 100%; }
+.graphic-container { width:100%; overflow-x:auto;display:inline-block; }
+.graphical_tree .bar-img {width: 28px; height: 28px;float: left;margin-right: 5px !important; position: relative;top: 6px;}
+.graphical_tree {list-style: none;}
+.graphical_tree, .graphical_tree * {margin: 0;padding: 0;}
+.graphical_tree > li {padding-left: 0;}
+.graphical_tree > li::before, .graphical_tree > li::after {display: none;}
+li span::before { font-family: 'Roboto-Regular';}
+.graphical_tree .empty_tree ~ ul::before { width:240px; }
+.graphical_tree .empty_tree ~ ul { padding-left:240px; }
+.graphical_tree p { display: table; margin-right:40px;}
+.graphical_tree > li:first-child {padding-left:0;}
+.graphical_tree li {display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;flex-direction: row;align-items: center; padding-top: .5vh;padding-bottom: .5vh;position: relative; padding-left: 60px;}
+.graphical_tree li::before {content: '';position: absolute;left: 0;top: 50%;border-top: 5px solid #dfeaf1;width: 60px;}
+.graphical_tree li::after {content: '';position: absolute;left: 0;border-left: 5px solid #dfeaf1;}
+.graphical_tree li:last-of-type::after {height: 50%;top: 0;}
+.graphical_tree li:first-of-type::after {height: 50%;bottom: 0;}
+.graphical_tree span label { height: 24px; width: 12px;border-bottom-left-radius: 90px; border-top-left-radius: 90px;background-color: #0f5e8c;position: absolute;right: 0;top: 25px;}
+.graphical_tree li ul li:last-of-type::after {height: 50%;top: 0;}
+.graphical_tree li ul li:first-of-type::after {height: 50%;bottom: 0;}
+.graphical_tree li.firstLi::after {height: 0% !important;}
+/* .graphical_tree li.firstLi ~ li::after {height: 100% !important;top:-33px!important;} */
+.graphical_tree li:first-child ul:first-of-type > li.firstLi:first-child::after { height:0px; }
+.graphical_tree li:first-child ul:first-of-type > li.firstLi:first-child ul li.firstLi:first-child::after { height:50%; }
+.graphical_tree li:not(:first-of-type):not(:last-of-type)::after {height: 100%;}
+
+.graphical_tree li ul li.firstLi ~ li.firstLi.secound:first-of-type::after { height:50%; }
+.graphical_tree li ul li.firstLi ~ li.firstLi.secound:last-of-type::after { height:50%; }
+
+.graphical_tree li ul li.firstLi.secound:first-of-type::after { height:0%; }
+.graphical_tree li ul li.firstLi.secound:last-of-type::after { height:0%; }
+
+.graphical_tree li ul li:only-child::after { height:0px !important;}
+.graphical_tree ul:empty { display: none;}
+
+.graphical_tree ul, .graphical_tree ol {padding-left: 60px;position: relative;}
+.graphical_tree ul::before, .graphical_tree ol::before {content: '';position: absolute;left: 0;top: 50%;border-top: 5px solid #dfeaf1;width: 60px;}
+.graphical_tree span {border: 1px solid #0f5e8c;box-shadow: 0 0 20px 0px #ccc;text-align: left;padding: 10px 15px 10px 5px;min-width: 120px;min-height: 60px;text-transform: capitalize;font-family: 'Roboto-Regular';position: relative;display: inline-block;}
+.graphical_tree .box-name {width: 65px;display: inline-block;}
+.graphical_tree .box-name h6 { width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;margin-bottom:5px;}
+.graphical_tree li > span ul {padding-left:0; margin-bottom:0;}
+.graphical_tree li > span ul > li { display: inline-block; }
+/* .graphical_tree span > span { cursor: pointer; position:absolute; bottom:-8px; right:5px; border:none; box-shadow: none;min-width:auto;min-height:auto;padding:0;margin:0;} */
+.graphical_tree span > label ~ h6 { position:relative; top:6px; font-size:11px; }
+.graphical_tree span > span { font-weight:bold; border:none;padding:0;margin:0;box-shadow: none;}
+.graphical_tree span > span img { width:28px; height:28px; border-radius: 50%; }
+.graphical_tree > li > span { border-left: 5px solid #2196F3; }
+.graphical_tree > li > span ~ ul > li > span { border-left: 5px solid #f20; }
+.graphical_tree > li > span ~ ul > li > span ~ ul > li > span { border-left: 5px solid rgb(106, 240, 124); }
+
+
+
+
+
+
+/* The ribbons */
+.corner-ribbon{
+    position: absolute;
+    top: 25px;
+    left: -50px;
+    text-align: center;
+    letter-spacing: 1px;
+    color: #f0f0f0;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    font-size: 10px;
+    border-bottom: 30px solid #4CAF50;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+}
+
+.corner-ribbon span{font-size:10px;color:#fff;position:relative;top:25px;padding:0}
+
+/* Custom styles */
+
+.corner-ribbon.sticky{
+  position: absolute;
+}
+
+.corner-ribbon.top-left{
+    top: -14px;
+    left: -31px;    
+    transform: rotate(-45deg);
+    -ms-transform:rotate(-45deg);
+    -moz-transform:rotate(-45deg);
+    -o-transform:rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    z-index: 9;
+}
+
+:host /deep/ .sub-box:hover .corner-ribbon.top-left{z-index:1}
+
+
+@media (max-width: 1199px) and (min-width: 992px)
+{
+.activity .filter-btn.mat-button {
+    padding: 0% 3%;
+}
+}
+@media (max-width: 1230px) and (min-width: 992px)
+{
+.user-btn-block .filter-btn.mat-button, .activity .filter-btn.mat-button {
+    padding: 0px 5px;
+    width: 30%;
+}
+}

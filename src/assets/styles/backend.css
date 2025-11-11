@@ -1,0 +1,526 @@
+@font-face { font-family: 'HelveticaLTStd-BoldCond'; src: url(../fonts/HelveticaLTStd-BoldCond.otf); }     
+@font-face { font-family: 'HelveticaLTStd-Cond'; src: url(../fonts/HelveticaLTStd-Cond.otf); }          
+@font-face { font-family: 'Playball'; src: url(../fonts/Playball.ttf); } 
+@font-face { font-family: 'certificate'; src: url(../fonts/certificate.ttf); }
+@font-face { font-family: 'OpenSans'; src: url(../fonts/OpenSans.ttf); }
+@font-face { font-family: 'Open-Sans-Bold'; src: url(../fonts/Open-Sans-Bold.ttf); }
+@font-face { font-family: 'Open-Sans-SemiBold'; src: url(../fonts/Open-Sans-SemiBold.ttf); }
+
+@font-face { font-family: 'Roboto-Bold'; src: url(../fonts/Roboto-Bold.ttf); }
+@font-face { font-family: 'Roboto-Medium'; src: url(../fonts/Roboto-Medium.ttf); }
+@font-face { font-family: 'ALEGREYASC-REGULAR'; src: url(../fonts/ALEGREYASC-REGULAR.TTF); }
+@font-face { font-family: 'PTSerif-Regular'; src: url(../fonts/PTSerif-Regular.ttf); }
+@font-face { font-family: 'Nyala'; src: url(../fonts/Nyala.ttf); }
+@font-face { font-family: 'Alex'; src: url(../fonts/Alex.ttf); }
+@font-face { font-family: 'AlexBrush-Regular'; src: url(../fonts/AlexBrush-Regular.ttf); }
+@font-face { font-family: 'Ovo'; src: url(../fonts/Ovo.ttf); }
+@font-face { font-family: 'calibri'; src: url(../fonts/calibri.ttf);  }
+@font-face { font-family: 'museoslab300'; src: url(../fonts/museoslab300.ttf);  }
+@font-face { font-family: 'Kadwa-Regular'; src: url(../fonts/Kadwa-Regular.ttf);  }
+@font-face { font-family: 'Kreon-Regular'; src: url(../fonts/Kreon-Regular.ttf);  }
+@font-face { font-family: 'Poly-Regular'; src: url(../fonts/Poly-Regular.ttf); }
+@font-face { font-family: 'Poppins-Regular'; src: url(../fonts/Poppins-Regular.otf); }
+@font-face { font-family: 'Allura-Regular'; src: url(../fonts/Allura-Regular.otf); }
+@font-face { font-family: 'Archivo-Regular'; src: url(../fonts/Archivo-Regular.ttf); }
+@font-face { font-family: 'OpenSans-Regular'; src: url(../fonts/OpenSans-Regular.ttf); }
+@font-face { font-family: 'CinzelDecorative-Regular'; src: url(../fonts/CinzelDecorative-Regular.otf); }
+@font-face { font-family: 'Raleway-Light'; src: url(../fonts/Raleway-Light.ttf); }
+@font-face { font-family: 'Raleway-Bold'; src: url(../fonts/Raleway-Bold.ttf); }
+@font-face { font-family: 'Italianno-Regular'; src: url(../fonts/Italianno-Regular.otf); }
+@font-face { font-family: 'Verdana'; src: url(../fonts/Verdana.ttf); }
+@font-face { font-family: 'Verdana-Bold'; src: url(../fonts/Verdana-Bold.ttf); }
+@font-face { font-family: 'Montserrat-Regular'; src: url(../fonts/Montserrat-Regular.otf); }
+@font-face { font-family: 'Vollkorn-Italic'; src: url(../fonts/Vollkorn-Italic.ttf); }
+@font-face { font-family: 'Montserrat-SemiBold'; src: url(../fonts/Montserrat-SemiBold.otf); }
+@font-face { font-family: 'CormorantUnicase-Regular'; src: url(../fonts/CormorantUnicase-Regular.ttf); }
+
+
+
+body { word-break: break-word;margin:0 auto; }
+.certificate-block {position: relative;width: 100%;max-width:1080px;/*padding: 5px;border: 2px solid #b78846;*/display: inline-block;}
+/* .certificate-block:before, .certificate-block:after {content: "•";position: absolute;width: 14px;height: 14px;font-size: 14px;color: #b78846;border: 2px solid #b78846;line-height: 12px;top: 5px;text-align: center;}
+.certificate-block:before {left: 5px;}
+.certificate-block:after {right: 5px;} */
+.certificate-block .certificate-sub-block {position: relative;/*border: 2px solid #b78846;padding:40px 40px 60px 40px;*/}
+/* .certificate-block .certificate-sub-block:before, .certificate-block .certificate-sub-block:after {content: "•";position: absolute;width: 14px;height: 14px;font-size: 14px;color: #b78846;border: 2px solid #b78846;line-height: 12px;bottom: -2px;text-align: center;}
+.certificate-block .certificate-sub-block:before { left: -2px; }
+.certificate-block .certificate-sub-block:after { right: -2px; } */
+
+.ql-editor { padding:0;}
+.contentaddhere { width:100%; position: relative; }
+.placeholderAddContent { display:none !important; }
+
+.ql-align-center { text-align: center; }
+.ql-align-right { text-align: right; }
+.ql-align-left { text-align: left; }
+.container-dragdrop { width:100%;}
+.main-sub { display: flex; }
+.main {width:100%; color:#000; margin-bottom:20px;}
+.content-two { width:49%;float: left;}
+.main p { word-break: break-word; }
+.main p span img{ padding:10px;}
+.h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6{font-family:inherit;font-weight:500;line-height:normal;color:inherit;padding:0 30px;}
+.h1,.h2,.h3,h1,h2,h3{margin-top:5px;margin-bottom:5px}
+.h4,.h5,.h6,h4,h5,h6{margin-top:5px;margin-bottom:5px}
+.h1,h1{font-size:36px}
+.h2,h2{font-size:30px}
+.h3,h3{font-size:24px}
+.h4,h4{font-size:18px}
+.h5,h5{font-size:14px}
+.h6,h6{font-size:12px}
+p{margin:5px 0 5px 0;padding:0 0px;}
+span{padding:5px 0;}
+img { max-width:100%;}
+
+
+
+
+.ql-font span[data-label="aref"]::before { font-family: "Aref Ruqaa"; }
+.ql-font span[data-label="play"]::before { font-family: 'Playball'; }
+.ql-font span[data-label="certificate"]::before { font-family: 'certificate'; }
+.ql-font span[data-label="helveticabold"]::before { font-family: 'HelveticaLTStd-BoldCond'; }
+.ql-font span[data-label="helveticastd"]::before { font-family: 'HelveticaLTStd-Cond'; }
+.ql-font span[data-label="opensans"]::before { font-family: 'OpenSans'; }
+.ql-font span[data-label="opensans-semi"]::before { font-family: 'Open-Sans-SemiBold'; }
+.ql-font span[data-label="opensans-bold"]::before { font-family: 'Open-Sans-Bold'; }
+
+.ql-font span[data-label="roboto-bold"]::before { font-family: 'Roboto-Bold';  }
+.ql-font span[data-label="roboto-medium"]::before { font-family: 'Roboto-Medium';}
+.ql-font span[data-label="alegreyasc-regular"]::before { font-family: 'ALEGREYASC-REGULAR';}
+.ql-font span[data-label="ptserif-regular"]::before { font-family: 'PTSerif-Regular'; }
+.ql-font span[data-label="nyala"]::before { font-family: 'Nyala'; }
+.ql-font span[data-label="alex"]::before { font-family: 'Alex'; }
+.ql-font span[data-label="alex-regular"]::before { font-family: 'AlexBrush-Regular'; }
+.ql-font span[data-label="ovo"]::before { font-family: 'Ovo'; }
+.ql-font span[data-label="calibri"]::before { font-family: 'calibri'; }
+.ql-font span[data-label="museoslab"]::before { font-family: 'museoslab300'; }
+.ql-font span[data-label="kadwa-regular"]::before { font-family: 'Kadwa-Regular'; }
+.ql-font span[data-label="kron-regular"]::before { font-family: 'Kreon-Regular'; }
+.ql-font span[data-label="poly-regular"]::before { font-family: 'Poly-Regular'; }
+.ql-font span[data-label="poppins-regular"]::before { font-family: 'Poppins-Regular';}
+.ql-font span[data-label="allura-regular"]::before { font-family: 'Allura-Regular'; }
+.ql-font span[data-label="archivo-regular"]::before { font-family: 'Archivo-Regular'; }
+.ql-font span[data-label="cinzel-regular"]::before { font-family: 'CinzelDecorative-Regular'; }
+.ql-font span[data-label="raleway-light"]::before { font-family: 'Raleway-Light'; }
+.ql-font span[data-label="raleway-bold"]::before { font-family: 'Raleway-Bold'; }
+.ql-font span[data-label="italianno-regular"]::before { font-family: 'Italianno-Regular'; }
+.ql-font span[data-label="verdana"]::before { font-family: 'Verdana'; }
+.ql-font span[data-label="verdana-bold"]::before { font-family: 'Verdana-Bold'; }
+.ql-font span[data-label="montserrat-regular"]::before { font-family: 'Montserrat-Regular'; }
+.ql-font span[data-label="vollkorn-italic"]::before { font-family: 'Vollkorn-Italic'; }
+.ql-font span[data-label="montserrat-semibold"]::before { font-family: 'Montserrat-SemiBold'; }
+.ql-font span[data-label="cormor-regular"]::before { font-family: 'CormorantUnicase-Regular'; }
+
+
+.ql-font span[data-label="mirza"]::before { font-family: "Mirza"; }
+.ql-font span[data-label="roboto"]::before { font-family: "Roboto"; }
+.ql-font span[data-label="acme"]::before { font-family: "Acme"; }
+.ql-font span[data-label="archivo"]::before { font-family: "Archivo Narrow"; }
+.ql-font span[data-label="cantarell"]::before { font-family: "Cantarell"; }
+.ql-font span[data-label="comfortaa"]::before { font-family: "Comfortaa"; }
+.ql-font span[data-label="courgette"]::before { font-family: "Courgette"; }
+.ql-font span[data-label="fredoka"]::before { font-family: "Fredoka One"; }
+.ql-font span[data-label="great"]::before { font-family: "Great Vibes"; }
+.ql-font span[data-label="hind"]::before { font-family: "Hind Siliguri"; }
+.ql-font span[data-label="jomhuria"]::before { font-family: "Jomhuria"; }
+.ql-font span[data-label="kanit"]::before { font-family: "Kanit"; }
+.ql-font span[data-label="kaushan"]::before { font-family: "Kaushan Script"; }
+.ql-font span[data-label="manuale"]::before { font-family: "Manuale"; }
+.ql-font span[data-label="maven"]::before { font-family: "Maven Pro"; }
+.ql-font span[data-label="monda"]::before { font-family: "Monda"; }
+.ql-font span[data-label="orbitron"]::before { font-family: "Orbitron"; }
+.ql-font span[data-label="overpass"]::before { font-family: "Overpass"; }
+.ql-font span[data-label="quat"]::before { font-family: "Quattrocento Sans"; }
+.ql-font span[data-label="satisfy"]::before { font-family: "Satisfy"; }
+.ql-font span[data-label="signika"]::before { font-family: "Signika"; }
+
+
+/* Set content font-families */
+.ql-font-mirza {font-family: "Mirza" !important;}
+.ql-font-play { font-family: 'Playball' !important;}
+.ql-font-certificate { font-family: 'certificate' !important;}
+.ql-font-helveticabold { font-family: 'HelveticaLTStd-BoldCond' !important; }
+.ql-font-helveticastd { font-family: 'HelveticaLTStd-Cond' !important; }
+
+span.ql-font-helveticabold { font-family: 'HelveticaLTStd-BoldCond' !important; }
+span.ql-font-helveticastd { font-family: 'HelveticaLTStd-Cond' !important; }
+
+.ql-font-opensans { font-family: 'OpenSans' !important; }
+.ql-font-opensans-semi { font-family: 'Open-Sans-SemiBold' !important; }
+.ql-font-opensans-bold { font-family: 'Open-Sans-Bold' !important; }
+.ql-font-roboto-bold { font-family: 'Roboto-Bold' !important;  }
+.ql-font-roboto-medium { font-family: 'Roboto-Medium' !important;}
+.ql-font-alegreyasc-regular { font-family: 'ALEGREYASC-REGULAR' !important;}
+.ql-font-ptserif-regular { font-family: 'PTSerif-Regular' !important; }
+.ql-font-nyala { font-family: 'Nyala' !important; }
+.ql-font-alex { font-family: 'Alex' !important; }
+.ql-font-alex-regular { font-family: 'AlexBrush-Regular' !important; }
+.ql-font-ovo { font-family: 'Ovo' !important; }
+.ql-font-calibri { font-family: 'calibri' !important; }
+.ql-font-museoslab { font-family: 'museoslab300' !important; }
+.ql-font-kadwa-regular { font-family: 'Kadwa-Regular' !important; }
+.ql-font-kron-regular { font-family: 'Kreon-Regular' !important; }
+.ql-font-poly-regular { font-family: 'Poly-Regular' !important; }
+.ql-font-poppins-regular { font-family: 'Poppins-Regular' !important;}
+.ql-font-allura-regular { font-family: 'Allura-Regular' !important; }
+.ql-font-archivo-regular { font-family: 'Archivo-Regular' !important; }
+.ql-font-cinzel-regular { font-family: 'CinzelDecorative-Regular' !important; }
+.ql-font-raleway-light { font-family: 'Raleway-Light' !important; }
+.ql-font-raleway-bold { font-family: 'Raleway-Bold' !important; }
+.ql-font-italianno-regular { font-family: 'Italianno-Regular' !important; }
+.ql-font-verdana { font-family: 'Verdana' !important; }
+.ql-font-verdana-bold { font-family: 'Verdana-Bold' !important; }
+.ql-font-montserrat-regular { font-family: 'Montserrat-Regular' !important; }
+.ql-font-vollkorn-italic { font-family: 'Vollkorn-Italic' !important; }
+.ql-font-montserrat-semibold { font-family: 'Montserrat-SemiBold' !important; }
+.ql-font-cormor-regular { font-family: 'CormorantUnicase-Regular' !important; }
+
+.ql-font-roboto {font-family: "Roboto" !important;}
+.ql-font-aref { font-family: "Aref Ruqaa" !important;}
+.ql-font-acme { font-family: "Acme" !important;}
+.ql-font-archivo { font-family: "Archivo Narrow" !important;}
+.ql-font-cantarell { font-family: "Cantarell" !important;}
+.ql-font-comfortaa { font-family: "Comfortaa" !important;}
+.ql-font-courgette { font-family: "Courgette" !important;}
+.ql-font-fredoka { font-family: "Fredoka One" !important;}
+.ql-font-great { font-family: "Great Vibes" !important;}
+.ql-font-hind { font-family: "Hind Siliguri" !important;}
+.ql-font-jomhuria { font-family: "Jomhuria" !important;}
+.ql-font-kanit { font-family: "Kanit" !important;}
+.ql-font-kaushan { font-family: "Kaushan Script" !important;}
+.ql-font-manuale { font-family: "Manuale" !important;}
+.ql-font-maven { font-family: "Maven Pro" !important;}
+.ql-font-monda { font-family: "Monda" !important;}
+.ql-font-orbitron { font-family: "Orbitron" !important;}
+.ql-font-overpass { font-family: "Overpass" !important;}
+.ql-font-quat { font-family: "Quattrocento Sans" !important;}
+.ql-font-satisfy { font-family: "Satisfy" !important;}
+.ql-font-signika { font-family: "Signika" !important;}
+
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="mirza"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="mirza"]::before {content: 'Mirza';font-family: "Mirza"; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="play"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="play"]::before {content: 'Playball'; font-family: 'Playball';}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="certificate"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="certificate"]::before {content: 'Certificate'; font-family: 'certificate';}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="helveticabold"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="helveticabold"]::before {content: 'HelveticaLTStd-BoldCond'; font-family: 'HelveticaLTStd-BoldCond';}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="helveticastd"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="helveticastd"]::before {content: 'HelveticaLTStd-Cond'; font-family: 'HelveticaLTStd-Cond';}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="opensans"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="opensans"]::before {content: 'OpenSans';font-family: "OpenSans";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="opensans-semi"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="opensans-semi"]::before {content: 'OpenSans-SemiBold';font-family: "Open-Sans-SemiBold";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="opensans-bold"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="opensans-bold"]::before {content: 'OpenSans-Bold';font-family: "Open-Sans-Bold";}
+
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="roboto-bold"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="roboto-bold"]::before { content:'Roboto-Bold';   font-family: 'Roboto-Bold';  }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="roboto-medium"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="roboto-medium"]::before { content:'Roboto-Medium'; font-family: 'Roboto-Medium';}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="alegreyasc-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="alegreyasc-regular"]::before { content:'ALEGREYASC-REGULAR'; font-family: 'ALEGREYASC-REGULAR';}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="ptserif-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="ptserif-regular"]::before { content:'PTSerif-Regular';  font-family: 'PTSerif-Regular'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="nyala"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="nyala"]::before { content:'Nyala';  font-family: 'Nyala'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="alex"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="alex"]::before { content:'Alex';  font-family: 'Alex'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="alex-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="alex-regular"]::before { content:'AlexBrush-Regular';  font-family: 'AlexBrush-Regular'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="ovo"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="ovo"]::before { content:'Ovo';  font-family: 'Ovo'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="calibri"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="calibri"]::before { content:'calibri';  font-family: 'calibri'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="museoslab"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="museoslab"]::before { content:'museoslab300';  font-family: 'museoslab300'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="kadwa-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="kadwa-regular"]::before { content:'Kadwa-Regular';  font-family: 'Kadwa-Regular'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="kron-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="kron-regular"]::before { content:'Kreon-Regular';  font-family: 'Kreon-Regular'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="poly-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="poly-regular"]::before { content:'Poly-Regular';  font-family: 'Poly-Regular'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="poppins-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="poppins-regular"]::before { content:'Poppins-Regular'; font-family: 'Poppins-Regular';}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="allura-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="allura-regular"]::before { content:'Allura-Regular';  font-family: 'Allura-Regular'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="archivo-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="archivo-regular"]::before { content:'Archivo-Regular';  font-family: 'Archivo-Regular'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="cinzel-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="cinzel-regular"]::before { content:'CinzelDecorative-Regular';  font-family: 'CinzelDecorative-Regular'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="raleway-light"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="raleway-light"]::before { content:'Raleway-Light';  font-family: 'Raleway-Light'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="raleway-bold"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="raleway-bold"]::before { content:'Raleway-Bold';  font-family: 'Raleway-Bold'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="italianno-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="italianno-regular"]::before { content:'Italianno-Regular';  font-family: 'Italianno-Regular'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="verdana"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="verdana"]::before { content:'Verdana';  font-family: 'Verdana'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="verdana-bold"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="verdana-bold"]::before { content:'Verdana-Bold';  font-family: 'Verdana-Bold'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="montserrat-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="montserrat-regular"]::before { content:'Montserrat-Regular';  font-family: 'Montserrat-Regular'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="vollkorn-italic"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="vollkorn-italic"]::before { content:'Vollkorn-Italic';   font-family: 'Vollkorn-Italic'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="montserrat-semibold"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="montserrat-semibold"]::before { content:'Montserrat-SemiBold';  font-family: 'Montserrat-SemiBold'; }
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="cormor-regular"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="cormor-regular"]::before {content:'CormorantUnicase-Regular';   font-family: 'CormorantUnicase-Regular'; }
+
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="roboto"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="roboto"]::before {content: 'Roboto';font-family: "Roboto";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="aref"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="aref"]::before {content: 'Aref Ruqaa'; font-family: "Aref Ruqaa";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="acme"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="acme"]::before {content: 'Acme';font-family: "Acme";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="archivo"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="archivo"]::before {content: 'Archivo Narrow';font-family: "Archivo Narrow";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="cantarell"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="cantarell"]::before {content: 'Cantarell';font-family: "Cantarell";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="comfortaa"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="comfortaa"]::before {content: 'Comfortaa';font-family: "Comfortaa";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="comfortaa"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="comfortaa"]::before {content: 'Comfortaa';font-family: "Comfortaa";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="courgette"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="courgette"]::before {content: 'Courgette';font-family: "Courgette";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="fredoka"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="fredoka"]::before {content: 'Fredoka One';font-family: "Fredoka One";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="great"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="great"]::before {content: 'Great Vibes';font-family: "Great Vibes";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="hind"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="hind"]::before {content: 'Hind Siliguri';font-family: "Hind Siliguri";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="jomhuria"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="jomhuria"]::before {content: 'Jomhuria';font-family: "Jomhuria";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="kanit"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="kanit"]::before {content: 'Kanit';font-family: "Kanit";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="kaushan"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="kaushan"]::before {content: 'Kaushan Script';font-family: "Kaushan Script";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="manuale"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="manuale"]::before {content: 'Manuale';font-family: "Manuale";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="maven"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="maven"]::before {content: 'Maven Pro';font-family: "Maven Pro";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="monda"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="monda"]::before {content: 'Monda';font-family: "Monda";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="orbitron"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="orbitron"]::before {content: 'Orbitron';font-family: "Orbitron";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="overpass"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="overpass"]::before {content: 'Overpass';font-family: "Overpass";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="quat"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="quat"]::before {content: 'Quattrocento Sans';font-family: "Quattrocento Sans";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="satisfy"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="satisfy"]::before {content: 'Satisfy';font-family: "Satisfy";}
+
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="signika"]::before, 
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="signika"]::before {content: 'Signika';font-family: "Signika";}
+
+/* font-sizes */
+
+.ql-size span[data-label="8"]::before { font-size:8px; }
+.ql-size span[data-label="10"]::before { font-size:10px; }
+.ql-size span[data-label="12"]::before { font-size:12px; }
+.ql-size span[data-label="14"]::before { font-size:14px; }
+.ql-size span[data-label="16"]::before { font-size:16px; }
+.ql-size span[data-label="18"]::before { font-size:18px; }
+.ql-size span[data-label="20"]::before { font-size:20px; }
+.ql-size span[data-label="22"]::before { font-size:22px; }
+.ql-size span[data-label="24"]::before { font-size:24px; }
+.ql-size span[data-label="26"]::before { font-size:26px; }
+.ql-size span[data-label="28"]::before { font-size:28px; }
+.ql-size span[data-label="30"]::before { font-size:30px; }
+.ql-size span[data-label="32"]::before { font-size:32px; }
+.ql-size span[data-label="34"]::before { font-size:34px; }
+.ql-size span[data-label="36"]::before { font-size:36px; }
+.ql-size span[data-label="38"]::before { font-size:38px; }
+.ql-size span[data-label="40"]::before { font-size:40px; }
+.ql-size span[data-label="42"]::before { font-size:42px; }
+.ql-size span[data-label="44"]::before { font-size:44px; }
+.ql-size span[data-label="46"]::before { font-size:46px; }
+.ql-size span[data-label="48"]::before { font-size:48px; }
+.ql-size span[data-label="50"]::before { font-size:50px; }
+.ql-size span[data-label="52"]::before { font-size:52px; }
+.ql-size span[data-label="54"]::before { font-size:54px; }
+.ql-size span[data-label="56"]::before { font-size:56px; }
+.ql-size span[data-label="58"]::before { font-size:58px; }
+.ql-size span[data-label="60"]::before { font-size:60px; }
+
+
+.ql-size-8 {font-size:8px;}
+.ql-size-10 {font-size:10px;}
+.ql-size-12 {font-size:12px;}
+.ql-size-14 {font-size:14px;}
+.ql-size-16 {font-size:16px;}
+.ql-size-18 {font-size:18px;}
+.ql-size-20 {font-size:20px;}
+.ql-size-22 {font-size:22px;}
+.ql-size-24 {font-size:24px;}
+.ql-size-26 {font-size:26px;}
+.ql-size-28 {font-size:28px;}
+.ql-size-30 {font-size:30px;}
+.ql-size-32 {font-size:32px;}
+.ql-size-34 {font-size:34px;}
+.ql-size-36 {font-size:36px;}
+.ql-size-38 {font-size:38px;}
+.ql-size-40 {font-size:40px;}
+.ql-size-42 {font-size:42px;}
+.ql-size-44 {font-size:44px;}
+.ql-size-46 {font-size:46px;}
+.ql-size-48 {font-size:48px;}
+.ql-size-50 {font-size:50px;}
+.ql-size-52 {font-size:52px;}
+.ql-size-54 {font-size:54px;}
+.ql-size-56 {font-size:56px;}
+.ql-size-58 {font-size:58px;}
+.ql-size-60 {font-size:60px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label::before, .ql-snow .ql-picker.ql-size .ql-picker-item::before { content:'Fontsize'}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="8"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="8"]::before {content: '8px';font-size:8px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="10"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="10"]::before {content: '10px';font-size:10px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="12"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="12"]::before {content: '12px';font-size:12px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="14"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="14"]::before {content: '14px';font-size:14px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="16"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="16"]::before {content: '16px';font-size:16px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="18"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="18"]::before {content: '18px';font-size:18px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="20"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="20"]::before {content: '20px';font-size:20px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="22"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="22"]::before {content: '22px';font-size:22px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="24"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="24"]::before {content: '24px';font-size:24px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="26"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="26"]::before {content: '26px';font-size:26px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="28"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="28"]::before {content: '28px';font-size:28px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="30"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="30"]::before {content: '30px';font-size:30px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="32"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="32"]::before {content: '32px';font-size:32px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="34"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="34"]::before {content: '34px';font-size:34px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="36"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="36"]::before {content: '36px';font-size:36px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="38"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="38"]::before {content: '38px';font-size:38px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="40"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="40"]::before {content: '40px';font-size:40px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="42"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="42"]::before {content: '42px';font-size:42px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="44"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="44"]::before {content: '44px';font-size:44px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="46"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="46"]::before {content: '46px';font-size:46px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="48"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="48"]::before {content: '48px';font-size:48px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="50"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="50"]::before {content: '50px';font-size:50px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="52"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="52"]::before {content: '52px';font-size:52px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="54"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="54"]::before {content: '54px';font-size:54px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="56"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="56"]::before {content: '56px';font-size:56px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="58"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="58"]::before {content: '58px';font-size:58px;}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="60"]::before, 
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="60"]::before {content: '60px';font-size:60px;}
+
+
+
+
+
+.ql-indent-1 { padding-left: 3em; }
+.ql-indent-2 { padding-left: 7em; }
+.ql-indent-3 { padding-left: 11em; }
+.ql-indent-4 { padding-left: 15em; }
+.ql-indent-5 { padding-left: 19em; }
+.ql-indent-6 { padding-left: 23em; }
+.ql-indent-7 { padding-left: 27em; }
+.ql-indent-8 { padding-left: 31em; }
+.ql-indent-9 { padding-left: 35em; }
+.ql-indent-10 { padding-left: 39em; }

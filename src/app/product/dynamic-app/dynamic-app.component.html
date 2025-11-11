@@ -1,0 +1,198 @@
+<section class="start_wrapper new-assign">
+  <div class="overlay-show">
+    <p>Uploading file. Please Wait...</p>
+  </div>
+
+  <div class="hpanel">
+    <div class="col-sm-12">
+      <div class="fieldset-main">
+        <div class="fieldset-block">
+          <ul class="info-details">
+            <li>
+              <h3>Step {{currentStep}} <span> - </span> </h3>
+            </li>
+            <li>
+              <h3> {{userTitle}} <span *ngIf="userDetails?.org_name && userDetails?.profile_details?.custom_template"
+                  class="hif-spacing">-</span> {{userDetails?.org_name}} </h3>
+            </li>
+          </ul>
+        </div>
+
+        <div class="error-text">
+          <div class="text-danger text-left small"
+            *ngIf="batchList?.length === 0 && userDetails.profile_details.product_step !== 1">
+            {{'in_batchid_must_need' | translate}}</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="panel-heading clearfix">
+      <div class="pull-left" *ngIf="userDetails?.pages?.issue_certificate">
+        <h3>{{'add_activities' | translate}} <span matTooltip="{{'phi_add_acctivity' | translate}}"
+            class="headTooltip"><i class="material-icons"> help_outline</i></span></h3>
+      </div>
+
+      <div class="pull-right" *ngIf="allowTestMode && resTestModeUserList.length > 0">
+        <button mat-button class="popup_button" (click)="ngxSmartModalService.getModal('switch_next').open()">{{'switch_to_next_activity' | translate}}</button>
+      </div>
+
+    </div>
+
+    <div class="col-sm-12" *ngIf="batchList?.length > 0 && displayField?.length > 0">
+      <div class="product_detail_title">
+        <h4>{{'product_details_dyn' | translate}}</h4>
+      </div>
+      <div class="dynamic-details">
+
+        <div class="col-md-12">
+          <ul>
+            <li>{{'batchid' | translate}} <span>:</span></li>
+            <li>{{displayBatchId}}</li>
+          </ul>
+        </div>
+
+        <div class="col-md-12" *ngFor="let displayvendor of batchDetails?.vendorname">
+          <ul>
+            <li>{{displayvendor.role}} <span>:</span></li>
+            <li>{{displayvendor.company ? displayvendor.company : ''}}</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-sm-12" *ngIf="displayDynamicField">
+      <h4>{{'add_activity_details_form' | translate}} <span
+          matTooltip="{{'info_add_activity_details_form' | translate}}" class="headTooltip"><i class="material-icons">
+            help_outline</i></span></h4>
+      <div class="col-md-12" *ngIf="batchList?.length > 0 && displayField?.length > 0">
+        <div class="col-md-12">
+          <label>{{'batchid' | translate}}</label>
+          <input type="text" class="form-control non_primary" value="{{displayBatchId}}" [readonly]='true'>
+        </div>
+      </div>
+      <dynamic-form-builder *ngIf="step1DisplayForm" [fields]="getFields()"></dynamic-form-builder>
+    </div>
+
+
+  </div>
+  <ngx-smart-modal #myModal identifier="myModal" [closable]='false' [escapable]='false' [dismissable]='false'
+    (onAnyCloseEvent)="ngxSmartModalService.resetModalData('myModal')">
+    <div style="text-align: center">
+      <div class="view-evidence-title">
+        <h4> {{'alert' | translate}} </h4>
+      </div>
+      <div class="add-select-field">
+        <div class="row">
+          <div class="dynamic-popup-detail">
+
+            <i class="material-icons">warning</i>
+
+            <h4>{{'info_previous_step_notadded' | translate}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dropdown-ok">
+      <button type="button" mat-button class="add-custom-ok"
+        (click)="ngxSmartModalService.getModal('myModal').close();redirectToPrivilege()">{{'ok' | translate}}</button>
+    </div>
+  </ngx-smart-modal>
+  <ngx-smart-modal #sameactivityerror [closable]='false' [escapable]='false' [dismissable]='false'
+    identifier="sameactivityerror" class="emailverifypopup">
+    <div>
+      <div class="email-verify-warning">
+        <i class="material-icons"> warning </i>
+        <h4>{{'same_activity_error_info' | translate}}</h4>
+      </div>
+      <div class="emailVerify_btn">
+        <button mat-button class="wrong_ok"
+          (click)="ngxSmartModalService.getModal('sameactivityerror').close();redirectToPrivilege()">{{'ok' | translate}}</button>
+      </div>
+    </div>
+
+  </ngx-smart-modal>
+
+  <ngx-smart-modal #younotassign [closable]='false' [escapable]='false' [dismissable]='false' identifier="younotassign"
+    class="emailveri-block">
+    <div class="email-verify-warning">
+      <i class="material-icons"> warning </i>
+      <h4>{{'you_not_assign_to_any_workflow' | translate}}</h4>
+    </div>
+
+    <div class="emailVerify_btn">
+      <button mat-button class="wrong_ok"
+        (click)="ngxSmartModalService.getModal('younotassign').close();redirectToPrivilege()">{{'ok' | translate}}</button>
+    </div>
+  </ngx-smart-modal>
+
+  <ngx-smart-modal #workwrongurl [closable]='false' [escapable]='false' [dismissable]='false' identifier="workwrongurl"
+    class="emailveri-block">
+    <div class="email-verify-warning">
+      <i class="material-icons"> warning </i>
+      <h4>{{'wrong_url_content' | translate}}</h4>
+    </div>
+
+    <div class="emailVerify_btn">
+      <button mat-button class="wrong_ok"
+        (click)="ngxSmartModalService.getModal('workwrongurl').close();redirectToPrivilege()">{{'ok' | translate}}</button>
+    </div>
+  </ngx-smart-modal>
+
+  <ngx-smart-modal #selectworkflow [closable]='false' [escapable]='false' [dismissable]='false'
+    identifier="selectworkflow" class="select_workflow emailveri-block">
+    <h4>{{'please_select_workflowfor_firststep' | translate}}</h4>
+
+    <div class="workflow-select">
+      <select (change)="changeValueWorkFlowStep1($event);" class="form-control non_primary">
+        <option [disabled]="true" [value]="null" [selected]="true">{{'select_workflow' | translate}}</option>
+        <option *ngFor="let opt of workflowList" [value]="opt.workflow_db_id">{{opt.workflow_id}}</option>
+      </select>
+    </div>
+  </ngx-smart-modal>
+
+  <ngx-smart-modal #inactivity identifier="inactivity" [closable]='false' [escapable]='false' [dismissable]='false'>
+    <div class="email-verify-warning">
+        <i class="material-icons"> warning </i>
+        <h4>{{'workflow_is_not_activity_info' | translate}}</h4>
+      </div>
+  
+      <div class="emailVerify_btn">
+        <button mat-button class="wrong_ok"
+          (click)="ngxSmartModalService.getModal('inactivity').close();redirectToPrivilege()">{{'ok' | translate}}</button>
+      </div>
+  </ngx-smart-modal>
+
+  <ngx-smart-modal #selectbatch identifier="selectbatch" [closable]='false' [escapable]='false' [dismissable]='false'>
+    <h4>{{'please_select_your_batch' | translate}}</h4>
+    <div class="emailVerify_btn">
+      <select (change)="selectedbatch($event);" class="form-control non_primary">
+        <option [disabled]="true" [value]="null" [selected]="true">{{'select_batch_id' | translate}}</option>
+        <option *ngFor="let opt of outBatchList.list" [value]="opt.out_batch_id">{{opt.out_batch_id}}</option>
+      </select>
+    </div>
+  </ngx-smart-modal>
+
+
+  <ngx-smart-modal #switch_next identifier="switch_next" class="select_workflow emailveri-block">
+    <h4>{{'please_select_your_next_activity' | translate}}</h4>
+    <div class="switch-select">
+      <select (change)="selectedstep($event);" class="form-control non_primary">
+        <option [disabled]="true" [value]="null" [selected]="true">{{'select_next_step' | translate}}</option>
+        <option *ngFor="let step of resTestModeUserList" [value]="step.id">Step {{step.step}} - {{step.role}} - {{step.email}} </option>
+      </select>
+      <span class="error_txt">{{errorstep}}</span>
+    </div>
+  </ngx-smart-modal>
+
+  <ngx-smart-modal #user_blocked identifier="user_blocked" class="select_workflow emailveri-block">
+    <div class="email-verify-warning">
+      <i class="material-icons"> warning </i>
+      <h4>{{'info_to_blocked_user' | translate}}</h4>
+    </div>
+    <div class="emailVerify_btn">
+      <button mat-button class="wrong_ok"
+        (click)="redirectToPrivilege(true)">{{'ok' | translate}}</button>
+    </div>
+  </ngx-smart-modal>
+</section>

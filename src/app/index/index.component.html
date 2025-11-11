@@ -1,0 +1,445 @@
+<div class="blockeducate_container">
+	<section class="block_banner">
+		<!-- Banner Section Start -->
+		<header id="myHeader">
+			<!-- Header Start -->
+			<div class="container">
+				<div class="block_header_block">
+					<div class="row">
+						<div class="col-lg-10 col-md-12 col-sm-12">
+							<nav class="navbar navbar-expand-lg navbar-dark">
+								<h1 class=""><a class="navbar-brand blocklogo" href="#">Vottun</a></h1>
+							</nav>
+						</div>
+						<div class="col-lg-2 col-md-12 col-sm-12">
+							<div class="block_loginbtn_block swing" *ngIf="apiService.isLoggedIn()">
+								<a class="navbar-brand blocklogin" (click)="apiService.getUser()"
+									style="width: 125px">My Account</a>
+							</div>
+							<div class="block_loginbtn_block swing" *ngIf="!apiService.isLoggedIn()">
+								<a class="navbar-brand blocklogin" routerLink="/signin">Sign in</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header><!-- Header End -->
+
+		<div class="particle-block">
+			<div id="particles-js"></div>
+		</div>
+
+		<div class="container">
+			<div class="block_banner_details bounceInUp">
+				<h1>Certification through Blockchain</h1>
+				<p>Know how blockchain has revolutionized the manageability, security and integrity of educational
+					assets through its powerful encryption capability and distributed data infrastructure.</p>
+				<div class="block_fullimg"><img src="assets/images/block_section.png" class="img-fluid"></div>
+			</div>
+		</div>
+	</section><!-- Banner Section End -->
+
+	<section class="block_client">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-2 col-md-2 col-sm-3">
+					<div class="block_client_list"><img src="assets/images/client-1.png" class="img-fluid"></div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-3">
+					<div class="block_client_list"><img src="assets/images/client-2.png" class="img-fluid"></div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-3">
+					<div class="block_client_list"><img src="assets/images/client-3.png" class="img-fluid"></div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-3">
+					<div class="block_client_list"><img src="assets/images/client-4.png" class="img-fluid"></div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-3">
+					<div class="block_client_list"><img src="assets/images/client-5.png" class="img-fluid"></div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-3">
+					<div class="block_client_list"><img src="assets/images/client-3.png" class="img-fluid"></div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-3">
+					<div class="block_client_list"><img src="assets/images/client-1.png" class="img-fluid"></div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-3">
+					<div class="block_client_list"><img src="assets/images/client-5.png" class="img-fluid"></div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-3">
+					<div class="block_client_list"><img src="assets/images/client-4.png" class="img-fluid"></div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-3">
+					<div class="block_client_list"><img src="assets/images/client-3.png" class="img-fluid"></div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-3">
+					<div class="block_client_list"><img src="assets/images/client-2.png" class="img-fluid"></div>
+				</div>
+				<div class="col-lg-2 col-md-2 col-sm-3">
+					<div class="block_client_list"><img src="assets/images/client-1.png" class="img-fluid"></div>
+				</div>
+			</div>
+		</div>
+	</section><!-- Client Section End -->
+
+
+	<section class="block_about">
+		<div class="about_details">
+			<h1>What is Blockchain</h1>
+			<p>Block chain technology is used to distribute digital information in an encrypted and decentralized
+				fashion. Such data cannot be altered without the agreement of all the hosts of the network thus making
+				it highly secure</p>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-6 col-sm-12">
+					<div class="about_blocklist">
+						<div class="about_icon"><span class="icon icons-trace-user"></span></div>
+						<h3>True Traceablity</h3>
+						<p>Blockchain technology using its distributed ledger fundamental can potentially remove mission
+							critical glitches in traceability. All participants have access to this distributed ledger
+							and every digital interaction is recorded in a secure and transparent manner which is
+							resistant to tamper. </p>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-6 col-sm-12">
+					<div class="about_blocklist">
+						<div class="about_icon"><span class="icon icons-verified"></span></div>
+						<h3>Verification</h3>
+						<p>In the world of digital transactions, privacy and authenticity of users are of utmost
+							importance. Through its decentralized and impenetrable system, blockchain technology can
+							easily store and manage digital identities which can be utilized not only on national but
+							cross border platforms for verification.</p>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-6 col-sm-12">
+					<div class="about_blocklist">
+						<div class="about_icon"><span class="icon icons-transparency"></span></div>
+						<h3>Transparency</h3>
+						<p>Being an open-source technology, blockchain enables complete visibility to authorised users.
+							The public addresses of user holdings and their respective transactions are open for viewing
+							which forms the differentiator in transparency compared to the workings of traditional
+							financial systems.</p>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-6 col-sm-12">
+					<div class="about_blocklist">
+						<div class="about_icon"><span class="icon icons-ban"></span></div>
+						<h3>Removal of fakes</h3>
+						<p>The unalterable and incorruptible nature of blockchain technology helps in counterfeiting
+							certificates nearly impossible. Since every block in the chain is securely encrypted, any
+							data related to the users’ credentials, when distributed in these blocks is virtually
+							tamper-proof.</p>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-6 col-sm-12">
+					<div class="about_blocklist">
+						<div class="about_icon"><span class="icon icons-medal"></span></div>
+						<h3>Track Achievements</h3>
+						<p>Using blockchain, educational authorities can manage and consolidate student’s data allowing
+							then to create a digital trail. These digital transcripts can be shared by students with
+							potential job-offering companies who in turn can tap into the network to verify the
+							student’s achievement history.</p>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-6 col-sm-12">
+					<div class="about_blocklist">
+						<div class="about_icon"><span class="icon icons-wallet"></span></div>
+						<h3>Wallet</h3>
+						<p>Users can be rest assured about the safety of their investment which is concealed within
+							highly encrypted blocks. The user has full control on the wallet and can make any business
+							transactions with a level of ease. Armed with the best safe and secure network environment,
+							Wallet stands to be the best in business.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section><!-- About Section End -->
+
+	<section class="block_lifecycle">
+		<div class="container">
+			<div class="row">
+				<div class="lifecycle_details">
+					<h3>Life Cycle of Vottun</h3>
+					<p>The process cycle starting from completion of a training program to the shareability of the
+						student’s credentials can be understood in six simple steps.</p>
+				</div>
+
+				<div class="lifecycle_list_block">
+					<div class="lifecycle_list">
+						<img src="assets/images/lifecycle_main.png" class="img-fluid">
+
+						<div class="lifelist-1">
+							<p>Shares<br> Drive Referrals</p>
+						</div>
+
+						<div class="lifelist-2">
+							<p>Student Completed<br> Training Program</p>
+						</div>
+
+						<div class="lifelist-3">
+							<p>Publisher Gets<br> Student Information</p>
+						</div>
+
+						<div class="lifelist-4">
+							<p>Automatically<br> Sent to Students</p>
+						</div>
+
+						<div class="lifelist-5">
+							<p>Certification Issues</p>
+						</div>
+
+						<div class="lifelist-6">
+							<p>Certificate and<br> Badges Created</p>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section><!-- Lifecycle Blockchain Section End -->
+
+	<section class="block_why">
+		<div class="why_details">
+			<h3>Why Vottun</h3>
+			<p>A versatile product to build the most secure infrastructure using blockchain technology. A one of a kind
+				singular platform that can be utilized primarily for issuing educational credentials over a highly
+				secure network.</p>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-4 col-sm-12 container-height">
+					<div class="why_list">
+						<div class="why_box"><span class="icon icons-refresh"></span></div>
+						<h3>Scalable Integrations</h3>
+						<p>From small sized educational organisations to large scale universities, both can leverage off
+							the technology by using Vottun. True certifications in any field can hold more credibility
+							and eventually eradicate any mutilation of records. </p>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-4 col-sm-12 container-height">
+					<div class="why_list">
+						<div class="why_box"><span class="icon icons-network"></span></div>
+						<h3>World-Class Team</h3>
+						<p>Our best in class development team forms a strong foundation to any technology that we offer.
+							Having successfully delivered projects all over the globe, you can be rest assured about the
+							teams competency and reliability. Not just delivery but we stand tall when it comes to
+							support and customer service.</p>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-4 col-sm-12 container-height">
+					<div class="why_list">
+						<div class="why_box"><span class="icon icons-customizable"></span></div>
+						<h3>Fully-Customizable</h3>
+						<p>Vottun can be customized to suit your requirements. Our excellent team of developers and
+							project managers will make sure your requirement is understood and modulate the platform
+							wherever required.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section><!-- Why Section End -->
+
+	<section class="block_certificate">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-12">
+					<div class="certificate_details">
+						<h3 class="">Paper vs Digital <span>Certificates.</span></h3>
+
+						<p class="">Because of blockchain’s incorruptible audit trails, a digital certificate supersedes
+							its traditional counterpart in endorsing a certificate to be authentic and fraudulent free.
+						</p>
+						<p class="">Blockchain ensures that the user is in full control of his or her digital records
+							with an ability to share for life. This technology promises to be the best solution to fake
+							certificate creation problems currently faced by leading educational institutions.</p>
+					</div>
+				</div>
+
+				<img src="assets/images/certificate_img.png" class="img-fluid"
+					style="position: absolute; z-index: 1; right: 0px; top: -100px; width: 55%;">
+
+			</div>
+		</div>
+	</section><!-- Paper Certificate Section End -->
+
+	<section class="block_usecase">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<div class="usecase_details ">
+						<h3 class="">Use Cases<br> For <span>Vottun</span></h3>
+
+						<p class="">Theoretically blockchain promises to change the centralized world. The stakes are
+							quite high when it comes to change and we now know that the technology itself stays true to
+							its word in real life applications. Starting from bitcoin, Blockchain has shown excellent
+							results in maintaining the security, integrity and authenticity of any digital data stored
+							on its distributed network. </p>
+					</div>
+				</div>
+
+
+				<div class="col-lg-8 col-md-8 col-sm-12">
+					<div id="demo" class="carousel slide" data-ride="carousel">
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<div class="row">
+									<div class="col-lg-6 col-md-6">
+										<div class="usecase-list">
+											<div class="usecase_icons"><span class="icon icons-money-coins"></span>
+											</div>
+											<h2>Financial Services professionals</h2>
+											<p>Financial institutions can overcome the traditional hurdles like
+												authenticity and security of a professional's credentials by integrating
+												blockchain technology. Using blockchain, a digital certificate can be
+												issued which is cryptographically signed and registered on the network.
+											</p>
+										</div>
+									</div>
+
+									<div class="col-lg-6 col-md-6">
+										<div class="usecase-list">
+											<div class="usecase_icons"><span class="icon icons-heartbeat"></span></div>
+											<h2>Medical professionals</h2>
+											<p>Healthcare institutions can embark on the blockchain journey by
+												integrating the processes used by their certificate issuing authority
+												with the blockchain infrastructure. It has the potential to allow
+												tracking of the uploaded content and qualify its authenticity. </p>
+										</div>
+									</div>
+
+									<div class="col-lg-6 col-md-6">
+										<div class="usecase-list">
+											<div class="usecase_icons"><span class="icon icons-head-member"></span>
+											</div>
+											<h2>Association</h2>
+											<p>Esteemed organisations can take advantage of Blockchain technology to
+												issue memberships. Any profile of a member can be securely distributed
+												over the network and any such credential can be verified and weighed for
+												originality without an ounce of doubt.</p>
+										</div>
+									</div>
+
+									<div class="col-lg-6 col-md-6">
+										<div class="usecase-list">
+											<div class="usecase_icons"><span class="icon icons-calendar-icon"></span>
+											</div>
+											<h2>Event Certificates</h2>
+											<p>Blockchain due to its nature of immutability, the technology can be used
+												for any sort of event certification. Certifications require authenticity
+												and the endorsement value of Blockchain provides just that. Any
+												certificate issued using Blockchain can be verified to reflect its
+												originality and authenticity</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</section><!-- Use Case Section End -->
+	<!-- Plan Section End -->
+
+	<section class="block_contact">
+		<div class="contact_details">
+			<h3>Contact Us</h3>
+			<p>Our team is always ready to help you with any questions that you may have. Please fill out the form below
+				and we will get in touch</p>
+		</div>
+
+		<div class="container">
+
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-12 offset-md-3">
+					<div class="error-text-container">
+						<div class="text-success text-center small" *ngIf="successMsg">{{successMsg}}</div>
+					</div>
+				</div>
+			</div>
+
+			<form class="form-horizontal" [formGroup]="contactUsForm" (ngSubmit)="saveContactUs(contactUsForm.value)">
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-sm-12 offset-md-3">
+						<div class="contact_form">
+							<input type="text" id="firstname" formControlName="first_name" placeholder="First Name" />
+							<div class="text-danger text-left small" *ngIf="errorMsg">
+								{{geterrorMsg('first_name') || this.errorMsgArr['first_name'] | translate}}</div>
+						</div>
+
+						<div class="contact_form">
+							<input type="text" id="lastname" formControlName="last_name" placeholder="Last Name" />
+							<div class="text-danger text-left small" *ngIf="errorMsg">
+								{{geterrorMsg('last_name') || this.errorMsgArr['last_name'] | translate}}</div>
+						</div>
+					</div>
+
+					<div class="col-lg-6 col-md-6 col-sm-12 offset-md-3">
+						<div class="contact_form">
+							<input type="text" id="email" formControlName="email" placeholder="Email" />
+							<div class="text-danger text-left small" *ngIf="errorMsg">
+								{{geterrorMsg('email') || this.errorMsgArr['email'] | translate}}</div>
+						</div>
+
+						<div class="contact_form">
+							<input type="tel" id="phone" formControlName="phone" placeholder="Phone" />
+							<div class="text-danger text-left small" *ngIf="errorMsg">
+								{{geterrorMsg('phone') || this.errorMsgArr['phone'] | translate}}</div>
+						</div>
+					</div>
+
+					<div class="col-lg-6 col-md-6 col-sm-12 offset-md-3">
+						<div class="contact_form_textarea">
+							<textarea rows="5" id="message" formControlName="message" placeholder="Message"></textarea>
+							<div class="text-danger text-left small" *ngIf="errorMsg">
+								{{geterrorMsg('message') || this.errorMsgArr['message'] | translate}}</div>
+						</div>
+					</div>
+
+					<div class="col-lg-6 col-md-6 col-sm-12 offset-md-3">
+
+						<div class="contact_btn">
+							<div class="text-success text-center small" *ngIf="successMsg">{{successMsg}}</div>
+							<button type="submit">SEND</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section><!-- Contact Section End -->
+
+
+	<footer class="block_footer">
+		<div class="container">
+			<div class="row">
+				<div class="footer_details">
+					<h3 class="zoomIn">Vottun</h3>
+					<ul class="social_icon_list">
+						<li><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-official"
+									aria-hidden="true"></i></a></li>
+						<li><a href="https://www.twitter.com/" target="_blank"><i class="fa fa-twitter"
+									aria-hidden="true"></i></a></li>
+						<li><a href="https://www.linkedin.com/" target="_blank"><i class="fa fa-linkedin"
+									aria-hidden="true"></i></a></li>
+						<li><a href="https://dribbble.com/" target="_blank"><i class="fa fa-dribbble"
+									aria-hidden="true"></i></a></li>
+						<li><a href="https://www.behance.net/" target="_blank"><i class="fa fa-behance"
+									aria-hidden="true"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer><!-- Footer Section End -->
+</div>

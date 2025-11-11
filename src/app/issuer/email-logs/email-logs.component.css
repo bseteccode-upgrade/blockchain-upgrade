@@ -1,0 +1,19 @@
+:host /deep/ .mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex { height:44px; }
+:host /deep/ .mat-select-trigger { top:5px; }
+.spinner { width:100%; display: inline-block; text-align:center; }
+:host /deep/ .mat-form-field-hide-placeholder .mat-select-trigger { height: 3.125em; }
+span.email-title { font-family: 'Roboto-Regular'; color:#000; font-size: 16px;text-transform: capitalize;  position: relative; width: 100px; display: inline-block;}
+span.email-title::after { content:':'; position: relative; float:right; padding-right:10px;}
+.dynamic-content a {background-color: #0f1115;padding: 5px 10px;margin-top: 10px;position: relative;display: inline-block;color: #fff;border-radius: 4px;}
+.mandrilldate p { line-height: 12; font-family: 'Roboto-Regular'; }
+.password-enter.delete-container h5 { margin: 10px 0px; font-family: 'Roboto-Regular'; }
+mat-table.table.table-striped.table-bordered.table-hover.mat-table { min-width:1050px;}
+.spinner-center { width:100%; display: inline-block; text-align:center; }
+.spinner-center mat-spinner { display: inline-block; }
+.user-btn-block{margin-bottom:20px}
+.scheduler-border form > [class*='col-']{min-height:60px}
+
+
+.failed_reason span.email-title{color:#f20}
+.failed_reason .dynamic-content{color:#f20!important}
+.failed_reason span.email-title::after{display:inline-block;position:absolute}

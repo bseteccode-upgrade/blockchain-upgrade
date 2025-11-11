@@ -1,0 +1,4 @@
+iframe {width: 100%;height:470px;}
+.detail-view{width:100%;text-align:center;}
+.detail-view a{font-size: 18px; color: #3898ea; font-weight: bold; margin-bottom: 20px; position: relative; display: inline-block; text-decoration: underline;}
+.detail-view a .material-icons { position: relative; top: 6px; padding: 0px 10px;}

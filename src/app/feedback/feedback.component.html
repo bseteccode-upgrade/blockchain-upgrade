@@ -1,0 +1,77 @@
+<div class="feedback_container">
+  <a (click)="onClose()" class="close_btn"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+
+  <h4 class="feedback_title">{{ 'vottun' | translate }}</h4>
+  <form class="form-horizontal" (ngSubmit)="submitFeedback(feedbackForm.value)" [formGroup]="feedbackForm"
+    enctype="multipart/form-data">
+
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="name" placeholder="{{'name' | translate}}*">
+          <div class="text-danger text-left small" *ngIf="errorMsgFeedback">{{geterrorMsgFeedback('name') ||
+          errorMsgArr['name'] | translate}}</div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12">
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="email"
+            placeholder="{{'email_address' | translate}}*">
+          <div class="text-danger text-left small" *ngIf="errorMsgFeedback">{{geterrorMsgFeedback('email') ||
+          errorMsgArr['email'] | translate}}</div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-sm-12">
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="subject" placeholder="{{'subject' | translate}}*">
+          <div class="text-danger text-left small" *ngIf="errorMsgFeedback">{{geterrorMsgFeedback('subject') ||
+          errorMsgArr['subject'] | translate}}</div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-sm-12">
+        <div class="form-group textarea">
+          <textarea rows="5" formControlName="message" placeholder="{{'how_can_we_help_you' | translate}}*"
+            class="form-control"></textarea>
+          <div class="text-danger text-left small" *ngIf="errorMsgFeedback">{{geterrorMsgFeedback('message') ||
+          errorMsgArr['message'] | translate}}</div>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-12 col-sm-12">
+        <div class="alert alert-danger" *ngIf="errorMsgFeedback">
+          {{errorMsgFeedback | translate}}
+        </div>
+      </div>
+
+      <div class="col-md-12 col-sm-12">
+
+        <div class="row">
+          <div class="col-md-6 col-sm-12 select-file">
+            <label for="file"><i class="fa fa-paperclip" aria-hidden="true"></i>
+              <input #fileInputOrgDoc type="file" id="file" name="file" style="display: none"
+                (click)="fileInputOrgDoc.value = null" value="" (change)="uploadFile($event)">
+            </label>
+            <span>{{fileName}}</span>
+            <div class="text-danger text-left small" style="position: relative;" *ngIf="errorMsgFeedback">
+              {{geterrorMsgFeedback['attachment'] || errorMsgArr['attachment'] | translate}} </div>
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <div class="form-group text-right">
+              <button *ngIf="process" class="btn btn-primary">{{'processing' | translate}}...</button>
+              <button *ngIf="!process" mat-button type="submit" class="submit-btn">
+                {{'submit' | translate}}</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+</div>

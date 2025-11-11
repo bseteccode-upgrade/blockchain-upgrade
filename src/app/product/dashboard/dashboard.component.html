@@ -1,0 +1,74 @@
+<section class="start_wrapper issue-certificate-list">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>Dashboard</h3>
+      </div>
+    </div>
+
+    <div class="total-count-block">
+      <div class="col-md-12">
+        <div class="col-md-4 col-sm-12">
+          <div class="total-student">
+            <div class="total-left">
+              <h4>{{'total' | translate}} {{'products' | translate}}</h4>
+              <h3>{{productService.matrixCount.product_count}}</h3>
+            </div>
+            <div class="total-right">
+              <span class="side-icon icon-total-product"></span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-4 col-sm-12">
+          <div class="total-addnew">
+            <div class="total-left">
+              <h4>{{'total' | translate}} {{'activities' | translate}}</h4>
+              <h3>{{productService.matrixCount.activity_count}}</h3>
+            </div>
+            <div class="total-right">
+              <span class="side-icon icon-total-activity"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+          <div class="total-certificate">
+            <div class="total-left">
+              <h4>{{'total' | translate}} {{'workflow' | translate}}</h4>
+              <h3>{{productService.matrixCount.workflow_count}}</h3>
+            </div>
+            <div class="total-right">
+              <span class="side-icon icon-total-workflow"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12 col-md-offset-2">
+          <div class="total-workflow">
+            <div class="total-left">
+              <h4>{{'total' | translate}} {{'members' | translate}}</h4>
+              <h3>{{productService.matrixCount.workflow_user_count}}</h3>
+            </div>
+            <div class="total-right">
+              <span class="side-icon icon-management"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+          <div class="total-activity">
+            <div class="total-left">
+              <h4>{{'total' | translate}} {{'reviewers' | translate}}</h4>
+              <h3>{{productService.matrixCount.reviewer_count}}</h3>
+            </div>
+            <div class="total-right">
+              <span class="side-icon icon-total-review"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

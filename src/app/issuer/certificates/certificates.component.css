@@ -1,0 +1,24 @@
+.hide {visibility: hidden}
+:host /deep/ .block-left { padding: 5px 10px}
+:host /deep/ .eng_group img { padding:0 20px;height:155px}
+.progress_animation { width:100%; text-align: center; display: inline-block}
+.progress_animation mat-spinner { display: inline-block}
+:host /deep/ .delete-input .mat-form-field-appearance-outline .mat-form-field-infix{padding:3px 0}
+.delete-input .text-danger.text-left.small { position: absolute;bottom:2px}
+.eng_group .blockchain-main .blockchain-details .block-left{width:64%}
+.eng_group .blockchain-main .blockchain-details .block-left h4{text-overflow:ellipsis;white-space:nowrap;width:100%;height:auto}
+:host /deep/ .eng_group:hover .blockchain-submain{height:188px}
+:host /deep/ .eng_group{min-height:220px;height:100%;margin-bottom:0}
+:host /deep/ .eng_group .blockchain-submain a { top:5px}
+:host /deep/ .certificate-view-model .nsm-dialog-animation-fade.nsm-dialog.nsm-dialog-open { min-width: 65%; width: 25%; }
+.certificate-scroll.scroll-window { color:#6a6c6f;padding: 15px 0;max-height:520px;border-right: 1px solid transparent;display: inline-block;position: relative;width: 100%;overflow:auto;display:-webkit-box!important;display:-webkit-flex!important;display:-ms-flexbox!important;display:flex!important;flex-wrap:wrap}
+.certificate-scroll.scroll-window >  [class*='col-']{margin-bottom:18px}
+
+.identifier_name{width:100%;display:inline-block;text-align:center}
+.identifier_name p{text-overflow: ellipsis; white-space: nowrap;font-size:14px;color:#2ab6d7;font-family: 'Roboto-Regular';margin-bottom:0;width:100%;overflow:hidden;padding:15px 10px 0 10px}
+
+@media (max-width:991px)
+{
+:host /deep/ .certificate-view-model .nsm-dialog-animation-fade.nsm-dialog.nsm-dialog-open { min-width: 50%; width: 65%; }
+:host /deep/ .certificate-view-model .nsm-dialog-animation-fade.nsm-dialog.nsm-dialog-open .nsm-dialog-btn-close { right: 0px; top: 0px; }
+}

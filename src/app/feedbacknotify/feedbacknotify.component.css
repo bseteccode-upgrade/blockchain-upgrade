@@ -1,0 +1,7 @@
+.feedback_notify{position:relative;padding:20px;}
+.feedback_notify h4{padding:20px;color:green;padding-top:0}
+p{margin:0 0;text-align:center;}
+p i{color:green;font-size:40px;}
+.close_btn{position:absolute;right:20px;font-size:24px;top:-3px;cursor:pointer;}
+.close_btn i{color:#697177;}
+.close_btn:hover i{color:#222222;}

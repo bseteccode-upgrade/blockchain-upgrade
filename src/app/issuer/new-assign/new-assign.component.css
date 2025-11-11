@@ -1,0 +1,121 @@
+.add-student-form .form-horizontal .form-group.border{height:100px}
+.add-student-form .form-horizontal .form-group.border.angular-editor{height:auto}
+.form-group.share-radio.select_field ~ .text-danger{bottom:-25px}
+.form-group.border.angular-editor{margin-top:30px}
+.failed-message { text-align: center}
+.success-message { text-align: center}
+.button-container { width: 100%; text-align: center; display: inline-block; position: relative}
+ul.report-email { padding-left:0; margin:10px 0; display: inline-block}
+ul.report-email li { width:49%; list-style-type:none; display: inline-block; float: left; padding:0 10px}
+.failed-message i.material-icons { color: #f20; font-size: 40px}
+.success-message i.material-icons { color: green; font-size: 40px}
+.success-message .report-list p { color:#1e232b;text-align: left;font-size: 14px;padding: 0 19%}
+.errorMultiUpload p { font-weight: bold; margin-bottom:0; color:#f20}
+.errorMultiUpload .nsm-dialog.nsm-dialog-open { max-width:55%; width:100%}
+ngx-smart-modal.errorMultiUpload { height:70%}
+.alert.alert-danger.bottom_message{margin-top:40px}
+.success-title h4 { margin-bottom:0}
+.success-table { width:100%; margin:0 auto; padding:30px 5%; display: inline-block; position: relative}
+.success-table td {padding: 0 10px;text-align: left;vertical-align: middle;}
+.success-table tbody { display: inline-block; }
+.evi-delete { display: inline-block; top: 28px; right: 19px; background-color: tomato; width: 40px; height: 40px; border-radius: 40px; text-align: center;}
+.search_container { padding-left:0;padding-right:0}
+.select-all { margin-top:20px;}
+.group-block { width:100%; text-align: center; display: inline-block}
+.group-btn.mat-button{ font-size:14px; padding:0 15px; height:35px; margin:5px 3px 8px 3px; color: #fff; background-color: #29b6d8; border-color: #29b6d8; min-width: 60px; }
+ul.search-box { padding-left:0;margin-bottom:0;}
+ul.search-box li { display: inline-block; vertical-align: top; }
+ul.search-box li .group-btn.mat-button {min-width: 45px;height:40px; margin:0 3px; position: relative; top:3px;border-radius:6px;}
+:host /deep/ .btn.btn-form-save.mat-button { margin:0px; }
+:host /deep/ .new_assign_btn{text-align: center;}
+:host /deep/ .new_assign_btn button:last-child { float: right;margin: 0;}
+:host /deep/ .new_assign_btn button:first-child { float: left;margin: 0;}
+:host /deep/ .new_assign_btn button {display: inline-block;margin: 0 5px;}
+:host /deep/ .certificate-add-form .step-back.mat-button { margin:0px 5px; }
+:host /deep/ .add-student-form .mat-horizontal-stepper-header { padding:0px 10px; }
+:host /deep/ .certificate-add-form mat-step-header.mat-step-header[aria-selected="false"] .mat-step-label-active p { left:15px; }
+:host /deep/ .certificate-add-form mat-step-header.mat-step-header[aria-selected="true"] .mat-step-label-active p { left:15px; }
+:host /deep/ .certificate-add-form mat-step-header.mat-step-header p  { left:15px; }
+:host /deep/ .certificate-add-form .step-back.mat-button { margin:0px; }
+:host /deep/ .block-left h4 { margin-top: 5px; margin-bottom: 5px; width: 100%; font-size: 14px; height: 45px; vertical-align: middle;  position: relative; display: inline-block; overflow: hidden; white-space: pre-line; word-break: break-word;}
+:host /deep/ .block-left { width:100%; display:inline-block; text-align: center; float: left; padding: 0px 0px; display: inline-block; } 
+:host /deep/ .blockchain-details { padding: 0px 0px 0px; }
+:host /deep/ .mat-radio-label-content { width:100%; padding: 10px 0px; }
+:host /deep/ .share-radio .mat-radio-container { position: relative; margin:0px 10px; top: 0px; right: 0px; }
+:host /deep/ .mat-radio-container { position: absolute; top: 5px; right: 5px; }
+:host /deep/ .mat-horizontal-content-container { overflow: hidden; padding: 0 0px 24px 0px; }
+:host /deep/ .add-student-form .mat-radio-button { display: inline; margin:10px 0px; }
+:host /deep/ .eng_group { min-height:200px;height:100%;margin-bottom:0;}
+:host /deep/ .eng_group img { height:120px; padding:10px; }
+:host /deep/ .badge-certificate-section { margin-bottom:0px; }
+:host /deep/ .add-student-form input.step-search { height: auto;}
+:host /deep/ .add-student-form .form-horizontal .form-group { margin-left:0px; margin-right:0px; margin-bottom:0px; }
+:host /deep/ .user-btn-block .filter-btn.mat-button { width:43%; margin-right:5px; }
+:host /deep/ .step-buttons { width:100%; text-align: center; display: inline-block; margin-top:15px; }
+:host /deep/ .panel-body .mat-form-field-appearance-outline .mat-form-field-infix {  padding: 0em 0 0em 0; }
+:host /deep/ .mat-horizontal-stepper-header{  pointer-events: none !important; }
+/* :host /deep/ .pull-right .mat-form-field-appearance-outline .mat-form-field-label { top: 1.5em; }
+:host /deep/ .pull-right .search-box .mat-form-field-appearance-outline.mat-focused .mat-form-field-label { top: 1.9em; }
+:host /deep/ .pull-right .search-box .mat-form-field-appearance-outline .mat-form-field-label { top:unset; } */
+button.step-next.mat-button { margin-top:15px; margin-left:10px; }
+.add-student-form .student-name { width:85%; position: relative; }
+.add-student-form .student-name p {line-height:15px; margin:0px; color: #2ab6d7; word-break: break-word; white-space: pre-line; text-transform: capitalize; }
+.pull-right .acheivement-search { height:40px;}
+.student-name-block .pull-right { width:100%; height: 50px;}
+.student-name-block { width:100%; position: relative;}
+.related-error { color:#f20; font-size: 14px;}
+.evidence-form input { margin:10px 0px; }
+ul.student-details { padding-left:0px; margin-bottom:0px; }
+ul.student-details li { display: inline-block; vertical-align: middle; padding:5px; }
+:host /deep/ .text-danger { bottom:0px;}
+.selected_certificate { position: relative; width:100%; text-align: center; margin-bottom:20px; display: inline-block; }
+.selected_certificate h4 {color: #1e232b; display: inline-block; margin-top:0px; padding-top:0px;}
+ul.course-list { margin-bottom:0px; padding-left:0px; width:100%; height:250px; }
+ul.course-list li { display:inline-block; width: 150px; padding: 5px; margin: 0px 10px;}
+.search-results, .search-results-course{max-height:26rem; min-height:26rem; height: 100%; overflow-y: scroll; overflow-x: hidden; border: 1px solid #ccc;padding: 15px 0px;display:-webkit-box!important;display:-webkit-flex!important;display:-ms-flexbox!important;display:flex!important;flex-wrap:wrap}
+.search-results-stud { height: 20rem; overflow-y: scroll; overflow-x: hidden; border: 1px solid #ccc; padding: 15px 0px;}
+.search-results-stud.student-result-list { border: none; min-height: 50px; height: 100%;max-height: 200px;overflow: auto; }
+.add-evidence-btn{ top: 5px; position: relative; }
+.evidence-field { position: relative; margin:5px 0px;}
+.related-certificate { width:100%; height:233px; overflow: auto; position: relative; display: inline-block; text-align: center;}
+.related-certificate .col-md-3{float:unset;display: inline-block;}
+.no-records{width:100%;text-align:center;font-size:16px;}
+
+.search-results > [class*='col-'],.search-results-course > [class*='col-']{margin-bottom:18px}
+.add-student-form .search_autocomplete input{height:38px;margin-top:-0.425em;}
+.add-student-form .autocomplete input{height:38px;margin-top:-0.425em;}
+
+.identifier_name{width:100%;display:block;text-align:center;float:left;}
+.identifier_name p{text-overflow: ellipsis; white-space: nowrap;font-size:14px;color:#2ab6d7;font-family: 'Roboto-Regular';margin-bottom:0;width:100%;overflow:hidden;padding:0 10px 0 10px}
+
+@media (min-width:991px) and (max-width:1199px)
+{
+.add-student-form .student-name { width:100%; position: relative; }
+ul.student-details li { display: inline-block;  vertical-align: middle; padding: 5px; list-style-type: none; }
+}
+
+@media (max-width:991px)
+{
+ul.course-list { width:100%; text-align: center;}
+}
+
+@media (min-width: 767px) and (max-width: 991px)
+{
+:host /deep/ .refresh-icon { margin:0px 0px; }
+}
+
+@media (max-width:767px)
+{
+.add-evidence.mat-button{position: static}.evidence_content .form-group.border > div {padding: 0; margin: 5px 0;}
+}
+
+@media (max-width:640px)
+{
+.new_assign_btn button{width: 100%;display: inline-block;margin: 5px 0 !important;}
+}
+
+@media (max-width: 480px)
+{
+.add-student-form form .panel-body .pull-right { width: 100%; }
+.add-student-form form .panel-body .pull-left { width: 100%; }
+}

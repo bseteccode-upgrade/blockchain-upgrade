@@ -1,0 +1,25 @@
+.start_wrapper .hpanel { display: inline-block;width:100%;}
+.faq-container { width:100%; display: inline-block; padding:10px 40px 40px 40px;text-align:center; }
+.faq-container h3 { font-family: 'Roboto-Bold';margin:0 0 0 0;color: #525252;text-transform: capitalize;}
+.faq-container h4 { margin:10px 0 40px 0;color: #525252; text-transform: capitalize;}
+:host /deep/ .mat-expansion-panel { background-color:transparent; box-shadow:none !important; }
+:host /deep/ .mat-expansion-panel.mat-expanded { background-color:#f7f7f7; box-shadow:none; }
+mat-expansion-panel-header { min-height:68px !important; height:100% !important; max-height:100%;    border-bottom: 1px solid #efefef;padding:15px;}
+mat-accordion  mat-panel-title { font-family: 'Roboto-Regular'; color:#206ab5; font-size: 16px; text-align: left;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;text-transform:capitalize;display: block;display: -webkit-box;}
+mat-accordion p {font-family: 'Roboto-Regular'; color:#636472;font-size: 14px;text-align: left;line-height: 25px;}
+:host /deep/ .mat-expanded .mat-expansion-panel-body { padding:15px 25px;}
+.separate_btn.mat-button {width: 40%;color: #fff;background-color: #29b6d8;border-color: #29b6d8;font-size: 14px;padding: 5px 15px;margin: 5px;}
+:host /deep/ .mat-form-field-appearance-outline .mat-form-field-infix {padding: 0em 0 0.5em 0;}
+.spinner { width:100%; display:inline-block; text-align: center; }
+.spinner mat-spinner { display: inline-block;}
+.form-section{display: inline-block;width: 100%;padding: 20px 0 0;border: 1px solid #ccc;margin-bottom: 20px;}
+.start_wrapper td.mat-cell:first-child, .start_wrapper td.mat-footer-cell:first-child, .start_wrapper th.mat-header-cell:first-child {background: transparent;background-color: transparent;padding: 0;}
+ul.file-list { width:100%; padding-left:0; margin-bottom:10px; padding:10px; text-align: left; display: flex;flex-wrap: wrap;}
+ul.file-list li { width:30%; display: flex;  padding:10px; border:1px solid #ccc;margin:5px;}
+ul.file-list li img { width:auto;height:30px;display: inline-block;}
+ul.file-list li a { display: inline-block; font-size: 12px;text-transform: capitalize;text-decoration: underline;cursor: pointer;color: #1e232b;font-weight: bold;padding:0 5px;word-break: break-word;word-wrap:break-word;}
+ 
+@media (max-width:480px)
+{
+ul.file-list li { width:100%; } 
+}

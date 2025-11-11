@@ -1,0 +1,201 @@
+<section class="start_wrapper bulk-upload">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'bulk_activities' | translate}} <span matTooltip="{{'phi_bulk_activity' | translate}}"
+            class="headTooltip"><i class="material-icons"> help_outline</i></span></h3>
+      </div>
+      <div class="pull-right">
+
+        <div class="bulk-head-left">
+        </div>
+
+        <a class="export-btn" mat-button (click)="downloadSampleExcel()">{{'download_csv_template' | translate}}
+          <span>
+            <i class="fa fa-share-square-o"></i>
+          </span>
+        </a>
+
+        <button mat-button routerLink="/productcertificate" class="upload-back-btn">
+          <i class="fa fa-hand-o-left fa-1x" style="font-size:20px;"></i> {{'back_to_activities' | translate}}</button>
+      </div>
+    </div>
+
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>{{'choose_file' | translate}}</ng-template>
+
+          <div class="col-md-4 col-sm-12">
+            <div class="file-upload-block">
+              <mat-form-field>
+                <input matInput formControlName="firstCtrl" readonly>
+                <div class="upload-box">
+                  <img src="assets/images/bulk-upload.png">
+                </div>
+                <button mat-button class="browse-file"
+                  (click)="fileinput.click()">{{'browse_file' | translate}}</button>
+                <input type="file" #fileinput accept=".csv" style="display: none;" (change)="upload($event)">
+              </mat-form-field>
+              <div>
+                <button mat-button matStepperNext>{{'next' | translate}}</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-8 col-sm-12">
+            <div class="uploader-progress-block">
+
+              <div class="upload-progress">
+                <img src="assets/images/folder.png">
+              </div>
+
+              <div role="tabpanel" class="upload-progress-bar tab-pane" id="skill">
+                <div class="skill-section">
+                  <div class="row">
+                    <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2">
+                      <div class="filename-progress">
+                        <p>{{fileName}}</p>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar  active" role="progressbar" aria-valuenow="45" aria-valuemin="0"
+                          aria-valuemax="100" [ngStyle]="{width: percentDone + '%'}"></div>
+                      </div>
+                      <div class="text-left">{{percentDone}}% {{'done' | translate}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>{{'upload' | translate}} {{'activitys' | translate}}</ng-template>
+          <div class="hpanel">
+            <div class="panel-body">
+              <div class="table-responsive">
+                <div class="example-container mat-elevation-z8">
+                  <table mat-table #table [dataSource]="dataSource"
+                    class="table table-striped table-bordered table-hover">
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="batchid">
+                      <th mat-header-cell *matHeaderCellDef> {{'badge_in' | translate}} </th>
+                      <td mat-cell *matCellDef="let element"> {{element.in_batch_id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="certiNumber">
+                      <th mat-header-cell *matHeaderCellDef> {{'certificate_number' | translate}} </th>
+                      <td mat-cell *matCellDef="let element"> {{element.certificate_number}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="designation">
+                      <th mat-header-cell *matHeaderCellDef> {{'certifier_designation' | translate}} </th>
+                      <td mat-cell *matCellDef="let element"> {{element.certifier_designation}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef> {{'certifier_name' | translate}} </th>
+                      <td mat-cell *matCellDef="let element"> {{element.certifier_name}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="country">
+                      <th mat-header-cell *matHeaderCellDef> {{'country' | translate}} </th>
+                      <td mat-cell *matCellDef="let element"> {{element.country_certified}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="issueDate">
+                      <th mat-header-cell *matHeaderCellDef> {{'issue_date' | translate}} </th>
+                      <td mat-cell *matCellDef="let element"> {{element.issue_date}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="expDate">
+                      <th mat-header-cell *matHeaderCellDef> {{'expire_date' | translate}} </th>
+                      <td mat-cell *matCellDef="let element"> {{element.expiry_date || 'None'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="transport">
+                      <th mat-header-cell *matHeaderCellDef> {{'transport' | translate}} </th>
+                      <td mat-cell *matCellDef="let element"> {{element.transport}} </td>
+                    </ng-container>
+                    <!-- Actions Column -->
+                    <ng-container matColumnDef="Action">
+                      <th mat-header-cell *matHeaderCellDef> {{'actions' | translate}} </th>
+                      <td mat-cell *matCellDef="let element; let i = index;" class="action_delt">
+                        <a (click)="delete(i)">
+                          <i class="fa fa-trash-o"></i>
+                        </a>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="step-secound">
+            <button mat-button matStepperPrevious class="back"
+              (click)="stepper.selectedIndex = 0;">{{'back' | translate}}</button>
+            <button mat-button class="red" (click)="deleteAll()">{{'clear_all' | translate}}</button>
+            <button mat-button class="green" *ngIf="!process"
+              (click)="secondButton(stepper)">{{'next' | translate}}</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>{{'completed' | translate}}</ng-template>
+        <div *ngIf="resBulkData.status === 'Completed'">
+
+          <div class="upload-success">
+            <i class="fa fa-check-circle-o fa-lg"></i>
+            <h3>{{'upload_successful' | translate}}</h3>
+            <div class="">
+              <button mat-button class="go-dash"
+                routerLink="/productcertificate">{{'go_to_activities' | translate}}</button>
+              <button mat-button class="add-more"
+                (click)="stepper.selectedIndex = 0;reset();">{{'add_more' | translate}}</button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="resBulkData.status !== 'Completed'">
+          <div class="student_count">
+            <p>{{'no_of_activity_not_added' | translate}} : {{resBulkData.fail_count}}</p>
+          </div>
+
+          <div class="failed-message">
+            <i class="material-icons"> report_problem </i>
+
+            <div class="report-list">
+              <div *ngFor="let msg of resBulkData.error_detail; let i = index">
+                <h4>{{msg[0] | translate}}</h4>
+                <ul class="report-email">
+                  <li *ngFor="let email of msg[1]">
+                    {{email}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="button-container">
+            <button mat-button class="back go-dash"
+              routerLink="/productcertificate">{{'go_to_activities' | translate}}</button>
+            <button mat-button class="back add-more" (click)="stepper.selectedIndex = 0;reset();">{{'add_more' |
+              translate}}</button>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+    <mat-spinner *ngIf="process"></mat-spinner>
+  </div>
+</section>

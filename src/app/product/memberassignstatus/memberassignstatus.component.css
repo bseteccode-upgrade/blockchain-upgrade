@@ -1,0 +1,10 @@
+:host /deep/ .mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex { height:44px; }
+:host /deep/ .mat-select-trigger { top:5px; }
+p { margin: 0 0 0px; }
+table td p { margin: 0 0 0px; }
+mat-table.table.table-striped.table-bordered.table-hover.mat-table { min-width:1050px;}
+.example-loading-shade{width:100%;display:inline-block;text-align:center}
+
+.filter-search-box fieldset.scheduler-border{padding:20px 0 20px 0 !important}
+.user-btn-block{text-align:left}
+button.blue.mat-mini-fab.mat-accent{background-color:#34495e}

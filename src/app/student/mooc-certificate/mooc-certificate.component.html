@@ -1,0 +1,113 @@
+<section class="start_wrapper">
+  <div class="hpanel">
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <h3>{{'add' | translate}} {{'mooc_certificates' | translate}}</h3>
+      </div>
+      <div class="pull-right">
+        <button mat-button routerLink="/mooc-list">
+          <i class="fa fa-hand-o-left fa-1x" style="font-size:20px;"></i> {{'mooc_certificates' | translate}}</button>
+      </div>
+    </div>
+    <div class="panel-body">
+        <div class="add-student-form">
+          <form class="form-horizontal" (ngSubmit)="submit(moocForm.value)" [formGroup]="moocForm">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label class="control-label" for="logo">{{'certificate' | translate}}
+                  <span class="mandatory">*({{'support_only' | translate}} pdf)</span>
+                </label>
+              </div>
+              <label class="btn btn-primary">{{'select_file' | translate}}
+                <input type="file" name="logo" accept=".pdf" style="display: none" (change)="uploadFile($event)" id="uploadlogo">
+              </label>
+              <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('upload') || this.errorMsgArr['upload'] | translate}}</div>
+              <br><br>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="username">{{'mooc_name' | translate}}
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="mooc_name" placeholder="{{'mooc_name' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('mooc_name') || this.errorMsgArr['mooc_name'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="username">{{'course_name' | translate}}
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="course_name" placeholder="{{'course_name' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('course_name') || this.errorMsgArr['course_name'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="fullname">{{'certificate_number' | translate}}
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" formControlName="certificate_number" placeholder="Certificate Number">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('certificate_number') || this.errorMsgArr['certificate_number'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="email">{{'website' | translate}}
+                  <span class="mandatory">*</span>
+                </label>
+                <input type="text" class="form-control" id="email" formControlName="mooc_website" placeholder="{{'website' | translate}}">
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('mooc_website') || this.errorMsgArr['mooc_website'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="issue_date">{{'issue_date' | translate}}
+                  <span class="mandatory">*</span>
+                </label>
+
+                <mat-form-field class="angular-datepicker">
+                  <input matInput placeholder="dd/mm/yyyy" [readonly]="true" [matDatepicker]="issueDate" (click)="issueDate.open()" formControlName="issue_date"
+                    id="issue_date" (dateChange)="onStartDateChange($event.value);changeDateEvent($event);">
+                  <mat-datepicker-toggle matSuffix [for]="issueDate"></mat-datepicker-toggle>
+                  <mat-datepicker #issueDate disabled="false"></mat-datepicker>
+                </mat-form-field>
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('issue_date') || this.errorMsgArr['issue_date'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="expiry_date">{{'expire_date' | translate}}</label>
+
+                <mat-form-field class="angular-datepicker">
+                  <input matInput placeholder="dd/mm/yyyy" [readonly]="true" [matDatepicker]="endValidity" (click)="endValidity.open()" min={{minendDate}}
+                    formControlName="expiry_date" id="expiry_date" (dateChange)="changeendDateEvent($event);">
+                  <mat-datepicker-toggle matSuffix [for]="endValidity"></mat-datepicker-toggle>
+                  <mat-datepicker #endValidity disabled="false"></mat-datepicker>
+                </mat-form-field>
+                <div class="text-danger text-left small" *ngIf="errorMsg">{{geterrorMsg('expiry_date') || this.errorMsgArr['expiry_date'] | translate}}</div>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="alert alert-danger" *ngIf="errorMsg">
+                {{errorMsg | translate}}
+              </div>
+              <br>
+            </div>
+            <div class="col-sm-10">
+              <div class="form-group">
+                <button type="button" *ngIf="process" class="btn btn-primary">{{'processing' | translate}}...</button>
+                <button type="submit" *ngIf="!process" mat-button class="btn btn-form-save">{{'save_button' | translate}}</button>
+              </div>
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
+</section>
